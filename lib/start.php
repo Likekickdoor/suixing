@@ -1,5 +1,6 @@
 <?php
     namespace lib;
+    //加载核心文件
     foreach($paths as $path){
         require_once($path);
     }
@@ -32,11 +33,17 @@
         }
 
         public static function run($config){
+            //加载配置
             self::$config = $config;
+            //加载数据库
             self::init_db($config['dbconfig']);
+            //获取控制器
             self::init_con();
+            //获取控制器方法
             self::init_med();
+            //初始化视图
             self::init_view($config['viewconfig']);
+            //初始化日志
             self::init_log($config['logconfig']);
         }
     }

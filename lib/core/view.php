@@ -7,8 +7,6 @@
 
         public static function init($config){
             self::$config = $config;
-            $name = '\lib\view\\'.$config['TEMPLET'];
-            self::$class = new $name($config);
         }
 
         public static function display($file,$data){
@@ -17,7 +15,8 @@
                 dump('模板文件不存在');
                 die;
             }
-            self::$class->display($file,$data);
+            $file = "$this->path\\$file.$this->format";
+            require_once($file);
         }
     }
 ?>

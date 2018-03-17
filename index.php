@@ -2,9 +2,7 @@
     define('FRAME',__DIR__);
     define('APP',FRAME.'/app');
     define('LIB',FRAME.'/lib');
-    define('LOG',FRAME.'/log');
     define('CORE',LIB.'/core');
-    define('DRIVE',CORE.'/drive');
     define('CONFIG',CORE.'/config');
     define('DEBUG',false);
 
