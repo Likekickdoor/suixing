@@ -4,20 +4,8 @@
     define('LIB',FRAME.'/lib');
     define('CORE',LIB.'/core');
     define('CONFIG',CORE.'/config');
-    define('DEBUG',false);
-
+    //加载第三方库
     require_once(FRAME.'/vendor/autoload.php');
-
-    if(DEBUG){
-        $whoops = new \Whoops\Run;
-        $option = new \Whoops\Handler\PrettyPageHandler();
-        // $option->setPageTitle('出错了!');
-        $whoops->pushHandler($option);
-        $whoops->register();
-        ini_set('display_error','On');
-    }else{
-        ini_set('display_error','Off');
-    }
-
+    
     require_once(LIB.'/admin.php');
 ?>

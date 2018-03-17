@@ -6,7 +6,6 @@
         "PHP","PHP Frame"
     ],
     "require": {
-        "php":">= 5.3.0",
-        "filp/whoops":"*"
+        "php":">= 5.3.0"
     }
 }
