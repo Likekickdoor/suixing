@@ -1,11 +1,12 @@
 <?php
+    //数据库类，封装了一些数据库函数
     namespace lib\core;
     class DB{
 
         public $rowcount;
         public $con;
         public $config;
-
+        //数据库链接
         public function connect($config){
             $this->config = $config;
             $this->rowcount = 0;
@@ -26,7 +27,7 @@
                 die('连接数据库失败!');
             }
         }
-
+        //执行数据库命令的函数
         public function query($sql){
             $result = $this->con->query($sql);
             if(!$result)
@@ -34,7 +35,7 @@
             $this->rowcount = $result->rowCount();
             return $result;
         }
-
+        //数据库查找函数，查找一条
         public function find($table,$condition){
             $sql = "select * from $table where $condition";
             try{
@@ -47,7 +48,7 @@
             }
             return $result->fetch();
         }
-
+        //查找所有
         public function findAll($table,$condition){
             $sql = "select * from $table where $condition";
             try{
@@ -63,7 +64,7 @@
             }
             return isset($list) ? $list : "";
         }
-
+        //插入
         public function insert($table,$data_name,$data){
             $sql = "insert into $table($data_name) values($data)";
             try{
@@ -75,7 +76,7 @@
                 die('插入数据失败');
             }
         }
-
+        //更新
         public function update($table,$data,$condition){
             $sql = "updata $table set $data where $condition";
             try{
