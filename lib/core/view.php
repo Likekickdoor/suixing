@@ -1,0 +1,23 @@
+<?php
+    //视图类
+    namespace lib\core;
+    class view{
+
+        public static $config;
+        public static $class;
+        //初始化，获取配置
+        public static function init($config){
+            self::$config = $config;
+        }
+        //把数据显示到模板文件
+        public static function display($file,$data){
+            $path = self::$config['PATH'].'\\'.$file.'.'.self::$config['FORMAT'];
+            if(!is_file($path)){
+                dump('模板文件不存在');
+                die;
+            }
+            $file = "$this->path\\$file.$this->format";
+            require_once($file);
+        }
+    }
+?>
