@@ -73,7 +73,7 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
         'endStation':end,
         'goDate':date
     }
-    proxies = [{'http':'192.168.1.107:80'},{'http':'169.254.25.181:80'},{'http':'169.254.195.159:80'}]
+    proxies = [{'http':'169.254.195.159:80'},{'http':'169.254.25.181:80'},{'http':'192.168.0.116:80'}]
     html = requests.post(url,headers = headers,data = data,proxies = proxies[i%2]).content.decode('utf-8')
     if html.find('系统错误页面') != -1 or html.find('暂未查询到汽车票数据') != -1:
         print(start + " ---> " + end + "\t无数据",end = '\n')
@@ -313,7 +313,7 @@ def get_data(station1,station2,date,cursor,i):
         get_result_from_qunaer(station1,station2,date,re_time,station2_id,station1_id,cursor)
         print('途牛:')
         get_result_from_tuniu(station2,station1,date,re_time,station2_id,station1_id,cursor)
-        time.sleep(random.uniform(2,3))
+        time.sleep(0.5)
 
 def main():
     db = pymysql.connect('localhost','root','','project',charset =  "utf8")
@@ -360,12 +360,12 @@ def main():
                     f = open('1.txt','w')
                     f.write(str(city[0] - 1) + ',' + str(responsible[0]))
                     f.close()
-                    if responsible[0] % 1000 == 0:
-                        time.sleep(300)
-                    elif responsible[0] % 100 == 0:
-                        time.sleep(120)
-                    elif responsible[0] % 50 == 0:
-                        time.sleep(60)
+                    # if responsible[0] % 1000 == 0:
+                    #     time.sleep(100)
+                    # elif responsible[0] % 100 == 0:
+                    #     time.sleep(30)
+                    # elif responsible[0] % 50 == 0:
+                    #     time.sleep(10)
                         
 if __name__ == '__main__':
     main()
