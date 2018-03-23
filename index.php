@@ -1,7 +1,6 @@
 <?php
-    //入口文件
+    define('FRAME',__DIR__);
     //定义常量
-    define('FRAME',__DIR__);//当前主框架目录
     define('APP',FRAME.'/app');//开发目录（控制器，模型，视图所在目录，开发使用）
     define('LIB',FRAME.'/lib');//框架主体目录
     define('CORE',LIB.'/core');//核心文件目录
