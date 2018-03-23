@@ -28,7 +28,7 @@
             $this->get_id();
             $now_time = time();
             //判断是否能直达
-            if(!$this->is_nonstop()){
+            if($this->is_nonstop()){
                 //如果不能直达,获取转乘线路
                 $this->tranship();
             }else{
@@ -65,10 +65,9 @@
         }
         //判断是否直达
         function is_nonstop(){
-            if($this->start_city_id and $this->end_station_id){
-                DB::find("city_to_station","city_id=$this->start_city_id and station_id=$this->end_station_id and state=1");
-                return DB::$rowcount;
-            }
+            DB::find("city_to_station","city_id=$this->start_city_id and station_id=$this->end_station_id and state=1");
+            if(DB::$rowcount > 0)
+                return TRUE;
             return FALSE;
         }
         //查询转乘线路

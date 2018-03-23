@@ -16,8 +16,7 @@
                 dump('模板文件不存在');
                 die;
             }
-            $file = "$this->path\\$file.$this->format";
-            require_once($file);
+            require_once($path);
         }
     }
 ?>
