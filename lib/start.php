@@ -17,12 +17,12 @@
         }
 
         public static function init_con(){
-            $conArr = array('index');   //定义可用控制器列表（防止控制器不存在的情况）
+            $conArr = array('index');   //定义可用控制器列表（防止控制器不存在的情况,增加的控制器需要手动加入到数组当中）
             self::$con = (isset($_GET['con']) and in_array($_GET['con'],$conArr)) ? $_GET['con'] : 'index';
         }
 
         public static function init_med(){
-            $medArr = array('index','bus');//定义方法列表
+            $medArr = array('index','bus');//定义方法列表（防止方法不存在的情况,增加方法需要手动加入到数组当中）
             self::$med = (isset($_GET['med']) and in_array($_GET['med'],$medArr)) ? $_GET['med'] : 'index';
         }
 

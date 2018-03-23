@@ -21,3 +21,4 @@ vendor目录为第三方类库，用来放置安装插件的目录（没安装�
     自定义函数文件：lib/function/function.php
     数据库封装函数文件：lib/DB.php
     开始（主）文件：lib/start.php
+    配置文件：lib/core/config/config.php（包含框架的所有配置）
