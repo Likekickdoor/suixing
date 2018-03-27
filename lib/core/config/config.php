@@ -3,7 +3,7 @@
     namespace lib\core\config;
     $config = array(
         //数据库配置
-        'dbconfig' => array('dbtype' => 'mysql','dbhost' => '127.0.0.1','dbuser' => 'root',
+        'dbconfig' => array('dbtype' => 'mysql','dbhost' => 'localhost','dbuser' => 'root',
                 'dbpwd' => '','dbname' => 'project','dbcharset' => 'utf8'),
         //日志配置
         'logconfig' => array('IS_START' => 'false','PATH' => FRAME.'/log','DB_NAME' => 'log'),
