@@ -17,7 +17,7 @@
         }
 
         public static function init_con(){
-            $conArr = array('index');   //定义可用控制器列表（防止控制器不存在的情况）
+            $conArr = array('index','show');   //定义可用控制器列表（防止控制器不存在的情况）
             self::$con = (isset($_GET['con']) and in_array($_GET['con'],$conArr)) ? $_GET['con'] : 'index';
         }
 

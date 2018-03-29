@@ -73,7 +73,6 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
         'endStation':end,
         'goDate':date
     }
-    # proxies = [{'http':'192.168.1.107:80'},{'http':'169.254.195.159:80'},{'http':'169.254.25.181:80'},{'http':'119.23.206.106:80'}]
     html = requests.post(url,headers = headers,data = data).content.decode('utf-8')
     if html.find('系统错误页面') != -1 or html.find('暂未查询到汽车票数据') != -1:
         print(start + " ---> " + end + "\t无数据",end = '\n')
@@ -89,6 +88,7 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
     cursor.execute(sql)
     if len(results) == 0:
         print("Notice!")
+        return 0
     for result in results:
         lis = result.find_all('li')
         start_time = lis[0].text.replace(' ','')
@@ -143,6 +143,7 @@ def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_i
     results = re.split(r',',html)[19:]
     if len(results) == 0:
         print("Notice!")
+        return 0
     for x in results:
         if x.find('to:') >= 0:
             end_station = re.sub(r'[a-zA-Z0-9:]','',x)
@@ -187,6 +188,7 @@ def get_result_from_xiecheng(start,end,date,re_time,start_station_id,end_station
     cursor.execute(sql)
     if len(trs) == 0:
         print("Notice!")
+        return 0
     for tr in trs:
         tds = tr.find_all('td')
         start_time = re.sub(r'[\n\r\t]','',tds[0].find('span',class_ = 'railway_time').text.replace(' ',''))
@@ -271,7 +273,6 @@ def get_data(station1,station2,date,cursor,i):
     station2_id = cursor.fetchone()[0]
     #获取出发地到目的地需要的时间
     re_time = get_time(station1,station2) 
-    # get_result_from_114(station1,station2,date,re_time,station1_id,station2_id,cursor)
     # time.sleep(1)
     # return 0
     t = random.randint(1,2)
@@ -307,7 +308,7 @@ def main():
         date = '2018-03-13'
     if day == '21':
         date = '2018-03-23'
-    date = '2018-03-30'
+    date = '2018-04-01'
     sql = u"select * from city where state=1"
     cursor.execute(sql)
     if cursor.rowcount > 0:
@@ -352,7 +353,7 @@ def main():
                     f = open('1.txt','w')
                     f.write(str(city[0] - 1) + ',' + str(responsible[0]))
                     f.close()
-                    if responsible[0] % 100 == 0:
+                    if responsible[0] % 50 == 0:
                         time.sleep(30)
         f = open('1.txt','w')
         f.close()
@@ -360,7 +361,7 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except TimeoutError:
+    except:
         print('异常')
         time.sleep(10)
         main()
@@ -372,7 +373,7 @@ if __name__ == '__main__':
     #         if day == '01' or day == '11' or day == '21':
     #             main()
     #         time.sleep(5)
-    #     except ("Traceback","NameError"):
+    #     except:
     #         print('异常')
     #         time.sleep(10)
     #         main()
