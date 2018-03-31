@@ -3,26 +3,6 @@
     use \lib\core\DB;
     class details{
 
-        function index(){
-
-            $view = V('index');
-            $view->display('index','
-
-
-
-
-
-
-                    欢迎使用MyFrame
-
-
-
-
-
-
-            ');
-        }
-
         function bus(){
             $mod = M('bus');
             if(!isset($_GET['start']) || !isset($_GET['end'])){
