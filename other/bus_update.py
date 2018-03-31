@@ -313,7 +313,7 @@ def main():
     cursor.execute(sql)
     if cursor.rowcount > 0:
         citys = cursor.fetchall()
-        f = open('1.txt','r')
+        f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','r')
         num = f.readline()
         if len(num) != 0:
             num = num.split(',',1)
@@ -350,12 +350,12 @@ def main():
                     if i == 1:
                         i = 2
                     else: i = 1
-                    f = open('1.txt','w')
+                    f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','w')
                     f.write(str(city[0] - 1) + ',' + str(responsible[0]))
                     f.close()
                     if responsible[0] % 50 == 0:
                         time.sleep(30)
-        f = open('1.txt','w')
+        f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','w')
         f.close()
 
 if __name__ == '__main__':

@@ -12,5 +12,8 @@
             $view = V('bus');
             $view->show_bus('bus',$data);
         }
+        function recommend(){
+            
+        }
     }
 ?>

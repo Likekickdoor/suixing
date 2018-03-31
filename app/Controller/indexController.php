@@ -7,11 +7,9 @@
             $view->display('index/index','');
         }
 
-        // function bus(){
-        //     $mod = M('bus');
-        //     $data = $mod->get_bus("price");
-        //     $view = V('bus');
-        //     $view->show_bus('bus',$data);
-        // }
+        function get_station(){
+            $mod = M('station');
+            $data = $mod->get_station();
+            p($data);
+        }
     }
-?>

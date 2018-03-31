@@ -2,7 +2,7 @@
     namespace app\Model;
     use lib\core\DB;
     class bus{
-        private $show;
+        private $data;
         private $start;
         private $end;
         private $start_id;
@@ -20,7 +20,7 @@
         //获取输出信息
         function print_line($lines){
             foreach ($lines as $line) {
-                $this->show .= $line['start_time'].','.$line['arrive_time'].','.$line['time'].','.$line['start_station_name'].','.$line['end_station_name'].','.$line['type'].','.$line['price'].';';
+                $this->data .= $line['start_time'].','.$line['arrive_time'].','.$line['time'].','.$line['start_station_name'].','.$line['end_station_name'].','.$line['type'].','.$line['price'].';';
             }
         }
         //获取站点id
@@ -51,12 +51,12 @@
                 if($lines != NULL){
                     $this->print_line($lines);
                 }else{
-                    $this->show = "无路线信息";
+                    $this->data = "无路线信息";
                 }
             }else{
                 $this->get_interchange($order);
             }
-            return $this->show;
+            return $this->data;
         }
         //获取转乘信息
         function get_interchange($order){
