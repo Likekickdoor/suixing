@@ -3,6 +3,9 @@
     class index{
 
         function index(){
+            // $data = \PY::encode("张","");
+            // p($data);
+            // die;
             $view = V('index');
             $view->display('index/index','');
         }
@@ -11,7 +14,8 @@
             $mod = M('station');
             $data = $mod->get_station();
             foreach ($data as $key) {
-                echo ($key['name'].",");
+                $pingyin = str_replace(" ","",\PY::encode($key['name'],""));
+                echo ($key['name'].",".$pingyin.";");
             }
         }
     }

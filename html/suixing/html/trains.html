@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>展示火车条数</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<?php foreach($data as $dataOne): 
+	?>
+		<li><?php //print_r($dataOne);
+			$runtime=$dataOne['BrunTime']-$dataOne['ArunTime'];
+			echo $dataOne['trainNo'].'+运行时间：'.$runtime.'+出发站：'.$dataOne['dpSta'].'+目的站：'.$dataOne['arrSta'].'+出发时间：'.$dataOne['AstartTime'].'+到达时间：'.$dataOne['BstartTime'];
+	  ?></li>
+	<?php
+	 endforeach;
+	?>
+</body>
+</html>
