@@ -17,12 +17,12 @@
         }
 
         public static function init_con(){
-            $conArr = array('index','show');   //定义可用控制器列表（防止控制器不存在的情况）
+            $conArr = array('index','details');   //定义可用控制器列表（防止控制器不存在的情况）
             self::$con = (isset($_GET['con']) and in_array($_GET['con'],$conArr)) ? $_GET['con'] : 'index';
         }
 
         public static function init_med(){
-            $medArr = array('index','bus','get_station');//定义方法列表
+            $medArr = array('index','bus','trains','flight','get_station','stopApi','show');//定义方法列表
             self::$med = (isset($_GET['med']) and in_array($_GET['med'],$medArr)) ? $_GET['med'] : 'index';
         }
 
@@ -48,7 +48,7 @@
             //初始化视图
             self::init_view($config['viewconfig']);
             //初始化日志
-            self::init_log($config['logconfig']);
+            // self::init_log($config['logconfig']);
         }
     }
 ?>

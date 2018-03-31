@@ -1,0 +1,167 @@
+body{
+    background:url(../img/bg.jpg) no-repeat center fixed;
+    background-size:100% 100%; 
+    height: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+#header{
+    width: 100%;
+    height: 100px;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+#main{
+    width: 100%;
+    height: 600px;
+   position: absolute;
+   top: 25%;
+}
+.left{
+width: 60%;
+height: 100%;
+float: left;
+}
+.right{
+    width: 40%;
+    height:100%;
+    float: left;
+    }
+    .tit{
+        color: white;
+        position: absolute;
+        top: 10%;
+        left: 20%;
+        font-size: 40px;
+        letter-spacing: 5px;
+    }
+  
+    .title{
+        color:#dbdada;
+        position: absolute;
+        top: 22%;
+        left: 10%;
+        font-size: 18px;
+        letter-spacing: 5px;
+    }
+    .title-0{
+        color:#dbdada;
+        position: absolute;
+        top: 27%;
+        left: 2%;
+        font-size: 18px;
+    }
+    .box{
+        width: 90%;
+        height: 500px;
+        background: #f6f6f6;
+        border-radius: 10px;
+    }
+    .top{
+        border-radius: 10px;
+        width: 100%;
+        height: 100px;
+        background: #fff;
+    }
+    .zuo{
+        float: left;
+        width: 75%;
+        height: 100px;
+    }
+
+    .title-1{
+        color: #666;
+        font-size: 24px;
+        letter-spacing: 5px;
+        padding: 20px 0 0 30px;
+        margin: 0;
+    }
+    .title-2{
+        color: #666;
+        font-size: 16px;
+        margin: 10px 0 0 10px;
+    }
+    .you{
+        float: left;
+        width: 25%;
+        height: 100px;
+    }
+    .write{
+        width: 70px;
+        height: 70px;
+        margin: 10px 0 0 20px;
+    }
+    .contain{
+        width: 100%;
+        height: 250px;
+        padding-top: 30px;
+        color: #444;
+        font-size: 20px;
+        
+    }
+    .contain div{
+       text-indent: 20px;
+       letter-spacing: 3px;
+       margin-top: 20px;
+       position: relative;
+       line-height: 30px;
+       
+    }
+    .contain div input{
+        width: 270px;
+        height: 30px;
+        position: absolute;
+        text-indent: 10px;
+        left: 25%;
+        /* margin: 0; */
+        outline: none;
+    }
+    .contain div .code{
+        width: 100px;
+    }
+    .txt-1{
+        color: red;
+        height: 30px;
+        font-size: 16px;
+        margin: 0;
+        display: none;
+        /* border: 1px solid #ccc; */
+    }
+   
+    .yan{
+        width: 80px;
+        height: 40px;
+        position: absolute;
+        left: 50%;
+    }
+    .change{
+        position: absolute;
+        left: 67%;
+        top: 30%;
+        text-decoration: none;
+        font-size: 16px;
+        letter-spacing: 1px;
+        display: block;
+        width: 120px;
+        height: 30px;
+        cursor: pointer;
+        text-indent: 0;
+    }
+    .bottom{
+        width: 100%;
+        height: 110px;
+        position: relative;
+    }
+    .submit{
+        width: 300px;
+        height: 40px;
+        color: rgb(195, 195, 252);
+        font-size: 20px;
+        background: #4A90C4;
+        border: none;
+        border-radius: 10px;
+        position: absolute;
+        /* top: 60%; */
+        left: 20%;
+        cursor: pointer;
+    }

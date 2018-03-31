@@ -1,4 +1,5 @@
 <?php
+    session_start();
     define('FRAME',__DIR__);
     //定义常量
     define('APP',FRAME.'/app');//开发目录（控制器，模型，视图所在目录，开发使用）
@@ -9,4 +10,6 @@
     require_once(FRAME.'/vendor/autoload.php');
     //加载管理文件
     require_once(LIB.'/admin.php');
+
+    
 ?>

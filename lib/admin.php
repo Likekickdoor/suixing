@@ -12,4 +12,5 @@
     start::run($config);
     //调用控制器的方法
     C(start::$con,start::$med);
+    start::init_log($config['logconfig']);
 ?>

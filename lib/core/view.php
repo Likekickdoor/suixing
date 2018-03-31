@@ -13,7 +13,7 @@
         public static function display($file,$data){
             $path = self::$config['PATH'].'\\'.$file.'.'.self::$config['FORMAT'];
             if(!is_file($path)){
-                dump('模板文件不存在');
+                p('模板文件不存在');
                 die;
             }
             require_once($path);

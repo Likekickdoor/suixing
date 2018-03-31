@@ -71,7 +71,7 @@
         public static function insert($table,$data_name,$data){
             $sql = "insert into $table($data_name) values($data)";
             try{
-                $result = self::$Scon->exec($sql);
+                $result = self::$con->exec($sql);
                 if(!$result)
                     die('数据库插入语句执行失败');
                 self::$rowcount = 1;
@@ -90,6 +90,64 @@
                 die('更新数据失败');
             }
         }
+        public static function select_all($table,$content,$where=array()){
 
+            $content = implode(",",$content);
+            if(!empty($where)){
+                foreach($where as $key=>$value){
+                    is_String($value)?$condition[] = $key."='".$value."'":$condition[] = $key."=".$value;
+                }
+    
+                
+                $condition = implode(" and ",$condition);
+                $sql = "SELECT ".$content." FROM ".$table." WHERE ".$condition;
+            }else{
+                $sql = "SELECT ".$content." FROM ".$table;
+            }
+            
+            try{
+                $result = self::$con->prepare($sql);      //预处理
+               
+                $result->execute();                     //执行
+                $resultArray = $result->fetchAll(\PDO::FETCH_ASSOC);         
+                              
+                return $resultArray;
+    
+            }catch(PDOException $e){
+                echo "<pre>";
+                echo "Error:".$e->getMessage()."<br/>";
+                echo "Code:".$e->getCode()."<br/>";
+                echo "File:".$e->getFile()."<br/>";
+                echo "Line:".$e->getTraceAsString()."<br/></pre>";
+            }
+        }
+
+        /**
+     * 执行sql查询语句
+     * 
+     * @param string 执行的查询sql语句
+     * @access public
+     * @return array 二维数组易维长度是个数，二维是关联数组
+     */
+    public static function select_sql($sql){
+        
+        try{
+            $result = self::$con->prepare($sql);      //预处理
+           
+            $result->execute();                     //执行
+            $resultArray = $result->fetchAll(\PDO::FETCH_ASSOC);         
+                          
+            return $resultArray;
+
+        }catch(PDOException $e){
+            echo "<pre>";
+            echo "Error:".$e->getMessage()."<br/>";
+            echo "Code:".$e->getCode()."<br/>";
+            echo "File:".$e->getFile()."<br/>";
+            echo "Line:".$e->getTraceAsString()."<br/></pre>";
+        }
+    }
+
+    
     }
 ?>

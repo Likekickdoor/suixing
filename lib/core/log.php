@@ -17,7 +17,17 @@
         }
         //写日志的函数
         public static function log($message){
-            \lib\core\DB::insert($this->db_name,'host,message',"'{$_SERVER['HTTP_HOST']}','$message'");
+
+            require_once("management/getIp.php");
+    
+            if(empty($_SESSION['ip'])){
+                $ip_id = \insert_ip::insert_ips();
+                $_SESSION['ip'] = $ip_id;
+                
+            }else{
+                
+            }
+            //\lib\core\DB::insert($this->db_name,'host,message',"'{$_SERVER['HTTP_HOST']}','$message'");
         }
     }
 ?>
