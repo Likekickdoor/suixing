@@ -170,6 +170,22 @@
   <script src="./html/index/js/bootstrap.js"></script>
   <script src="./html/index/js/toolFunc.js"></script>
   <script src="./html/index/js/main.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $.ajax({
+        url: './index.php?con=index&med=get_station',
+        type: 'GET',
+        success: function(res) {
+          let aCitys = res.split(',');
+          console.log(aCitys);
+        }
+      })
+
+      // $('#input').input(function() {
+
+      // })
+    })
+  </script>
 </body>
 
 </html>

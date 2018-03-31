@@ -10,6 +10,8 @@
         function get_station(){
             $mod = M('station');
             $data = $mod->get_station();
-            p($data);
+            foreach ($data as $key) {
+                echo ($key['name'].",");
+            }
         }
     }
