@@ -10,6 +10,7 @@
         CORE.'/log.php',
         //自定义函数文件
         LIB.'/function/function.php',
+        LIB.'/function/PY.php',
         //配置文件
         CONFIG.'/config.php',
     );

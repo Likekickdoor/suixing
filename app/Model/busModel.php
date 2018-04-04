@@ -2,7 +2,7 @@
     namespace app\Model;
     use lib\core\DB;
     class bus{
-        private $data;
+        private $data = [];
         private $start;
         private $end;
         private $start_id;
@@ -11,16 +11,21 @@
         function init(){
             $this->start = $_GET['start'];
             $this->end = $_GET['end'];
-            if(strpos($this->start,'市') or strpos($this->start,'县'))
-                $this->start = substr($this->start,0,strlen($this->start) - 3);
-            if(strpos($this->end,'市') or strpos($this->end,'县'))
-                $this->end = substr($this->end,0,strlen($this->end) - 3);
             $this->get_id();
+            array_push($this->data,array("has_date" => "true"));
         }
         //获取输出信息
         function print_line($lines){
             foreach ($lines as $line) {
-                $this->data .= $line['start_time'].','.$line['arrive_time'].','.$line['time'].','.$line['start_station_name'].','.$line['end_station_name'].','.$line['type'].','.$line['price'].';';
+                // if($line['time']==0){
+                //     $line['time'] = "未知";
+                //     $line['arrive_time']="未知";
+                // }
+                $temp = explode('.',$line['time']);
+                $hour = $temp[0]."时";
+                $min = ($temp[1] / 100 * 60)."分";
+                $line['time'] = $hour.$min;
+                array_push($this->data,$line);
             }
         }
         //获取站点id
@@ -51,7 +56,7 @@
                 if($lines != NULL){
                     $this->print_line($lines);
                 }else{
-                    $this->data = "无路线信息";
+                    $this->data = "false";
                 }
             }else{
                 $this->get_interchange($order);

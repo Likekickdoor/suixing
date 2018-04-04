@@ -3,15 +3,18 @@
     use \lib\core\DB;
     class details{
 
+        private $busData = '';
+        private $trainData = '';
+        private $flightData = '';
+        private $shipData = '';
+
         function bus(){
-            $mod = M('bus');
             if(!isset($_GET['start']) || !isset($_GET['end'])){
                 $this->index();
                 return 0;
             }
-            $data = $mod->get_bus($_GET['start'],$_GET['end'],'2018-03-15');
-            $view = V('bus');
-            $view->show_bus('bus',$data);
+            $mod = M('bus');
+            $this->busData = $mod->get_bus("price");
         }
 
         function trains(){
@@ -21,9 +24,7 @@
                 $this->index();
                 return 0;
             }
-            $datas= $trains_obj->Search_trains($_GET['dpplace'],$_GET['arrplace']);
-            $view= V('trains');
-            $view->show_trains($datas);
+            $this->trainData = $trains_obj->Search_trains($_GET['dpplace'],$_GET['arrplace']);
         }
 
         function flight(){
@@ -32,22 +33,17 @@
                 $this->index();
                 return 0;
             }
-            
-            
             $flight_obj= M('flight');
-            //$flight_obj->select_line($_GET['dpplace'],$_GET['arrplace']);
-            $datas= $flight_obj->searchFlight();
-            var_dump($datas);
+            $this->flightData = $flight_obj->searchFlight();
         }
 
-        function stopApi(){
-            if(!isset($_REQUEST['about_id']) || !isset($_REQUEST['dpSort'])||!isset($_REQUEST['arrSort'])){
-                return 0;
-            }
-            $trains_obj=M('StopInfo');
-            $trains_obj->get_stop_info($_REQUEST['about_id'],$_REQUEST['dpSort'],$_REQUEST['arrSort']);
+        function show(){
+            $this->bus();
+            // $this->trains();
+            // $this->flight();
+            $view = V('details');
+            $view->display('detailsHtml/details',$this->busData,$this->trainData,$this->flightData,$this->shipData);
         }
-
         
     }
 ?>

@@ -37,10 +37,12 @@
         <img src="html/detailsHtml/img/screen.jpg" />
     </div>
     <div class="searchArea">
-        <form action="#" id="mainForm">
+        <form action="./index.php" id="mainForm" method="GET">
+            <input type="hidden" name="con" value="details">
+            <input type="hidden" name="med" value="show">
         <div class="InputWhere">
             <div class="start">
-                <input name="" type="text" id="start" placeholder="输入起点" autocomplete="off" spellcheck="false"/>
+                <input name="start" type="text" id="start" placeholder="输入起点" autocomplete="off" spellcheck="false"/>
                 <!-- 此处为下拉城市名列表 -->
                 <ul class="listCityName">
                 </ul>
@@ -48,7 +50,7 @@
             <div class="SEbutton">
                 <input type="button" id="SEbutton" /></div>
             <div class="end">
-                <input name="" type="text" id="end" placeholder="输入终点" autocomplete="off" spellcheck="false"/>
+                <input name="end" type="text" id="end" placeholder="输入终点" autocomplete="off" spellcheck="false"/>
                 <ul class="listCityName">
                 </ul>
             </div>
@@ -73,7 +75,7 @@
             <div class="btnScreen"><a>关闭</a></div>
         </div>
         <div class="InputSubmit">
-            <input type="submit" value="查&nbsp;询" />
+            <input id="submit" type="submit" value="查&nbsp;询" />
         </div>
     </form>
     </div>
@@ -243,7 +245,7 @@
                     <div class="isTime">时间<a></a></div>
                     <div class="isPrice">价格<a></a></div>
                 </div>
-            <?php 
+            <?php if(false)
             foreach($data as $key =>$dataOne):
                 $id=$key+1;
                 $Dots=$dataOne['arrSort']-$dataOne['dpSort']-1;
@@ -332,6 +334,82 @@
                     <div class="isTime">时间<a></a></div>
                     <div class="isPrice">价格<a></a></div>
                 </div>
+                <?php 
+                if(true){
+                    $data = $busData;
+                    unset($data[0]);
+                    for($i=1;$i<count($data);$i++){
+                        //$id=$key+1;
+                        //$Dots=$dataOne['time'];
+                ?>
+                <li class="lists Normal">
+                    <div class="dotss"></div>
+                    <div class="moreTags">
+                        <div class="moreTagsLeft">
+                            <div class="tg1">荐</div>
+                            <div class="tg2">直达</div>
+                            <div class="tg3">路线最短</div>
+                            <span class="tg4">
+                                <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                            </span>
+                            <sapn class="showHideBtn">
+                                <span class="showHideStationsName"></span>
+                                <span class="showHideKm"></span>
+                                <span class="foldBtn"></span>
+                            </span>
+                        </div>
+                        <div class="moreTagsRight">
+                            <span class="currencySymbol">￥</span>
+                            <span class="prices">
+                            <?php echo $data[$i]['price'];?>
+                            </span>
+                        </div>
+                        <div class="stations">
+                            <div class="StationLeft">
+                                <div class="number"><?echo "abc";?></div>
+                                <div class="costTime">
+                                    <?php echo $data[$i]['time'] ?>
+                                </div>
+                            </div>
+                            <div class="StationCenter">
+                                <div class="startStation">
+                                    <div class="startTime"><?php echo $data[$i]['start_time'];?></div>
+                                    <div class="startPlace"><?php echo $data[$i]['start_station_name'];?></div>
+                                </div>
+                                <div class="throughStations slideRight">
+                                    <div class="line" id="first">
+                                        <div class="SaEdots"></div>
+                                        <div class="CenterDots"></div>
+                                        <div class="btnSlideRight" onclick="doRequestUsingGET(<? ?>)">经停信息</div>
+                                        <div class="lineThroughDots"></div>
+                                        <div class="STAT"  id=<?php ?> >
+                                            <div class="saveStationsGap">
+                                                 <!-- <div>666</div> -->
+                                                 <!-- 停站距离 -->
+                                            </div>
+                                            <div class="space"></div>
+                                            <div class="saveStationsName">
+                                                <?php  ?>
+                                                <div>默认站X</div>
+                                                <?php  ?>
+                                                <!-- 留一站才停站信息按钮显示
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="endStation">
+                                    <div class="endTime"><?php echo $data[$i]['arrive_time'];?></div>
+                                    <div class="endPlace"><?php echo $data[$i]['end_station_name'];?></div>
+                                </div>
+                            </div>
+                            <div class="StationRight"></div>
+                        </div>
+                    </div>
+                </li>
+                <?php }} ?>
             </ul>
             <ul class="ulPLANE" id="ul">
                 <div class="sorts">

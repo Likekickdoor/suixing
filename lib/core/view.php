@@ -10,7 +10,7 @@
             self::$config = $config;
         }
         //把数据显示到模板文件
-        public static function display($file,$data){
+        public static function display($file,$busData = '',$trainData = '',$flightData = '',$shipData = ''){
             $path = self::$config['PATH'].'\\'.$file.'.'.self::$config['FORMAT'];
             if(!is_file($path)){
                 p('模板文件不存在');

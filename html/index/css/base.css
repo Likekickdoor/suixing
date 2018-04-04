@@ -1,7 +1,18 @@
 body {
-  color: #000!important;
+  color: #000;
+  background-image: url(../img/page-bg.jpg);
 }
-
+div.page-bg {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -10;
+  background-image: url(../img/page-bg.jpg);
+}
 div.nav-btn {
   width: 40px;
   position: fixed;
@@ -107,11 +118,12 @@ body.page-scroll ul.header-nav li a:hover::after {
 /* index */
 
 section.section {
-  padding: 100px 0;
-  z-index: -10000;
+  padding: 120px 0;
+  z-index: -1;
+  background-color: #fff;
 }
 section.section:nth-child(2n+1) {
-  background-image: url('../img/bg.png');
+  background-image: url('../img/section-bg.png');
 }
 section.banner {
   color: #fff;
@@ -177,10 +189,13 @@ section.query form.index-query input[type='text'] {
   padding: 5px 10px;
   margin-bottom: 25px;
   background-color: #eee;
-  color: #222;
+  color: #333;
   border: none;
   outline: none!important;
   box-shadow: none;
+}
+section.query form.index-query input[type=text]::placeholder {
+  color: #bbb;
 }
 section.query form.index-query button[type='submit'] {
   background-color: #57ACF6;
@@ -240,6 +255,12 @@ section.advantage div.info-box {
   color: #fff;
   border-radius: 3px;
   box-shadow: 0px 0px 3px #ccc;
+  position: relative;
+  left: 0; top: 0;
+  transition: all ease-in-out 300ms;
+}
+section.advantage div.info-box:hover {
+  left: .3em; top: .3em;
 }
 section.advantage div.info-box h2 {
   text-align: center;
@@ -282,14 +303,21 @@ section.about p {
 section.about p span {
   color: #57ACF6;
   padding: 0 5px;
-  text-decoration: underline;
   word-break: keep-all;
 }
 
 
 
-
-
+section.ad-block {
+  height: 200px;
+  background-color: rgba(44, 168, 240, .9);
+}
+section.ad-block h1 {
+  margin: 0;
+  line-height: 200px;
+  text-align: center;
+  color: #fff;
+}
 
 
 /* 联系我们 */
@@ -322,10 +350,21 @@ section.contact div.send-msg textarea,
 section.contact div.send-msg button {
   width: 100%;
 }
+section.contact div.send-msg input.input-error,
+section.contact div.send-msg textarea.input-error{
+  color: #FA8072;
+}
+section.contact div.send-msg input.input-error::placeholder,
+section.contact div.send-msg textarea.input-error::placeholder {
+  color: rgba(250, 128, 114, .5);
+}
 div.send-msg button.btn {
   background-color: #57ACF6;
   color: #fff;
 }
+
+
+
 
 
 /* 未来我们将 */
@@ -347,6 +386,19 @@ section.feature p::before {
 }
 
 
+
+/*页脚*/
+footer.footer {
+  height: 100px;
+  line-height: 100px;
+  color: #fff;
+  text-align: center;
+  background-color: #2ca8f0;
+}
+footer.footer a {
+  font-style: italic;
+  color: inherit;
+}
 
 
 

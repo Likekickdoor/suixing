@@ -3,13 +3,46 @@
     font-family: Neue;
     src: url('../fonts/Neue.ttf');
 }
+html{transition-property: all; transition-duration: 1s;}
 li{list-style: none}
 /* 全屏展示信息 */
-.fullCover{display: none; background: #000000aa; width: 100%; height: 100%; position: fixed; top: 0; z-index: 999999999;}
-.fullCover .centerBox{display: none; width: 700px; height: 500px; background: white; margin: 200px auto; border-radius: 3px; box-shadow: 0 0 8px #000000dd;}
-.fullCover .centerBox .caption{position: relative; top: 0; background: none; height: 40px; width: 100%}
+.fullCover{display: none; background: #000000aa; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999999999; align-items: center}
+.fullCover .centerBox{display: table; width: 700px; background: white; margin: 100px auto; border-radius: 3px; box-shadow: 0 0 8px #000000dd;}
+.fullCover .centerBox .caption{position: relative; top: 0; background: #eee; height: 41px; width: 100%; border-top-left-radius: 3px; border-top-right-radius: 3px; box-shadow: 0 0 6px rgba(0, 0, 0, .08) inset; border-bottom: 1px solid #ffffffcc}
 .fullCover .centerBox .caption .closeBtn{width: 40px; height: 100%; float: left; background-color: none; padding: auto 0; display: flex; align-items: center}
-.fullCover .centerBox .caption .closeBtn .StarttoEnd{width: 660px; height: 100%; float: left; background: none;}
+.wlineInfo{position: absolute; right: 267px}
+
+.fullCover .centerBox .caption .StarttoEnd{width: auto; height: 100%; float: right; background: none; display: flex; margin: 0}
+.wStationNum, .wCostTime{display: block; float: right; width: 267px; height: 40px; font: 400 18px/40px 'Neue'; background: none; font-size: 14px; text-align: center; letter-spacing: .08em; text-indent: .08em; border-top-right-radius: 3px; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.wStationNum::before{content: "途经 "; font-size: 14px}
+.wStationNum::after{content: " 个站点"; font-size: 14px}
+.wStart{float: left; height: 100%; background: none; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.to{float: left; height: 18px; width: 18px; font: 200 12px/18px '微软雅黑'; border-radius: 50%; background: #12a81e; margin: 11px 0; padding: 0 3px; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, .16)}
+.wEnd{float: left; height: 100%; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.wNumber{font: 400 16px/40px 'Neue'; letter-spacing: .06em; width: 100%; height: 40px; position: absolute; top: 40px; z-index: 9999; text-align: center; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.wNumber::after{content: " 次列车"; letter-spacing: .08em; font: 200 16px/40px '微软雅黑'}
+/* .wTag{width: 40px; height: 40px; background: green} */
+.wCostTime{display: none; position: absolute; background: #eee; right: 0; }
+.wCostTime::before{content: "总计耗时 "}
+.fullCover .centerBox .content{display: flex; margin: 0 auto; justify-content: center}
+.content .column{width: 460px; height: 720px; background: #f5f5f5; padding: 10px 0; display: flex; flex-wrap: wrap; flex-direction: column; margin: 40px auto 0}
+.content .column div{width: 200px; height: 35px; font: 400 16px/35px '微软雅黑'; text-align: center; margin: 0 15px; background: white; border-bottom: 1px dashed #f5f5f5; letter-spacing: .08em; cursor: pointer}
+.content .column div span{display: inline-block; width: 100%; height: 20px; position: relative; font: 400 5px/18px '微软雅黑'; background: #2186facc; opacity: 0; color: white; text-shadow: 0 0 4px rgba(0, 0, 0, .16); border-top: 2px solid #57ACF6;
+    transition-property: all;
+    transition-duration: .2s;}
+.content .column div .toShow{opacity: 1}
+.content .column div span::before{content: "离上一站"; font-weight: 100; color: #eee}
+.content .column div span::after{content: "km"; font-weight: 100; color: #eee}
+.content .column div:nth-of-type(odd){background: #fcfcfc}
+.content .column div::before{content: " "; display: block; width: 6px; height: 6px; background: #f5f5f5; position: relative; left: -3px; top: -3px; border-radius: 50%}
+.content .column div::after{content: " "; display: block; width: 6px; height: 6px; background: #f5f5f5; position: relative; right: -3px; top: -38px; margin: -6px 0 0 194px; border-radius: 50%}
+/* .content .outOFcolumn .column_back{display: block; width: 230px; height: 100%; position: relative; top: 0; background: #ffffff00; z-index: 0; margin-left: -230px; text-indent: -15px; margin-top: 17.5px}
+.content .outOFcolumn .column_back span{display: block; width: 200px; height: 35px; background: none; font: 400 16px/35px '微软雅黑'; text-indent: 0; margin: 0 15px}
+.content .outOFcolumn .column_back span::before{content: ""} */
+/* .thecover{position: relative; background: #f00f0011}
+.theCover span{} */
+
+
 /* Navigation */
 .header{z-index: 999; width: 100%; height: 70px; min-width: 1200px; background: #fff; position: fixed; top: 0; box-shadow: 0 3px 3px rgba(0, 0, 0, .16)}
 .headerContent{width: 1000px; height: 100%; background: none; margin: 0 auto; }
@@ -42,7 +75,7 @@ li{list-style: none}
 /* 搜索区域 */
 .searchArea{position: relative; background: none; width: 600px; height: 260px; margin: 120px auto}
 .InputWhere{background: none; width: 100%; height: 100px; display: flex; flex-wrap: nowrap}
-#start, #end, #SEbutton, [name="dateRange"], [type="submit"]{border: none; margin: none; padding: none; outline-color: #57acf6; font-weight: 400}
+#start, #end, #SEbutton, [name="dateRange"], #submit{border: none; margin: none; padding: none; outline-color: #57acf6; font-weight: 400}
 #start, #end{z-index: 1; background: #ffffffdd; width: 200px; height: 30px; margin: 35px 25px; padding: 0 5px; border-radius: 3px; box-shadow: 0 3px 3px rgba(0, 0, 0, .16); 
     transition-property: all;
     transition-duration: .5s;}
@@ -76,10 +109,10 @@ li{list-style: none}
 .btnScreen{float: right; margin: 0 9% 0}
 .btnScreen a, .btnScreen a:hover{font-size: 14px; letter-spacing: .08em; cursor: pointer; text-decoration: none; color: #57acf6}
 .InputSubmit{background: none; width: 100%; height: 100px;}
-[type="submit"]{background: #57acf6; width: 115px; height: 40px; border-radius: 4px; font-weight: 500; font-size: 15px; color: white; box-shadow: 0 3px 16px rgba(0, 0, 0, .46); display: block; margin: 0 auto; outline: none; cursor: pointer; 
+#submit{background: #57acf6; width: 115px; height: 40px; border-radius: 4px; font-weight: 500; font-size: 15px; color: white; box-shadow: 0 3px 16px rgba(0, 0, 0, .46); display: block; margin: 0 auto; outline: none; cursor: pointer; 
     transition-property: all;
     transition-duration: 0.3s;}
-[type="submit"]:hover{box-shadow: 0 6px 6px rgba(0, 0, 0, .16)}
+#submit:hover{box-shadow: 0 6px 6px rgba(0, 0, 0, .16)}
 /* 查询结果区域 */
 .resultsArea{display: table; background: white; position: relative; min-width: 950px; min-height: 400px; box-shadow: 0 5px 5px rgba(0, 0, 0, .16); border-radius: 3px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin: -40px auto}
 .TAG-1, .TAG-2, .TAG-3, .TAG-4, .TAG-5{position: absolute; top: -32px; left: 0; border-bottom: 32px solid #ffffffcc; border-left: 15px solid transparent; border-right: 15px solid transparent; width: 100px; cursor: pointer; 
@@ -105,10 +138,11 @@ li{list-style: none}
 .isTime a::after, .isPrice a::after{display: inline-block; width: 18px; height: 30px; background: url('../img/chevron.svg') no-repeat center; background-size: 16px; content: "0"; transform: rotate(90deg); color: transparent}
 .isTime a.selected, .isPrice a.selected{display: inline-block; transform: rotate(180deg); }
 .ulSUGGEST{display: block; width: 100%; min-height: 200px; background: #f5f5f5}
+/* .ulSUGGEST.noInfo::after, .ulTRAIN.noInfo::after, .ulBUS.noInfo::after, .ulPLANE.noInfo::after, .ulSHIP.noInfo::after{content: "暂无查询结果"; display: block; background: #f5f5f5; margin: -30px auto; text-align: center; font: 400 20px/20px '微软雅黑'; position: relative; z-index: 99; height: 40px; padding-top: 30px; letter-spacing: .08em; text-indent: .08em;} */
 .ulTRAIN{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
-.ulBUS{display: none; width: 100%; min-height: 200px; background: floralwhite}
-.ulPLANE{display: none; width: 100%; min-height: 200px; background: none}
-.ulSHIP{display: none; width: 100%; min-height: 200px; background: cornflowerblue}
+.ulBUS{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+.ulPLANE{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+.ulSHIP{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
 
 
 /* ！！！！！查询结果列表的样式！！！！！*/
@@ -117,6 +151,7 @@ li{list-style: none}
 .lists.Normal{width: 930px; height: 155px; margin: 0 auto; border-bottom: 1px dashed #ddd; background: white; padding-top: 5px; 
     transition-property: all;
     transition-duration: 0.3s;}
+
 .lists.Normal.toHigh{height: 185px}
 .dotss{background: none; position: relative; width: 100%; bottom: -149px; 
     transition-property: all;
@@ -145,6 +180,9 @@ li{list-style: none}
 .lists.Normal .moreTags .stations .StationCenter{width: 85.5%; height: 100%; display: flex; flex-wrap: nowrap}
 .lists.Normal .moreTags .stations .StationRight{width: 2%; height: 100%}
 /*修改*/.lists.Normal .moreTags .stations .StationLeft .number{width: 90px; height: 25px; background: #12a81e; padding-left: 5%; letter-spacing: 2px; text-indent: 2px; font: 400 16px/25px 'Neue'; color: white; text-align: center; border-bottom-right-radius: 5px;}
+.lists.Normal.Q .moreTags .stations .StationLeft .number{display: none}
+.lists.Normal.Q .moreTags .stations .StationLeft .costTime{width: 90px!important; border: none; border-bottom-right-radius: 5px}
+.lists.Normal.Q .moreTags .stations .StationCenter .endStation .endPlace{width: 54px!important}
 .lists.Normal .moreTags .stations .StationLeft .number.addci::after{content: "次"}
 .lists.Normal .moreTags .stations .StationLeft .costTime{width: 90px; height: 25px; background: #2186fa; padding-left: 5%; letter-spacing: 2px; text-indent: 2px; font: 400 16px/25px 'Neue'; color: white; text-align: center; border-top-right-radius: 5px; border-bottom: 1px dashed white}
 .lists.Normal .moreTags .stations .StationCenter .startStation, .endStation{width: 10%; display: flex; flex-direction: column; justify-content: center}
@@ -153,8 +191,9 @@ li{list-style: none}
 .lists.Normal .moreTags .stations .StationCenter .startStation .startTime, .endTime{font: 400 24px/24px 'Neue'; text-indent: 10px}
 .startTime{color: #57acf6}.endTime{color: #989898}
 .lists.Normal .moreTags .stations .StationCenter .startStation .startPlace, .endPlace{font: 200 16px/18px '微软雅黑'; text-indent: 10px}
+.lists.Normal.Q .moreTags .stations .StationCenter .startStation .startPlace, .lists.Normal.Q .moreTags .stations .StationCenter .endStation .endPlace{font: 200 16px/18px '微软雅黑'; text-indent: 10px; width: 100%}
 .lists.Normal .moreTags .stations .StationCenter .throughStations .line{width: 100%; height: 1px; background: #d1d1d1}
-.lists.Normal .moreTags .stations .StationCenter .throughStations .btnSlideRight{display: none; width: 60px; height: 25px; background: white; margin: -12px auto; text-align: center; border: 2px solid #d1d1d1; border-radius: 3px; font: 400 10px/20px '微软雅黑'; cursor: pointer; }
+.lists.Normal .moreTags .stations .StationCenter .throughStations .btnSlideRight, .newbtnSlideRight{display: none; width: 60px; height: 25px; background: white; margin: -12px auto; text-align: center; border: 2px solid #d1d1d1; border-radius: 3px; font: 400 10px/20px '微软雅黑'; cursor: pointer; cursor: pointer;}
 .lists.Normal .moreTags .stations .StationCenter .throughStations .line .SaEdots::before{display: block; content: " "; width: 10px; height: 10px; border-radius: 50%; background: white; float: left; margin-top: -5px; border: 3px solid #12a81e; box-shadow: 0 0 4px rgba(0, 0, 0, .16)}
 .lists.Normal .moreTags .stations .StationCenter .throughStations .line .SaEdots::after{display: block; content: " "; width: 10px; height: 10px; border-radius: 50%; background: white; float: right; margin-top: -5px; border: 3px solid #2186fa; box-shadow: 0 0 4px rgba(0, 0, 0, .16)}
 
@@ -203,6 +242,9 @@ JZC  JZLC  ZC  JLC  JLQF  JLQFC          C
 .showHideStationsName::after{content: "显示站名"; font: 400 14px/25px '微软雅黑'; text-align: center}
 .showHideKm::after{content: "显示距离"; font: 400 14px/25px '微软雅黑'; text-align: center}
 .foldBtn::after{content: " "; }
+.showHideWindow{display: none; width: 60px; height: 25px; float: left; background: white; text-align: center; border: 2px solid #d1d1d1; border-radius: 3px; font: 400 10px/20px '微软雅黑'; cursor: pointer; margin: 7.5px}
+.showHideWindow::after{content: "窗口显示"; text-align: center; font: 400 10px/20px '微软雅黑'}
+
 
 /*【经停信息展示功能】样式*/
 .lineThroughDots{display: flex; justify-content: center; }
