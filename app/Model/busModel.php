@@ -59,67 +59,68 @@
                     $this->data = "false";
                 }
             }else{
-                $this->get_interchange($order);
+                // $this->get_interchange($order);
+                $this->data = "false";
             }
             return $this->data;
         }
-        //获取转乘信息
-        function get_interchange($order){
-            //获取城市id
-            $start_city = DB::find("city","city like '%{$this->start}%'");
-            if(DB::$rowcount > 0){
-                $start_city_id = $start_city['id'];
-            }
-            $end_city = DB::find("city","city like '%{$this->start}%'");
-            if(DB::$rowcount > 0){
-                $end_city_id = $end_city['id'];
-            }
-            if($start_city != NULL and $end_city != NULL){
-                $this->city_to_city($start_city_id,$end_city_id,$order);
-            }else if($start_city != NULL and $end_city == NULL){
-                $this->city_to_station($start_city_id,$order);
-            }else if($start_city == NULL and $end_city != NULL){
-                $this->station_to_city($end_city_id,$order);
-            }else if($start_city == NULL and $end_city == NULL){
-                $this->station_to_station($order);
-            }
-        }
-        //城市到城市
-        function city_to_city($start_city_id,$end_city_id,$order){
-            $second = DB::findAll("city_to_station a,station b,city c,line d","a.city_id={$start_city_id} and b.id=a.station_id  and c.city=b.`name` and d.start_station_id=c.id and d.end_station_id={$end_city_id} and d.state=1 order by {$order}");
-            if($second == NULL){
-                return 0;
-            }
-            $center_city_id = $second[0]['city_id'];
-            $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
-            $this->print_line($frist);
-            $this->print_line($second);
-        }
-        //城市到小站
-        function city_to_station($start_city_id,$order){
-            $second = DB::findAll("city_to_station a,station b,city c,line d","a.city_id={$start_city_id} and b.id=a.station_id and c.city=b.`name` and d.start_station_id=c.id and d.end_station_id={$this->end_station_id} and d.state=1 order by {$order}");
-            if($second == NULL){
-                return 0;
-            }
-            $center_city_id = $second[0]['city_id'];
-            $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
-            $this->print_line($frist);
-            $this->print_line($second);
-        }
-        //小站到城市
-        function station_to_city($end_city_id,$order){
-            p("station_to_city");
-        }
-        //小站到小站
-        function station_to_station($order){
-            $second = DB::findAll("line a,city_to_station b","b.station_id={$this->start_id} and a.start_station_id=b.city_id and a.end_station_id={$this->end_id} and a.state=1 order by {$order}");
-            if($second == NULL){
-                return 0;
-            }
-            $center_city_id = $second[0]['city_id'];
-            $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
-            $this->print_line($frist);
-            $this->print_line($second);
-        }
+        // //获取转乘信息
+        // function get_interchange($order){
+        //     //获取城市id
+        //     $start_city = DB::find("city","city like '%{$this->start}%'");
+        //     if(DB::$rowcount > 0){
+        //         $start_city_id = $start_city['id'];
+        //     }
+        //     $end_city = DB::find("city","city like '%{$this->start}%'");
+        //     if(DB::$rowcount > 0){
+        //         $end_city_id = $end_city['id'];
+        //     }
+        //     if($start_city != NULL and $end_city != NULL){
+        //         $this->city_to_city($start_city_id,$end_city_id,$order);
+        //     }else if($start_city != NULL and $end_city == NULL){
+        //         $this->city_to_station($start_city_id,$order);
+        //     }else if($start_city == NULL and $end_city != NULL){
+        //         $this->station_to_city($end_city_id,$order);
+        //     }else if($start_city == NULL and $end_city == NULL){
+        //         $this->station_to_station($order);
+        //     }
+        // }
+        // //城市到城市
+        // function city_to_city($start_city_id,$end_city_id,$order){
+        //     $second = DB::findAll("city_to_station a,station b,city c,line d","a.city_id={$start_city_id} and b.id=a.station_id  and c.city=b.`name` and d.start_station_id=c.id and d.end_station_id={$end_city_id} and d.state=1 order by {$order}");
+        //     if($second == NULL){
+        //         return 0;
+        //     }
+        //     $center_city_id = $second[0]['city_id'];
+        //     $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
+        //     $this->print_line($frist);
+        //     $this->print_line($second);
+        // }
+        // //城市到小站
+        // function city_to_station($start_city_id,$order){
+        //     $second = DB::findAll("city_to_station a,station b,city c,line d","a.city_id={$start_city_id} and b.id=a.station_id and c.city=b.`name` and d.start_station_id=c.id and d.end_station_id={$this->end_station_id} and d.state=1 order by {$order}");
+        //     if($second == NULL){
+        //         return 0;
+        //     }
+        //     $center_city_id = $second[0]['city_id'];
+        //     $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
+        //     $this->print_line($frist);
+        //     $this->print_line($second);
+        // }
+        // //小站到城市
+        // function station_to_city($end_city_id,$order){
+        //     p("station_to_city");
+        // }
+        // //小站到小站
+        // function station_to_station($order){
+        //     $second = DB::findAll("line a,city_to_station b","b.station_id={$this->start_id} and a.start_station_id=b.city_id and a.end_station_id={$this->end_id} and a.state=1 order by {$order}");
+        //     if($second == NULL){
+        //         return 0;
+        //     }
+        //     $center_city_id = $second[0]['city_id'];
+        //     $frist = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$center_city_id} and state=1 order by {$order}");
+        //     $this->print_line($frist);
+        //     $this->print_line($second);
+        // }
     }
 ?>

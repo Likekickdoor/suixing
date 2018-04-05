@@ -308,7 +308,7 @@ def main():
         date = '2018-03-13'
     if day == '21':
         date = '2018-03-23'
-    date = '2018-04-05'
+    date = '2018-04-10'
     sql = u"select * from city where state=1"
     cursor.execute(sql)
     if cursor.rowcount > 0:

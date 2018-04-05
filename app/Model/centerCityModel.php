@@ -3,7 +3,7 @@
     use lib\core\DB;
     class centerCity{
 
-        private $data;
+        private $data = [];
         private $start;
         private $end;
 
@@ -14,20 +14,51 @@
 
         function getCenterCity(){
             $this->init();
-            
-            //$this->data = DB::findAll("city a,city_to_station b,station c,city d,city_to_station e,station f","a.city='{$this->start}' and a.id=b.city_id and b.station_id=c.id and c.name=d.city and d.id=e.city_id and e.station_id=f.id");
-            $result = DB::query("select e.city_id from city a,city_to_station b,station c,city d,city_to_station e,station f where a.city='{$this->start}' and a.id=b.city_id and b.station_id=c.id and c.name=d.city and d.id=e.city_id and e.station_id=f.id and f.name='{$this->end}'");
-            $this->data = $result->fetchall();
-            // $result = DB::query("select c.name from city a,city_to_station b,station c where a.city='{$this->start}' and a.id=b.city_id and b.station_id=c.id");
-            // while($row = $result->fetch()){
-            //     $temp = DB::query("select c.name from city a,city_to_station b,station c where a.city like '%{$row['name']}%' and a.id=b.city_id and b.station_id=c.id and c.name like '%{$this->end}%'");
-            //     $show = $temp->fetchall();
-            //     p($row['name']);
-            //     if($show)
-            //     p($show);
-            // }
-            // die;
+            $result = DB::find("city","city like '%{$this->start}%'");
+            if(DB::$rowcount > 0){
+                DB::find("city","city like '%{$this->end}%'");
+                if(DB::$rowcount > 0){
+                    $this->city_to_city();
+                }else{
+                    $this->city_to_station();
+                }
+            }else{
+                $result = DB::find("city","city like '{$this->end}'");
+                if($result > 0){
+                    $this->station_to_city();
+                }else{
+                    $this->station_to_station();
+                }
+            }
             return $this->data;
+        }
+
+        function city_to_city(){
+            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->start}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
+            array_push($this->data,$result->fetchall());
+            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->end}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
+            array_push($this->data,$result->fetchall());
+        }
+
+        function city_to_station(){
+            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->start}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
+            array_push($this->data,$result->fetchall());
+            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->end}' and a.id=b.station_id and b.city_id=c.id");
+            array_push($this->data,$result->fetchall());
+        }
+
+        function station_to_city(){
+            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->start}' and a.id=b.station_id and b.city_id=c.id");
+            array_push($this->data,$result->fetchall());
+            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->end}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
+            array_push($this->data,$result->fetchall());
+        }
+
+        function station_to_station(){
+            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->start}' and a.id=b.station_id and b.city_id=c.id");
+            array_push($this->data,$result->fetchall());
+            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->end}' and a.id=b.station_id and b.city_id=c.id");
+            array_push($this->data,$result->fetchall());
         }
     }
 ?>
