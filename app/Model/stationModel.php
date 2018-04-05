@@ -6,7 +6,7 @@
         private $data;
 
         function get_station(){
-            $this->data = DB::findAll("station","state=1");
+            $this->data = DB::findAll("all_station","state=1");
             return $this->data;
         }
     }

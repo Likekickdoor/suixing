@@ -59,9 +59,11 @@
                 if(!$result)
                     die('数据库查询语句执行失败');
                 self::$rowcount = $result->rowCount();
-                while($row = $result->fetch()){
-                    $list[] = $row;
-                }
+                // while($row = $result->fetch()){
+                //     $list[] = $row;
+                // }
+                if(self::$rowcount != 0)
+                    return $result->fetchall();
             }catch(Exception $e){
                 die('查找数据失败');
             }

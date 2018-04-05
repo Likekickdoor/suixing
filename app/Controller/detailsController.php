@@ -25,10 +25,10 @@
 
         function show(){
             if(isset($_GET['start']) && isset($_GET['end'])){
-                $mod = M('centerCity');
-                $isInterchange = $mod->getCenterCity();
-                p($isInterchange);
-                die;
+                // $mod = M('centerCity');
+                // $isInterchange = $mod->getCenterCity();
+                // p($isInterchange);
+                // die;
                 $this->bus();
                 // $this->trains();
                 // $this->flight();
