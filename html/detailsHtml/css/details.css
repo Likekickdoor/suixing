@@ -1,0 +1,364 @@
+*{margin: 0; padding: 0; font-family: '微软雅黑'}
+@font-face{
+    font-family: Neue;
+    src: url('../fonts/Neue.ttf');
+}
+html{transition-property: all; transition-duration: 1s;}
+li{list-style: none}
+/* 全屏展示信息 */
+.fullCover{display: none; background: #000000aa; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999999999; align-items: center}
+
+.fullCover .centerBox{display: table; width: 700px; background: white; margin: 100px auto; border-radius: 3px; box-shadow: 0 0 8px #000000dd;}
+.fullCover .centerBox .caption{position: relative; top: 0; background: #eee; height: 41px; width: 100%; border-top-left-radius: 3px; border-top-right-radius: 3px; box-shadow: 0 0 6px rgba(0, 0, 0, .08) inset; border-bottom: 1px solid #ffffffcc}
+.fullCover .centerBox .caption .closeBtn{width: 40px; height: 100%; float: left; background-color: none; padding: auto 0; display: flex; align-items: center}
+.wlineInfo{position: absolute; right: 267px}
+
+.fullCover .centerBox .caption .StarttoEnd{width: auto; height: 100%; float: right; background: none; display: flex; margin: 0}
+.wStationNum, .wCostTime{display: block; float: right; width: 267px; height: 40px; font: 400 18px/40px 'Neue'; background: none; font-size: 14px; text-align: center; letter-spacing: .08em; text-indent: .08em; border-top-right-radius: 3px; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.wStationNum::before{content: "途经 "; font-size: 14px}
+.wStationNum::after{content: " 个站点"; font-size: 14px}
+.wStart{float: left; height: 100%; background: none; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.to{float: left; height: 18px; width: 18px; font: 200 12px/18px '微软雅黑'; border-radius: 50%; background: #12a81e; margin: 11px 0; padding: 0 3px; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, .16)}
+.wEnd{float: left; height: 100%; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
+.wNumber{font: 400 16px/40px 'Neue'; letter-spacing: .06em; width: 100%; height: 40px; position: absolute; top: 40px; z-index: 9999; text-align: center; text-shadow: 0 0 4px rgba(0, 0, 0, .08); background: #ffffffcc; box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
+.wNumber::after{content: " 次列车"; letter-spacing: .08em; font: 200 16px/40px '微软雅黑'}
+/* .wTag{width: 40px; height: 40px; background: green} */
+.wCostTime{display: none; position: absolute; background: #eee; right: 0; }
+.wCostTime::before{content: "总计耗时 "}
+.fullCover .centerBox .content{display: flex; margin: 0 auto; justify-content: center; height: 450px; overflow: auto; overflow-x: hidden}
+.content .column{width: 460px; height: 720px; background: #f5f5f5; padding: 10px 0; display: flex; flex-wrap: wrap; flex-direction: column; margin: 40px auto 0}
+.content .column div{width: 200px; height: 35px; font: 400 16px/35px '微软雅黑'; text-align: center; margin: 0 15px; background: white; border-bottom: 1px dashed #f5f5f5; letter-spacing: .08em; cursor: default; 
+    transition-property: all;
+    transition-duration: .5s;}
+.content .column div:hover{box-shadow: 0 0 16px rgba(0, 0, 0, .16) inset}
+.content .column div span{display: block; margin-top: -25px; width: 100%; height: 20px; position: relative; font: 400 5px/18px '微软雅黑'; background: #2186facc; opacity: 0; color: white; text-shadow: 0 0 4px rgba(0, 0, 0, .16); border-top: 2px solid #57ACF6; cursor: pointer; 
+    transition-property: all;
+    transition-duration: .2s;}
+.content .column div span:hover{opacity: 1}
+/* .content .column div .toShow{opacity: 1} */
+.content .column div span::before{content: "离上一站"; font-weight: 100; color: #eee}
+.content .column div span::after{content: "km"; font-weight: 100; color: #eee}
+.content .column div:nth-of-type(odd){background: #fcfcfc}
+.content .column div::before{content: " "; display: block; width: 6px; height: 6px; background: #f5f5f5; position: relative; left: -3px; top: -3px; border-radius: 50%}
+.content .column div::after{content: " "; display: block; width: 6px; height: 6px; background: #f5f5f5; position: relative; right: -3px; top: -38px; margin: 0 0 0 194px; border-radius: 50%}
+
+/* Navigation */
+.header{z-index: 999; width: 100%; height: 70px; min-width: 1200px; background: #fff; position: fixed; top: 0; box-shadow: 0 3px 3px rgba(0, 0, 0, .16)}
+.headerContent{width: 1000px; height: 100%; background: none; margin: 0 auto; }
+.siteName{width: 140px; height: 100%; background: none; float: left; }
+.siteName a { color: #000!important; }
+.siteName img{display: block; padding: 18px; float: left}
+.siteName span{float: left; text-align: center; padding: 24px 0; font: 800 20px/21.5px '宋体'; letter-spacing: .1em; text-shadow: 0 0 10px rgba(0, 0, 0, .1)}
+.siteContents{width: 340px; height: 100%; float: right; background: none; display: flex; flex-wrap: nowrap; text-align: center; }
+.siteContents li{text-indent: 3px; width: 60px; letter-spacing: 3px; padding-left: 8px; padding-top: 24px}
+.siteContents li a{text-decoration: none; color: black; font-weight: 200; font-size: 14px; text-align: center}
+.siteContents li:last-child{width: 100px}
+.siteContents a::after{
+    display: block;
+    content: "";
+    height: 1px;
+    width: 0;
+    position: relative;
+    margin: 0 auto; 
+    bottom: -8px;
+    background-color: #57ACF6;
+    transition: all ease .3s;
+    transition-property: all;
+    transition-duration: .3s;
+    transition-timing-function: ease;
+    transition-delay: initial;
+}
+.siteContents a.active::after, .siteContents a:hover::after{bottom: -8px; width: 100%; position: relative;}
+
+/* 背板 */
+.theBackBoard{z-index: -1; width: 1000px; margin: 0 auto}
+.theBackBoard img{display: block; width: 1000px; position: absolute; top: 0; padding-bottom: 700px; background: white}
+/* 搜索区域 */
+@keyframes wait{
+    0%{opacity: .6; transform: rotateY(0deg)}
+    12.5%{opacity: .6; transform: rotateY(90deg)}
+    25%{opacity: .6; transform: rotateY(180deg); transform: rotateX(0deg)}
+    50%{opacity: .6; transform: rotateY(0); transform: rotateX(90deg)}
+    60%{opacity: .6; transform: rotateY(90deg); transform: rotateX(180deg)}
+    100%{opacity: .6; transform: rotateY(180deg); transform: rotateX(0deg)}
+    /* 30%{opacity: 1; transform: rotateY(180deg)}
+    37.5%{opacity: 1; transform: rotateX(0deg)}
+    50%{opacity: .6; transform: rotateX(90deg)} 
+    62.5%{opacity: .6; transform: rotateX(180deg)}
+    70%{opacity: .6; transform: rotateX(180deg)}
+    75%{opacity: .6; transform: rotateY(0deg)}
+    100%{opacity: .6; transform: rotateY(0deg)} */
+    }
+.searchArea{position: relative; background: none; width: 600px; height: 260px; margin: 120px auto}
+.wait{display: none; background: #ffffffaa; width: 100px; height: 25px; margin: 0 auto; text-align: center; letter-spacing: .08em; font: 200 14px/25px '微软雅黑'; border-radius: 4px; text-shadow: 0 0 4px rgba(0, 0, 0, .08); box-shadow: 0 0 10px rgba(0, 0, 0, .6)}
+.wait::after{content: ""; display: block; width: 30px; height: 30px; background: #57ACF6; text-align: center; margin-left: 35px; position: relative; top: -65px; animation: 4s wait infinite}
+.InputWhere{background: none; width: 100%; height: 100px; display: flex; flex-wrap: nowrap}
+#start, #end, #SEbutton, [name="dateRange"], #submit{border: none; margin: none; padding: none; outline-color: #57acf6; font-weight: 400}
+#start, #end{z-index: 1; background: #ffffffdd; width: 200px; height: 30px; margin: 35px 25px; padding: 0 5px; border-radius: 3px; box-shadow: 0 3px 3px rgba(0, 0, 0, .16); 
+    transition-property: all;
+    transition-duration: .5s;}
+/***********************添加下拉城市名预览*************************/
+.listCityName{z-index: 9999999; position: relative; display: none; width: 200px; background: #ffffffcc; min-height: 33px; margin: -10px auto; padding-bottom: 3px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; box-shadow: 0 4px 8px rgba(0, 0, 0, .08);}
+.listCityName li{width: 100%; height: 30px; background: none; padding: 0 20px; border-bottom: 1px solid #ddd; text-shadow: 0 0 4px rgba(0, 0, 0, .3); letter-spacing: .1em; text-indent: .1em; font-family: '微软雅黑'; line-height: 30px; -webkit-backdrop-filter: brightness(.8) blur(8px); cursor: default;}
+.listCityName li:hover{background: white}
+.listCityName .last{border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border: none}
+/***********************添加下拉城市名预览*************************/
+#start:focus, #end:focus{background-color: #ffffffff}
+#SEbutton{width: 30px; height: 30px; box-shadow: 0 0 3px rgba(0, 0, 0, .16); border-radius: 50%; background: white url('../img/swap.svg') no-repeat center; background-size: 24px; margin: 35px; outline: none; cursor: pointer; 
+    transition-property: all;
+    transition-duration: .25s;}
+#SEbutton:hover{transform: rotate(-180deg)}
+#SEbutton:active{ background-color: #ffffffdd}
+.start, .end{width: 250px;}
+.SEbutton{width: 100px}
+.InputWhen{background: none; width: 100%;height: 45px; display: none}
+[name="dateRange"]{display: block; text-align: center; width: 135px; height: 30px; border-radius: 15px; padding: 0 25px; margin: 20px auto; outline: none; color: #9f9f9f}
+/*添加筛选面板*/
+.addScreen{display: none; width: auto; height: 30px; margin: 0 auto; text-align: center;}
+.addScreen a, .addScreen a:hover{text-decoration: none; color: white; font-size: 15px; cursor: pointer;}
+.screenMenu{z-index: 9; display: none; width: 165px; height: 200px; border-radius: 3px; background: white; position: absolute; left: 385px; bottom: -120px; box-shadow: 0 3px 6px rgba(0, 0, 0, .1)}
+.grayLine{width: 100%; height: 18px; background: #f5f5f5; margin-top: 20px; color: #727073}
+.grayLine div:first-child{width: 82.5%; height: 100%; padding: 0 0 0 10%; float: left; background: none}
+.grayLine div:last-child{float: left;}
+.grayLine div:last-child li div:last-child{margin: 5px}
+.grayLine div:last-child li{width: 165px; height: 24px}
+.grayLine div:last-child li div:first-child{width: 80%; height: 28px; background: none; padding: 0 0 0 10%; float: left; font-weight: 600; font-size: 15px; padding-top: 5px}
+.grayLine div:last-child li div:last-child{float: left}
+.btnScreen{float: right; margin: 0 9% 0}
+.btnScreen a, .btnScreen a:hover{font-size: 14px; letter-spacing: .08em; cursor: pointer; text-decoration: none; color: #57acf6}
+.InputSubmit{background: none; width: 100%; height: 100px;}
+#submit{background: #57acf6; width: 115px; height: 40px; border-radius: 4px; font-weight: 500; font-size: 15px; color: white; box-shadow: 0 3px 16px rgba(0, 0, 0, .46); display: block; margin: 0 auto; outline: none; cursor: pointer; 
+    transition-property: all;
+    transition-duration: 0.3s;}
+.InputSubmit.error::before{content: "出发地和目的地不能相同！"; display: block; margin: 5px auto; padding: 2px; width: auto; text-align: center; color: #e81123; text-shadow: 0 0 6px rgba(0, 0, 0, .08); font: 200 10px/20px '微软雅黑'; background: #ffffffaa; width: 170px; border-radius: 3px;}
+#submit:hover{box-shadow: 0 6px 6px rgba(0, 0, 0, .16)}
+/* 查询结果区域 */
+.resultsArea{display: table; background: white; position: relative; min-width: 950px; min-height: 400px; box-shadow: 0 5px 5px rgba(0, 0, 0, .16); border-radius: 3px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin: -40px auto}
+.TAG-1, .TAG-2, .TAG-3, .TAG-4, .TAG-5{position: absolute; top: -32px; left: 0; border-bottom: 32px solid #ffffffcc; border-left: 15px solid transparent; border-right: 15px solid transparent; width: 100px; cursor: pointer; 
+    transition-property: all;
+    transition-duration: 0.3s;}
+.TAG-1:hover, .TAG-2:hover, .TAG-3:hover, .TAG-4:hover, .TAG-5:hover{border-bottom: 35px solid #ffffffaa; text-shadow: 0 0 4px rgba(0, 0, 0, .3)}
+.TAG-1Words, .TAG-2Words, .TAG-3Words, .TAG-4Words, .TAG-5Words{display: block; width: 34px; position: relative; top: -25px; margin: 0 0 0 38px; cursor: pointer; background: transparent; text-shadow: 0 0 4px rgba(0, 0, 0, .3); letter-spacing: .1em; text-indent: .1em; pointer-events: none}
+.TAG-2{left: 90px}.TAG-3{left: 180px}.TAG-4{left: 270px}.TAG-5{left: 360px}
+.TAG-2Words{margin-left: 125px; margin-top: -20px}
+.TAG-3Words{margin-left: 218px; margin-top: -20px}
+.TAG-4Words{margin-left: 306px; margin-top: -20px}
+.TAG-5Words{margin-left: 394px; margin-top: -20px}
+.TAG-1.active, .TAG-2.active, .TAG-3.active, .TAG-4.active, .TAG-5.active, .tag.active{border-bottom: 35px solid white}
+/*推荐路线列表*/
+.listAll{display: block; width: 100%; height: 90%; background: #f5f5f5}
+.listAll .LAtitle::before{position: absolute; content: "*"; font: 200 16px/16px '微软雅黑'; margin-left: calc(100% - 232px); margin-top: 28px; color: #e44d26}
+.listAll .LAtitle::after{position: absolute; content: "票价仅供参考， 实际价格以官方为准"; font: 200 12px/14px '微软雅黑'; letter-spacing: .08em; margin-left: calc(100% - 220px); margin-top: -15px}
+.listAll .LAtitle h1{text-align: center; font-size: 16px; font-weight: 600; line-height: 100%; letter-spacing: .1em; text-indent: .1em; background: white; margin: 0 auto; padding-bottom: 30px}
+.listAll .LAtitle h1::after{content: "*"; position: absolute; font: 200 16px/16px '微软雅黑'; color: #e44d26; margin-top: -4px}
+.sorts{display: none; flex-wrap: nowrap; justify-content: center; height: 30px; width: 100%; background: #f5f5f5; margin: 0 auto; text-align: center; line-height: 30px}
+.sorts div{ height: 100%; margin: 0 20px}
+.isThrough, .isTime, .isPrice, .CityA, .CityB{cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.3s;}
+.CityA{text-align: right}
+.CityB{text-align: left}
+.isThrough:hover, .isTime:hover, .isPrice:hover, .CityA:hover, .CityB:hover{text-shadow: 0 0 3px rgba(0, 0, 0, .08); }
+.isTime a::after, .isPrice a::after, .transCity a::before, .CityA a::after, .CityB a::after{display: inline-block; width: 18px; height: 30px; background: url('../img/chevron.svg') no-repeat center; background-size: 16px; content: "0"; transform: rotate(90deg); color: transparent; text-align: none}
+.isTime a.selected, .isPrice a.selected, .CityA a.selected, .CityB a.selected{display: inline-block; transform: rotate(180deg); }
+.ulSUGGEST{display: block; width: 100%; min-height: 200px; background: #f5f5f5}
+@keyframes starBlin{
+    0%{opacity: .6; box-shadow: 0 3px 8px #0000ffee }
+    25%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
+    50%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
+    75%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
+    100%{opacity: .6; box-shadow: 0 3px 8px #0000ffee}  
+    }
+@keyframes archieveBlin{
+    0%{opacity: .6; box-shadow: 0 3px 8px #e80a4fee }
+    25%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
+    50%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
+    75%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
+    100%{opacity: .6; box-shadow: 0 3px 8px #e80a4fee}  
+    }
+.ulSUGGEST.noInfo::after, .ulTRAIN.noInfo::after, .ulBUS.noInfo::after, .ulPLANE.noInfo::after, .ulSHIP.noInfo::after{content: "暂无查询结果"; display: block; background: white; margin: -40px auto; text-align: center; font: 200 20px/20px '微软雅黑'; position: relative; z-index: 99; height: 60px; padding-top: 30px; letter-spacing: .08em; text-indent: .08em; text-shadow: 0 0 6px rgba(0, 0, 0, .08); border-bottom: 1px dashed blue; box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
+.ulSUGGEST.noInfo::before, .ulTRAIN.noInfo::before, .ulBUS.noInfo::before, .ulPLANE.noInfo::before, .ulSHIP.noInfo::before{content: ""; display: block; background: blue url('../img/bug.svg') no-repeat center; background-size: 22px; border-radius: 3px; box-shadow: 0 3px 8px #0000ffee; height: 28px; width: 28px; position: absolute; z-index: 99999; margin: 30px 0; left: calc(50% - 14px); animation: 5s starBlin infinite}/**/
+.ulSUGGEST.noresult::before{content: "当前无推荐，请切换标签"; display: block; background: white; margin: -40px auto; text-align: center; font: 200 20px/20px '微软雅黑'; position: relative; z-index: 99; height: 60px; padding-top: 30px; letter-spacing: .08em; text-indent: .08em; text-shadow: 0 0 6px rgba(0, 0, 0, .08); border-bottom: 1px dashed #e80a4f; box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
+.ulSUGGEST.noresult::after{content: ""; display: block; background: #e80a4f url('../img/archive.svg') no-repeat center; background-size: 22px; border-radius: 3px; box-shadow: 0 3px 8px #e80a4fee; height: 28px; width: 28px; position: absolute; z-index: 99999; margin: 50px 0; left: calc(50% - 14px); animation: 4s archieveBlin infinite}
+.ulTRAIN{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+.ulBUS{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+.ulPLANE{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+.ulSHIP{display: none; width: 100%; min-height: 200px; background: #f5f5f5}
+
+
+/* ！！！！！查询结果列表的样式！！！！！*/
+/* Normal */
+/*|荐|、|直达|、|路线最短|、火车、汽车、飞机、轮船 全灰色显示*/
+.lists.Normal{width: 930px; height: 155px; margin: 0 auto; border-bottom: 1px dashed #ddd; background: white; padding-top: 5px; 
+    transition-property: all;
+    transition-duration: 0.3s;}
+
+.lists.Normal.toHigh{height: 185px}
+.dotss{background: none; position: relative; width: 100%; bottom: -149px; 
+    transition-property: all;
+    transition-duration: 0.3s;}
+.dotss.bottomSlide{bottom: -179px}
+.lists.Normal .dotss::before{content: " "; display: block; width: 10px; height: 10px; background: #f5f5f5; position: absolute; left: -5px; bottom: -5px; border-radius: 50%}
+.lists.Normal .dotss::after{content: " "; display: block; width: 10px; height: 10px; background: #f5f5f5; position: absolute; right: -5px; bottom: -5px; border-radius: 50%}
+.lists.Normal.last .dotss{display: none}/*之后用addClass来修改*//*已完成【line #216】*/
+.lists.Normal.last{border-bottom-color: #f5f5f5}
+.lists.Normal .moreTags{width: 100%; height: 40px; background: none}
+.lists.Normal .moreTags .moreTagsLeft{float: left; width: 90%; height: 100%; background: none}
+
+.lists.Normal .moreTags .moreTagsRight{float: right; display: flex; align-items: center; width: 10%; height: 100%; background: none}
+.lists.Normal .moreTags .moreTagsLeft div{float: left; height: 20px; margin: 10px; border-radius: 5px; border-bottom-left-radius: 0; text-align: center; line-height: 20px; color: white; font-weight: 200; font-size: 12px; letter-spacing: 1px; text-indent: 1px}
+.lists.Normal .moreTags .moreTagsLeft .tg1{background: #eee; width: 24px}
+.lists.Normal .moreTags .moreTagsLeft .tg2{background: #eee; width: 38px;}
+.lists.Normal .moreTags .moreTagsLeft .tg3{background: #efefef; width: 60px}
+.lists.Normal .moreTags .moreTagsLeft .tg4{display: flex; float: left; background: none; height: 100%; align-items: center}
+.tt1, .tt2, .tt3, .tt4{display: block; float: left; background: none; margin: 0 4px; border-radius: 3px}
+/*此处可更改交通工具图标颜色【tt1(火车), tt2(汽车), tt3(飞机), .tt4(轮船)】*/
+.tt1{background: #eee}.tt2{background: #eee}.tt3{background: #eee}.tt4{background: #eee}
+.lists.Normal .moreTags .moreTagsLeft .tg4 img{width: 24px; height: 24px; padding: 4px}
+.lists.Normal .moreTags .moreTagsRight .currencySymbol{font: 300 14px/14px 'Neue'; position: relative; }
+.lists.Normal .moreTags .moreTagsRight .prices{font: 700 24px/24px 'Neue'; color: #ff6814; position: relative; }
+.lists.Normal .moreTags .stations{clear: both; width: 100%; height: 104px; background: none; display: flex; flex-wrap: nowrap; justify-content: flex-start}
+.lists.Normal .moreTags .stations .StationLeft{width: 12.5%; height: 100%; display: flex; flex-direction: column-reverse}
+.lists.Normal .moreTags .stations .StationCenter{width: 85.5%; height: 100%; display: flex; flex-wrap: nowrap}
+.lists.Normal .moreTags .stations .StationRight{width: 2%; height: 100%}
+/*修改*/.lists.Normal .moreTags .stations .StationLeft .number{width: 90px; height: 25px; background: #12a81e; padding-left: 5%; letter-spacing: 2px; text-indent: 2px; font: 400 16px/25px 'Neue'; color: white; text-align: center; border-bottom-right-radius: 5px;}
+.lists.Normal.Q .moreTags .stations .StationLeft .number{display: none}
+.lists.Normal.Q .moreTags .stations .StationLeft .costTime{width: 90px!important; border: none; border-bottom-right-radius: 5px}
+.lists.Normal.Q .moreTags .stations .StationCenter .endStation .endPlace{width: 79.5px!important}
+.lists.Normal .moreTags .stations .StationLeft .number.addci::after{content: "次"}
+.lists.Normal .moreTags .stations .StationLeft .costTime{width: 90px; height: 25px; background: #2186fa; padding-left: 5%; letter-spacing: 2px; text-indent: 2px; font: 400 16px/25px 'Neue'; color: white; text-align: center; border-top-right-radius: 5px; border-bottom: 1px dashed white}
+.lists.Normal .moreTags .stations .StationCenter .startStation, .endStation{width: 10%; display: flex; flex-direction: column; justify-content: center}
+.lists.Normal .moreTags .stations .StationCenter .throughStations{width: 20%; background: none; display: flex; align-items: center; }
+.lists.Normal .moreTags .stations .StationCenter .endStation{width: 10%}
+.lists.Normal.C .moreTags .stations .StationLeft .costTime{width: 100%!important; height: 25px; background: #2186fa; padding-left: 5%; letter-spacing: 2px; text-indent: 2px; font: 400 11.5px/25px '微软雅黑'; color: white; text-align: center; border-top-right-radius: 5px; border-bottom: 1px dashed white}
+.lists.Normal.C .moreTags .stations .StationCenter .endStationRight{width: 50%; height: 100px; background: none; display: flex; flex-wrap: nowrap; padding: 8px; padding-left: 80px}
+.lists.Normal.C .moreTags .stations .StationCenter .RunTime{width: 50%; text-align: center; font: 300 14px/18px '微软雅黑'}
+.lists.Normal.C .moreTags .stations .StationCenter .RunTime div{font: 400 18px/70px 'Neue'; color: #989898; letter-spacing: .08em; text-indent: .08em}
+.lists.Normal.C .moreTags .stations .StationCenter .RunTime::before{content: "运营时间"; font: 400 12px/18px '微软雅黑'; color: #ff6814; border: 1px solid #ff6814; border-radius: 3px; padding: 2px 4px; text-align: center; }
+.lists.Normal.C .moreTags .stations .StationCenter .RunLine{width: 50%; text-align: center}
+.lists.Normal.C .moreTags .stations .StationCenter .RunLine div{font: 400 14px/65px '微软雅黑'; letter-spacing: .08em; text-indent: .08em}
+.lists.Normal.C .moreTags .stations .StationCenter .RunLine::before{content: "航线"; font: 300 12px/18px '微软雅黑'; color: #57acf6; border: 1px solid #57acf6; border-radius: 3px; padding: 2px 4px; text-align: center; }
+.lists.Normal .moreTags .stations .StationCenter .startStation .startTime, .endTime{font: 400 24px/24px 'Neue'; text-indent: 10px}
+.endTime.tow::after, .endTime.three::after, .endTime.four::after{content: "明"; font: 200 10px/10px '微软雅黑'; background: none; display: block; height: 12px; width: 12px; position: absolute; margin-left: 64px; margin-top: -24px; color: #ff6814 }
+.endTime.three::after{content: "后"}
+.endTime.four::after{content: "三天后"; width: auto; color: #2186fa;}
+.startTime{color: #57acf6}.endTime{color: #989898}
+.lists.Normal .moreTags .stations .StationCenter .startStation .startPlace, .endPlace{font: 200 16px/18px '微软雅黑'; text-indent: 10px}
+.lists.Normal.Q .moreTags .stations .StationCenter .startStation .startPlace, .lists.Normal.Q .moreTags .stations .StationCenter .endStation .endPlace{font: 200 16px/18px '微软雅黑'; text-indent: 10px; width: 100%}
+.lists.Normal .moreTags .stations .StationCenter .throughStations .line{width: 100%; height: 1px; background: #d1d1d1}
+.lists.Normal .moreTags .stations .StationCenter .throughStations .btnSlideRight, .newbtnSlideRight{display: none; width: 60px; height: 25px; background: white; margin: -12px auto; text-align: center; border: 2px solid #d1d1d1; border-radius: 3px; font: 400 10px/20px '微软雅黑'; cursor: pointer; cursor: pointer;}
+.lists.Normal .moreTags .stations .StationCenter .throughStations .line .SaEdots::before{display: block; content: " "; width: 10px; height: 10px; border-radius: 50%; background: white; float: left; margin-top: -5px; border: 3px solid #12a81e; box-shadow: 0 0 4px rgba(0, 0, 0, .16)}
+.lists.Normal .moreTags .stations .StationCenter .throughStations .line .SaEdots::after{display: block; content: " "; width: 10px; height: 10px; border-radius: 50%; background: white; float: right; margin-top: -5px; border: 3px solid #2186fa; box-shadow: 0 0 4px rgba(0, 0, 0, .16)}
+
+/*
+查询结果列表属性列表可能性：
+【规则】
+㈠有【荐】就必有【直达】或【路线最短】，否则就没有【荐】；
+㈡有【直达】那么「交通工具」只能有一种；
+㈢有【直达】不一定会有【荐】，有【路线最短】则一定有【荐】；
+【可能情况列表】
+J      Z         L         H       Q        F       C 
+荐    直 达    路线 最短    火 车    汽 车    飞 机    轮 船
+①   ②     ③  ④    ⑤    ⑥     ⑦       ⑧   ⑨⑩
+JZH  JZLH  ZH  JLH  JLHQ  JLHQF  JLHQFC  H    总计
+JZQ  JZLQ  ZQ  JLQ  JLHF  JLHQC          Q    42
+JZF  JZLF  ZF  JLF  JLHC  JLHFC          F
+JZC  JZLC  ZC  JLC  JLQF  JLQFC          C
+                    JLQC                 HQ
+                    JLFC                 HF
+                                         HC
+                                         QF
+                                         QC
+                                         FC
+                                         HQF
+                                         HQC
+                                         HFC
+                                         QFC
+                                         HQFC
+*/
+/* !!!!!!!! 标签激活颜色 !!!!!!!!*/
+/* 【荐 J 】 */.lists.Normal.J .moreTags .moreTagsLeft .tg1{background: #e80a4f; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【直达 Z 】 */.lists.Normal.Z .moreTags .moreTagsLeft .tg2{background: #0acee8; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【路线最短 L 】 */.lists.Normal.L .moreTags .moreTagsLeft .tg3{background: #00e0ac; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【火车 H 】 */.lists.Normal.H .moreTags .moreTagsLeft .tg4 .tt1{background: #26a69a; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【汽车 Q 】 */.lists.Normal.Q .moreTags .moreTagsLeft .tg4 .tt2{background: #f9e842; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【飞机 F 】 */.lists.Normal.F .moreTags .moreTagsLeft .tg4 .tt3{background: #42a5f5; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 【轮船 L 】 */.lists.Normal.C .moreTags .moreTagsLeft .tg4 .tt4{background: #e44d26; box-shadow: 0 0 3px rgba(0, 0, 0, .16)}
+/* 激活以上某个标签只需调用 $('.lists.Normal').addClass(...) 函数 即可 
+*/
+.lists.Normal.notZ{display: table!important; min-height: 155px; max-width: 930px}
+.lis.lists.Normal .CitySelect{display: none}
+.lists.Normal.notZ .CitySelect{display: flex; width: 100%; height: auto; background: green; flex-wrap: wrap; justify-content: center; position: relative; z-index: 99}
+.lists.Normal.notZ .CitySelect div{width: auto; margin: 0 10px; height: 26px; font: 200 10px/25px '微软雅黑'; display: none}
+.lists.Normal.notZ .CitySelect.actived div{display: block; cursor: pointer}
+/* .lists.Normal.notZ  */
+.ACity, .BCity{width: 432px; height: 200px; background: white; margin: 10px auto; display: none; position: relative; padding: 5px; flex-wrap: wrap; justify-content: flex-start; border-bottom: 1px dashed #f5f5f5; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; overflow: auto; overflow-x: hidden}
+.ACity div, .BCity div{width: 70px; height: 20px; margin: 5px; cursor: pointer; text-align: center}
+.BCity{background: white}
+/* .clearCities{display: block; width: 40px!important; height: 26px; border-radius: 5px; background: #e81123; text-align: center; position: relative; z-index: 9; margin: 2px 0}
+.clearCities::after{content: "取消"; color: white; font: 200 12px/30px '微软雅黑';} */
+.Udot{display: block; margin-top: -9px}
+.Bdot{display: block; margin-top: -9px}
+.Udot::before{content: ""; display: block; width: 8px; height: 8px; background: #f5f5f5; position: absolute; left: 0; margin-left: -4px; border-radius: 50%}
+.Udot::after{content: ""; display: block; width: 8px; height: 8px; background: #f5f5f5; position: absolute; right: 0; margin-right: -4px; border-radius: 50%}
+.Bdot::before{content: ""; display: block; width: 8px; height: 8px; background: #f5f5f5; position: absolute; left: 0; margin-left: -4px; border-radius: 50%}
+.Bdot::after{content: ""; display: block; width: 8px; height: 8px; background: #f5f5f5; position: absolute; right: 0; margin-right: -4px; border-radius: 50%}
+
+.showHideBtn{display: none; float: right; align-items: center; justify-content: flex-end; width: auto; height: 40px; background: none; padding-right: 10px; display: none}
+.showHideStationsName{display: block; width: auto; height: 25px; background: #f5f5f5; margin-right: 5px; border-radius: 5px; padding: 0 5px; box-shadow: rgba(0, 0, 0, .1); cursor: pointer;}
+.showHideKm{display: block; width: auto; height: 25px; background: #f5f5f5; margin-left: 5px; border-radius: 5px; padding: 0 5px; box-shadow: rgba(0, 0, 0, .1); cursor: pointer;}
+.showHideStationsName.actived{color: white; background: #12a81e}
+
+.showHideKm.actived{color: white; background: #42a5f5}
+.foldBtn{display: block; width: 19px; height: 19px; background: #e81123 url('../img/close.svg') no-repeat center; background-size: 15px; border-radius: 50%; margin-left: 10px; box-shadow: 0 0 14px rgba(0, 0, 0, .2); cursor: pointer;}
+.showHideStationsName::after{content: "显示站名"; font: 400 14px/25px '微软雅黑'; text-align: center}
+.lists.Normal.F .moreTags .moreTagsLeft .showHideBtn .showHideStationsName::after{content: "显示机型"}
+.showHideKm::after{content: "显示距离"; font: 400 14px/25px '微软雅黑'; text-align: center}
+.transCity::after{content: "请选择转乘城市"; font: 400 14px/25px '微软雅黑'; text-align: center;}
+.transCity{width: 130px; margin: 0 8px; cursor: pointer}
+.transCity a::before{display: inline-block; width: 18px; height: 22px; background: url('../img/chevron.svg') no-repeat center; background-size: 16px; content: "0"; transform: rotate(90deg); color: transparent;}
+.transCity.actived a::before{transform: rotate(270deg)}
+.foldBtn::after{content: " "; }
+.showHideWindow{display: none; width: 60px; height: 25px; float: left; background: white; text-align: center; border: 2px solid #d1d1d1; border-radius: 3px; font: 400 10px/20px '微软雅黑'; cursor: pointer; margin: 7.5px}
+.showHideWindow::after{content: "窗口显示"; text-align: center; font: 400 10px/20px '微软雅黑'}
+
+
+/*【经停信息展示功能】样式*/
+.lineThroughDots{display: flex; justify-content: center; }
+.throughDots{width: 10px; height: 10px; background: white; position: relative; bottom: 4.5px; border-radius: 50%; display: none; border: 3px solid #989898; box-shadow: 0 0 3px rgba(0, 0, 0, .16); pointer-events: none; 
+    transition-property: all;
+    transition-duration: 0.4s;}
+.throughDots:hover{border-color: #57ACF6; cursor: pointer; box-shadow: 0 0 6px#57ACF6cc; }
+.STAT{display: none; pointer-events: none; position: relative; top: -37.5px; height: 104px; width: 643.7px; align-items: center}
+.saveStationsGap{pointer-events: none; z-index: 99999; position: relative; top: 0; width: 643.7px; height: 20px; background: transparent; display: flex; flex-wrap: nowrap; text-align: center; margin-top: 10px; opacity: 0; 
+    transition-property: all;
+    transition-duration: 0.8s;}
+.saveStationsGap div{font: 400 12px/12px 'Neue'; color: #6c6c6c; letter-spacing: 1px; text-indent: 1px}
+.saveStationsGap.SHOW{opacity: 1;}
+.lists.Normal.F .moreTags .stations .StationCenter .throughStations .line .STAT .saveStationsGap div{margin: 0 auto!important; text-indent: -20px }
+.lists.Normal.F .moreTags .stations .StationCenter .throughStations .line .lineThroughDots div{display: none!important}
+/* .saveStationsGap div:first-child{height: 100%; width: 61px; } */
+/* .saveStationsGap div:last-child{height: 100%; width: 61px; } */
+/* .saveStationsGap div:nth-child(2), .saveStationsGap div:nth-child(3), .saveStationsGap div:nth-child(4), .saveStationsGap div:nth-child(5), .saveStationsGap div:nth-child(6), .saveStationsGap div:nth-child(7), .saveStationsGap div:nth-child(8){width: 58px; } */
+.saveStationsName{pointer-events: auto; z-index: 99999; position: relative; bottom: 0; width: 643.7px; height: 35.5px; background: none; display: flex; flex-wrap: nowrap; text-align: center; justify-content: center; opacity: 0; padding-top: 15px; 
+    transition-property: all;
+    transition-duration: 0.3s;}
+.saveStationsName div{font: 200 10px/22px '微软雅黑'; letter-spacing: 1px; text-indent: 1px; text-shadow: 0 0 0 rgba(0, 0, 0, .1)}
+.saveStationsName.SHOW{opacity: 1;}
+.saveStationsGap.SHOW div::after{content: "km"; font: 400 8px/8px 'Neue'; color: #bbb; transition-property: all; transition-duration: 0.3s; text-shadow: 0 0 3px rgba(0, 0, 0, .08)}
+.space{pointer-events: none; width: 623.7px; height: 4px; background: none; margin: 0 10px}
+
+.alertNoResult{width: 100%; height: 50px; background: #00e0ac}
+
+/*页脚*/
+footer.footer {
+    height: 70px;
+    line-height: 70px;
+    color: #fff;
+    text-align: center;
+    background-color: #2ca8f0;
+  }
+  footer.footer a {
+    font-style: italic;
+    color: inherit;
+  }

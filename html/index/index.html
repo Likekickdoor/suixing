@@ -1,0 +1,191 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>随行网</title>
+  <link rel="shortcut Icon" href="html/detailsHtml/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- style file -->
+  <link rel="stylesheet" href="html/index/css/bootstrap.css">
+  <link rel="stylesheet" href="html/index/css/normalize.css">
+  <link rel="stylesheet" href="html/index/css/base.css">
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <div class="page-bg"></div>
+
+  <!-- code start here -->
+
+  <div class="nav-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="header">
+      <div class="headerContent">
+          <div class="siteName"><img src="favicon.ico" /><span>随行网</span></div>
+          <div class="siteContents">
+              <li><a href="./index.php?con=details&med=display&start=&end=">线路查询</a></li>
+              <li><a href="jvascript:void(0)" id="to_about">关于</a></li>
+              <li><a href="jvascript:void(0)" id="to_advantage">优势</a></li>
+              <li><a href="jvascript:void(0)" id="to_feature">未来</a></li>
+              <li><a href="jvascript:void(0)" id="to_content">联系我们</a></li>
+          </div>
+      </div>
+  </div>
+  <!-- <header class="header">
+      <ul class="header-nav col-md-8 col-md-offset-2">
+        <li><a href="./index.php?con=details&med=display&start=&end=">线路查询</a></li>
+        <li><a href="javascript: void(0);" id="to_advantage">优势</a></li>
+        <li><a href="javascript: void(0);" id="to_">logo</a></li>
+        <li><a href="javascript: void(0);" id="to_feature">未来</a></li>
+        <li><a href="javascript: void(0);" id="to_contact">联系我们</a></li>
+      </ul>
+  </header> -->
+
+
+
+
+
+
+  <section class="banner jumbotron container-fluid">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>随行网</h1>
+        <p><span>最全、最优</span>的出行路线方案规划</p>
+      </div>
+  </section>
+
+
+  <section class="query container-fluid">
+    <div class="col-md-8 col-md-offset-2">
+      <form class="index-query" action="./index.php" method="GET">
+        <input type="hidden" name="con" value="details">
+        <input type="hidden" name="med" value="display">
+        <input type="text" placeholder="出发城市" title="from" name="start" autocomplete="off">
+        <input type="text" placeholder="目的城市" title="to" name="end" autocomplete="off">
+        <button type="submit" class="submit">线路查询</button>
+        <ul class="city-auto">
+        </ul>
+      </form>
+    </div>
+  </section>
+
+
+  <section class="about section container-fluid" id="about">
+    <div class="col-md-5 col-md-offset-2">
+      <h1 class="section-title left">我们所做的</h1>
+      <p><span>随行网</span>根据用户不同的出行需求，为用户提供<span>高效率</span>的出行方案。</p>
+    </div>
+  </section>
+
+
+
+
+  <section class="advantage section container-fluid" id="advantage">
+    <h1 class="section-title">随行的优势</h1>
+    <div class="container">
+      <div class="row">
+
+          <div class="col-md-3 col-sm-6">
+            <div class="info-box">
+              <h2>信息<span>全</span></h2>
+              <p>随行庞大的后台数据能为用户提供最全的线路信息。</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="info-box">
+              <h2>选择<span>多</span></h2>
+              <p>不同的用户有不同的需求，但随行总能根据不同的需求为用户提供满意的方案。</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="info-box">
+              <h2>方案<span>优</span></h2>
+              <p>随行通过自己独特的方案筛选算法，根据用户需求为用户提供最好的出行方案。</p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="info-box">
+              <h2>数据<span>新</span></h2>
+              <p>随行会及时更新后台数据，以确保用户所得到的信息总是最实时的。</p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ad-block">
+    <h1>随行伴您效率出行</h1>
+  </section>
+
+
+  <section class="feature section container-fluid" id="feature">
+    <h1 class="section-title">未来我们将</h1>
+    <div class="col-md-8 col-md-offset-2">
+      <p>随行站内在线订票</p>
+      <p>提供城市间专车直达功能</p>
+      <p>添加城市气候模块</p>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+  <section class="contact section container-fluid" id="contact">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-6 contact-info">
+        <h1 class="section-title left">联系我们</h1>
+        <p class="contact-com">如果您有任何对随行网的看法或建议，愿意帮助我们变得更好，欢迎通过线上或线下的方式将您的提议发送给我们</p>
+        <p><b>地址：</b>湖南农业大学第13教学楼</p>
+        <p><b>邮箱：</b><a href="mailto:deyunrel@163.com">hunaucsecl@163.com</a></p>
+        <p><b>网址：</b><a href="http://www.kbell.me/">湖南农业大学互联网创新实验室</a></p>
+      </div>
+      <div class="col-md-6 send-msg">
+        <div class="form-group">
+          <label for="msg-name">您的名字：</label>
+          <input type="text" class="form-control" id="msg-name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="msg-mail">您的邮箱：</label>
+          <input type="email" class="form-control" id="msg-mail" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="msg-text">信息反馈：</label>
+          <textarea class="form-control" id="msg-text" rows="4" placeholder="您的提议或反馈"></textarea>
+        </div>
+        <button type="submit" class="btn" id="msg-btn">提交</button>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    Copyright © 2018 <a href="http://www.kbell.me/">湖南农业大学互联网创新实验室</a>
+  </footer>
+
+
+  <!-- script -->
+  <script src="html/index/js/modernizr.js"></script>
+  <script src="html/index/js/jquery.js"></script>
+  <script src="html/index/js/plugins.js"></script>
+  <script src="html/index/js/bootstrap.js"></script>
+  
+  <script src="html/index/js/main.js"></script>
+</body>
+
+</html>
