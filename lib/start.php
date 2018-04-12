@@ -22,7 +22,7 @@
         }
 
         public static function init_med(){
-            $medArr = array('index','bus','trains','flight','stopApi','show','getStation');//定义方法列表
+            $medArr = array('show','getStation','getCenterCity',"display","chooseFristCity","chooseSecondCity");//定义方法列表
             self::$med = (isset($_GET['med']) and in_array($_GET['med'],$medArr)) ? $_GET['med'] : 'index';
         }
 

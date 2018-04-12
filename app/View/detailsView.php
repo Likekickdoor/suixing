@@ -2,8 +2,8 @@
     namespace app\View;
     class details{
 
-        function display($file,$busData = '',$trainData = '',$flightData = '',$shipData = ''){
-            \lib\core\view::display($file,$busData,$trainData,$flightData,$shipData);
+        function display($file,$data){
+            \lib\core\view::display($file,$data);
         }
     }
 ?>

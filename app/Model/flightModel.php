@@ -16,19 +16,19 @@ class flight {
     /**
      * 查找航班数据
      */
-    public function searchFlight(){
+    public function searchFlight($start,$end){
         $allFlightMessage = array();
         
-        $routeData = $this->select_line();
+        $routeData = $this->select_line($start,$end);
         if(empty($routeData)){
-            echo "没有找到航线，可以查看其它线路";
+            return $allFlightMessage;;
         }else{
             foreach($routeData as $key=>$value){
                 $s_flightTableWhere = array("f_r_id"=>$value['r_id']);
                 $r_flightTable = DB::select_all("flight_table",array("*"),$s_flightTableWhere);
                 //var_dump($r_flightTable);
                 if(empty($r_flightTable)){
-                    echo "没有找到航班信息";
+                    return $allFlightMessage;;
 
                 }else{
                     foreach($r_flightTable as $k=>$v){
@@ -53,8 +53,12 @@ class flight {
 
      public function select_city($cityName){
         $cityName = str_replace(array("市","区","县","特别行政区","州"),"",$cityName);
-        $s_cityLike = "SELECT * FROM city WHERE `city` like '".$cityName."%'";
+        $s_cityLike = "SELECT * FROM city WHERE `city` like '%".$cityName."%'";
         $s_cityLike_r = DB::select_sql($s_cityLike);
+        if(empty($s_cityLike_r)){
+            $s_cityLike = "SELECT * FROM station WHERE `name` like '%".$cityName."%'";
+            $s_cityLike_r =  DB::select_sql($s_cityLike);
+        }
         return $s_cityLike_r;
         
      }
@@ -62,42 +66,64 @@ class flight {
        * 把起点城市和终点城市
        * 
        */
-      public function select_line() {
+      public function select_line($start,$end) {
          
-        if(!empty($_GET['dpplace'])&&!empty($_GET['arrplace'])){
+        if(!empty($start)&&!empty($end)){
             $cityLine = array();
-            $startCity = $this->select_city($_GET['dpplace']);
-            $toCity = $this->select_city($_GET['arrplace']);
+            $startCity = $this->select_city($start);
+            $toCity = $this->select_city($end);
                
-            foreach($startCity as $key=>$value){
-                foreach($toCity as $k=>$v){
-                    $s_route = "SELECT * FROM route_table where r_from_id=".$value['id']." AND r_to_id=".$v['id'];
-                    $s_route_r = DB::select_sql($s_route);
+            if(!empty($startCity)&&!empty($toCity)){
 
-                    if(empty($s_route_r)){
+                foreach($startCity as $key=>$value){
+                    foreach($toCity as $k=>$v){
+                        $s_route = "SELECT * FROM route_table where r_from_id=".$value['id']." AND r_to_id=".$v['id'];
+                        $s_route_r = DB::select_sql($s_route);
 
-                    }else{
-                        $cityLine[]=$s_route_r[0];
+                        if(empty($s_route_r)){
+
+                        }else{
+                            $cityLine[]=$s_route_r[0];
+                        }
                     }
                 }
+                
+
+                if(empty($startCity[0]['city'])){
+                    
+                    $startCity[0]['city'] = $startCity[0]['name'];
+                }
+
+                if(empty($toCity[0]['city'])){
+                    
+                    $toCity[0]['city'] = $toCity[0]['name'];
+                }
+                //插入查询记录信息
+                if(!empty($_SESSION['ip'])){
+                    
+
+                    $i_seleclcont = "ip_id,original_start,starCity_id,start_city,original_to,tocity_id,toCity";
+                    $i_data = "'".$_SESSION['ip']."','".$start."',".$startCity[0]['id'].",'".$startCity[0]['city']."','".$end."',".$toCity[0]['id'].",'".$toCity[0]['city']."'";
+                    //var_dump($i_data);die;
+                }else{
+                    $i_seleclcont = "original_start,starCity_id,start_city,original_to,tocity_id,toCity";
+                    $i_data = "'".$start."',".$startCity[0]['id'].",'".$startCity[0]['city']."','".$end."',".$toCity[0]['id'].",'".$toCity[0]['city']."'";
+                }
+                /* if(!empty($_SESSION['ip'])){
+                    $i_seleclcont = array("ip_id"=>$_SESSION['ip'],"original_start"=>$start,
+                "starCity_id"=>$startCity[0]['id'],"start_city"=>$startCity[0]['city'],"original_to"=>$end,
+            "tocity_id"=>$toCity[0]['id'],"toCity"=>$toCity[0]['city']);
+                }else{
+                    $i_seleclcont = array("original_start"=>$start,
+                    "starCity_id"=>$startCity[0]['id'],"start_city"=>$startCity[0]['city'],"original_to"=>$end,
+                "tocity_id"=>$toCity[0]['id'],"toCity"=>$toCity[0]['city']);
+                        $i_select = "original_start,starCity_id,start_city,original_to,tocity_id,toCity";
+                        $i_data = $start.",".
+                }
+                    */
+                DB::insert("management_selectcount",$i_seleclcont,$i_data);
             }
-            
-
-            //插入查询记录信息
-               /* if(!empty($_SESSION['ip'])){
-                   $i_seleclcont = array("ip_id"=>$_SESSION['ip'],"original_start"=>$_GET['dpplace'],
-               "starCity_id"=>$startCity[0]['id'],"start_city"=>$startCity[0]['city'],"original_to"=>$_GET['arrplace'],
-           "tocity_id"=>$toCity[0]['id'],"toCity"=>$toCity[0]['city']);
-               }else{
-                   $i_seleclcont = array("original_start"=>$_GET['dpplace'],
-                   "starCity_id"=>$startCity[0]['id'],"start_city"=>$startCity[0]['city'],"original_to"=>$_GET['arrplace'],
-               "tocity_id"=>$toCity[0]['id'],"toCity"=>$toCity[0]['city']);
-                    $i_select = "original_start,starCity_id,start_city,original_to,tocity_id,toCity";
-                    $i_data = $_GET['dpplace'].",".
-               }
-
-               DB::insert("management_selectcount",$i_seleclcont);
- */
+ 
                return  $cityLine;
        }
      }
