@@ -6,7 +6,7 @@
         'dbconfig' => array('dbtype' => 'mysql','dbhost' => '127.0.0.1','dbuser' => 'root',
                 'dbpwd' => '890ccf33a9a4','dbname' => 'suixing','dbcharset' => 'utf8'),
         //日志配置
-        'logconfig' => array('IS_START' => 'false','PATH' => FRAME.'/log','DB_NAME' => 'log'),
+        'logconfig' => array('IS_START' => 'true','PATH' => FRAME.'/log','DB_NAME' => 'log'),
         //视图配置
         'viewconfig' => array('FORMAT' => 'html','PATH' => FRAME.'\html')
     );

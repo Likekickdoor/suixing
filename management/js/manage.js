@@ -139,12 +139,12 @@ window.onload = function () {
     var oChange=document.querySelector('.change');
     oChange.onclick=function(){
         arra({
-            url: 'http://localhost/aviation/phpImageChecked/setImageChecked.php',
+            url: 'http://localhost/suixing/phpImageChecked/setImageChecked.php',
             
 
             success: function (arr1) {
                
-               $(".yan").attr('src',"http://localhost/aviation/phpImageChecked/setImageChecked.php"); 
+               $(".yan").attr('src',"http://localhost/suixing/phpImageChecked/setImageChecked.php"); 
             }
         })
     }
