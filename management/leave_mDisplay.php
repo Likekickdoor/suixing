@@ -21,15 +21,15 @@ class leaveDisplay {
         /* $sql_watch "SELECT * FROM management_leave where is_watch=0";
         $r_watch = $this->pdosqlObject->select_sql($sql_watch);
         if(!empty($r_watch)){ */
-        $sql = "SELECT * FROM management_leave where is_watch=0 ORDER BY id DESC limit 10"; //查找没有查看的留言信息
+        $sql = "SELECT * FROM management_leave where is_watch=0 ORDER BY id DESC limit 5"; //查找没有查看的留言信息
         $r_levae = $this->pdosqlObject->select_sql($sql);
         /* }else{
 
         } */
 //var_dump( $r_levae);
         if(!empty($r_levae)){
-            if((int)count($r_levae)<10){
-                $length = 10-(int)count($r_levae);
+            if((int)count($r_levae)<5){
+                $length = 5-(int)count($r_levae);
                 $sql_isWatch = "SELECT * FROM management_leave where is_watch=1 ORDER BY id DESC limit ".$length;     //查找来满足10条
                 $r_leaveIsWatch = $this->pdosqlObject->select_sql($sql_isWatch);
                 if(!empty($r_leaveIsWatch)){
