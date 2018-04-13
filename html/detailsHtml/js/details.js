@@ -426,7 +426,6 @@
     $('.ulTRAIN').find('.lists.Normal').addClass('H').addClass('Z');
     $('.ulBUS').find('.lists.Normal').addClass('Q');
     $('.ulPLANE').find('.lists.Normal').addClass('F').addClass('Z').addClass('L');
-    $('.ulSHIP').find('.lists.Normal').addClass('C');
     $('.ulSHIP').find('.lists.Normal').addClass('C').addClass('Z');
 
     $('ul').children('li:last-child').addClass('last');//【line #216】
