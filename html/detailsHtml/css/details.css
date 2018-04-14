@@ -3,13 +3,15 @@
     font-family: Neue;
     src: url('../fonts/Neue.ttf');
 }
-html{transition-property: all; transition-duration: 1s;}
-li{list-style: none}
+html{background: url('../img/screen.jpg') no-repeat top; background-size: 1100px auto}
+html body{transition-property: all; transition-duration: 1s; background: none}
+ul li{list-style-type: none}
+li{list-style-type: none}
 /* 全屏展示信息 */
-.fullCover{display: none; background: #000000aa; width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999999999; align-items: center}
+.fullCover{display: none; background: rgba(0, 0, 0, .66); width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 999999999; align-items: center}
 
-.fullCover .centerBox{display: table; width: 700px; background: white; margin: 100px auto; border-radius: 3px; box-shadow: 0 0 8px #000000dd;}
-.fullCover .centerBox .caption{position: relative; top: 0; background: #eee; height: 41px; width: 100%; border-top-left-radius: 3px; border-top-right-radius: 3px; box-shadow: 0 0 6px rgba(0, 0, 0, .08) inset; border-bottom: 1px solid #ffffffcc}
+.fullCover .centerBox{display: table; width: 700px; background: white; margin: 200px auto; border-radius: 3px; box-shadow: 0 0 8px rgba(0, 0, 0, .86);}
+.fullCover .centerBox .caption{position: relative; top: 0; background: #eee; height: 41px; width: 100%; border-top-left-radius: 3px; border-top-right-radius: 3px; box-shadow: 0 0 6px rgba(0, 0, 0, .08) inset; border-bottom: 1px solid rgba(255, 255, 255, .8)}
 .fullCover .centerBox .caption .closeBtn{width: 40px; height: 100%; float: left; background-color: none; padding: auto 0; display: flex; align-items: center}
 .wlineInfo{position: absolute; right: 267px}
 
@@ -20,7 +22,7 @@ li{list-style: none}
 .wStart{float: left; height: 100%; background: none; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
 .to{float: left; height: 18px; width: 18px; font: 200 12px/18px '微软雅黑'; border-radius: 50%; background: #12a81e; margin: 11px 0; padding: 0 3px; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, .16)}
 .wEnd{float: left; height: 100%; padding: 0 10px; font: 200 18px/40px '微软雅黑'; text-shadow: 0 0 4px rgba(0, 0, 0, .08)}
-.wNumber{font: 400 16px/40px 'Neue'; letter-spacing: .06em; width: 100%; height: 40px; position: absolute; top: 40px; z-index: 9999; text-align: center; text-shadow: 0 0 4px rgba(0, 0, 0, .08); background: #ffffffcc; box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
+.wNumber{font: 400 16px/40px 'Neue'; letter-spacing: .06em; width: 100%; height: 40px; position: absolute; top: 40px; z-index: 9999; text-align: center; text-shadow: 0 0 4px rgba(0, 0, 0, .08); background: rgba(255, 255, 255, .8); box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
 .wNumber::after{content: " 次列车"; letter-spacing: .08em; font: 200 16px/40px '微软雅黑'}
 /* .wTag{width: 40px; height: 40px; background: green} */
 .wCostTime{display: none; position: absolute; background: #eee; right: 0; }
@@ -31,10 +33,10 @@ li{list-style: none}
     transition-property: all;
     transition-duration: .5s;}
 .content .column div:hover{box-shadow: 0 0 16px rgba(0, 0, 0, .16) inset}
-.content .column div span{display: block; margin-top: -25px; width: 100%; height: 20px; position: relative; font: 400 5px/18px '微软雅黑'; background: #2186facc; opacity: 0; color: white; text-shadow: 0 0 4px rgba(0, 0, 0, .16); border-top: 2px solid #57ACF6; cursor: pointer; 
+.content .column div span{display: block; margin-top: -25px; width: 100%; height: 20px; position: relative; font: 400 .75em/18px '微软雅黑'; background: rgba(33, 134, 250, .8); opacity: 0; color: white; text-shadow: 0 0 4px rgba(0, 0, 0, .16); border-top: 2px solid #57ACF6; cursor: pointer; -khtml-opacity: .5;
     transition-property: all;
     transition-duration: .2s;}
-.content .column div span:hover{opacity: 1}
+.content .column div span:hover{opacity: 1; -khtml-opacity: 1;}
 /* .content .column div .toShow{opacity: 1} */
 .content .column div span::before{content: "离上一站"; font-weight: 100; color: #eee}
 .content .column div span::after{content: "km"; font-weight: 100; color: #eee}
@@ -43,8 +45,8 @@ li{list-style: none}
 .content .column div::after{content: " "; display: block; width: 6px; height: 6px; background: #f5f5f5; position: relative; right: -3px; top: -38px; margin: 0 0 0 194px; border-radius: 50%}
 
 /* Navigation */
-.header{z-index: 999; width: 100%; height: 70px; min-width: 1200px; background: #fff; position: fixed; top: 0; box-shadow: 0 3px 3px rgba(0, 0, 0, .16)}
-.headerContent{width: 1000px; height: 100%; background: none; margin: 0 auto; }
+.header{z-index: 999999; width: 100%; height: 70px; background: #fff; position: fixed; top: 0; box-shadow: 0 3px 3px rgba(0, 0, 0, .16)}
+.headerContent{ height: 100%; width: 80%; background: none; margin: 0 auto; }
 .siteName{width: 140px; height: 100%; background: none; float: left; }
 .siteName a { color: #000!important; }
 .siteName img{display: block; padding: 18px; float: left}
@@ -75,7 +77,7 @@ li{list-style: none}
 .theBackBoard img{display: block; width: 1000px; position: absolute; top: 0; padding-bottom: 700px; background: white}
 /* 搜索区域 */
 @keyframes wait{
-    0%{opacity: .6; transform: rotateY(0deg)}
+    0%{opacity: .6; transform: rotateY(0deg);}
     12.5%{opacity: .6; transform: rotateY(90deg)}
     25%{opacity: .6; transform: rotateY(180deg); transform: rotateX(0deg)}
     50%{opacity: .6; transform: rotateY(0); transform: rotateX(90deg)}
@@ -90,30 +92,31 @@ li{list-style: none}
     100%{opacity: .6; transform: rotateY(0deg)} */
     }
 .searchArea{position: relative; background: none; width: 600px; height: 260px; margin: 120px auto}
-.wait{display: none; background: #ffffffaa; width: 100px; height: 25px; margin: 0 auto; text-align: center; letter-spacing: .08em; font: 200 14px/25px '微软雅黑'; border-radius: 4px; text-shadow: 0 0 4px rgba(0, 0, 0, .08); box-shadow: 0 0 10px rgba(0, 0, 0, .6)}
-.wait::after{content: ""; display: block; width: 30px; height: 30px; background: #57ACF6; text-align: center; margin-left: 35px; position: relative; top: -65px; animation: 4s wait infinite}
+.wait{display: block; background: rgba(255, 255, 255, .66); width: 100px; height: 25px; margin: 0 auto; text-align: center; letter-spacing: .08em; font: 200 14px/25px '微软雅黑'; border-radius: 4px; text-shadow: 0 0 4px rgba(0, 0, 0, .08); box-shadow: 0 0 10px rgba(0, 0, 0, .6)}
+.wait::after{content: ""; display: block; width: 30px; height: 30px; background: #57ACF6; text-align: center; margin-left: 35px; position: relative; top: -65px; animation: 2s rotateplane infinite}
 .InputWhere{background: none; width: 100%; height: 100px; display: flex; flex-wrap: nowrap}
 #start, #end, #SEbutton, [name="dateRange"], #submit{border: none; margin: none; padding: none; outline-color: #57acf6; font-weight: 400}
-#start, #end{z-index: 1; background: #ffffffdd; width: 200px; height: 30px; margin: 35px 25px; padding: 0 5px; border-radius: 3px; box-shadow: 0 3px 3px rgba(0, 0, 0, .16); 
+#start, #end{z-index: 1; background: rgba(255, 255, 255, .8); width: 200px; height: 30px; margin: 35px 25px; padding: 0 5px; border-radius: 3px; box-shadow: 0 3px 3px rgba(0, 0, 0, .16); 
     transition-property: all;
     transition-duration: .5s;}
 /***********************添加下拉城市名预览*************************/
-.listCityName{z-index: 9999999; position: relative; display: none; width: 200px; background: #ffffffcc; min-height: 33px; margin: -10px auto; padding-bottom: 3px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; box-shadow: 0 4px 8px rgba(0, 0, 0, .08);}
+.listCityName{z-index: 9999999; position: relative; display: none; width: 200px; background: rgba(255, 255, 255, .8); min-height: 33px; margin: -10px auto; padding-bottom: 3px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; box-shadow: 0 4px 8px rgba(0, 0, 0, .08);}
 .listCityName li{width: 100%; height: 30px; background: none; padding: 0 20px; border-bottom: 1px solid #ddd; text-shadow: 0 0 4px rgba(0, 0, 0, .3); letter-spacing: .1em; text-indent: .1em; font-family: '微软雅黑'; line-height: 30px; -webkit-backdrop-filter: brightness(.8) blur(8px); cursor: default;}
 .listCityName li:hover{background: white}
 .listCityName .last{border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border: none}
 /***********************添加下拉城市名预览*************************/
-#start:focus, #end:focus{background-color: #ffffffff}
-#SEbutton{width: 30px; height: 30px; box-shadow: 0 0 3px rgba(0, 0, 0, .16); border-radius: 50%; background: white url('../img/swap.svg') no-repeat center; background-size: 24px; margin: 35px; outline: none; cursor: pointer; 
+#start:focus, #end:focus{background-color: #ffffff}
+#SEbutton{width: 30px; height: 30px; box-shadow: 0 0 3px rgba(0, 0, 0, .16); border-radius: 15px; background: white url('../img/swap.svg') no-repeat center; background-size: 24px; margin: 35px; outline: none; cursor: pointer; 
     transition-property: all;
     transition-duration: .25s;}
 #SEbutton:hover{transform: rotate(-180deg)}
-#SEbutton:active{ background-color: #ffffffdd}
+#SEbutton:active{ background-color: rgba(255, 255, 255, .8)}
 .start, .end{width: 250px;}
 .SEbutton{width: 100px}
 .InputWhen{background: none; width: 100%;height: 45px; display: none}
 [name="dateRange"]{display: block; text-align: center; width: 135px; height: 30px; border-radius: 15px; padding: 0 25px; margin: 20px auto; outline: none; color: #9f9f9f}
 /*添加筛选面板*/
+
 .addScreen{display: none; width: auto; height: 30px; margin: 0 auto; text-align: center;}
 .addScreen a, .addScreen a:hover{text-decoration: none; color: white; font-size: 15px; cursor: pointer;}
 .screenMenu{z-index: 9; display: none; width: 165px; height: 200px; border-radius: 3px; background: white; position: absolute; left: 385px; bottom: -120px; box-shadow: 0 3px 6px rgba(0, 0, 0, .1)}
@@ -130,14 +133,15 @@ li{list-style: none}
 #submit{background: #57acf6; width: 115px; height: 40px; border-radius: 4px; font-weight: 500; font-size: 15px; color: white; box-shadow: 0 3px 16px rgba(0, 0, 0, .46); display: block; margin: 0 auto; outline: none; cursor: pointer; 
     transition-property: all;
     transition-duration: 0.3s;}
-.InputSubmit.error::before{content: "出发地和目的地不能相同！"; display: block; margin: 5px auto; padding: 2px; width: auto; text-align: center; color: #e81123; text-shadow: 0 0 6px rgba(0, 0, 0, .08); font: 200 10px/20px '微软雅黑'; background: #ffffffaa; width: 170px; border-radius: 3px;}
+.InputSubmit.error::before{content: "出发地和目的地不能相同！"; display: block; margin: 5px auto; padding: 2px; width: auto; text-align: center; color: #e81123; text-shadow: 0 0 6px rgba(0, 0, 0, .08); font: 200 10px/20px '微软雅黑'; background: rgba(255, 255, 255, .66); width: 170px; border-radius: 3px;}
 #submit:hover{box-shadow: 0 6px 6px rgba(0, 0, 0, .16)}
 /* 查询结果区域 */
+/* .out{width: auto; height: auto; margin: 0 auto!important} */
 .resultsArea{display: table; background: white; position: relative; min-width: 950px; min-height: 400px; box-shadow: 0 5px 5px rgba(0, 0, 0, .16); border-radius: 3px; border-top-left-radius: 2px; border-top-right-radius: 2px; margin: -40px auto}
-.TAG-1, .TAG-2, .TAG-3, .TAG-4, .TAG-5{position: absolute; top: -32px; left: 0; border-bottom: 32px solid #ffffffcc; border-left: 15px solid transparent; border-right: 15px solid transparent; width: 100px; cursor: pointer; 
+.TAG-1, .TAG-2, .TAG-3, .TAG-4, .TAG-5{position: absolute; top: -32px; left: 0; border-bottom: 32px solid rgba(255, 255, 255, .66); border-left: 15px solid transparent; border-right: 15px solid transparent; width: 100px; cursor: pointer; 
     transition-property: all;
     transition-duration: 0.3s;}
-.TAG-1:hover, .TAG-2:hover, .TAG-3:hover, .TAG-4:hover, .TAG-5:hover{border-bottom: 35px solid #ffffffaa; text-shadow: 0 0 4px rgba(0, 0, 0, .3)}
+.TAG-1:hover, .TAG-2:hover, .TAG-3:hover, .TAG-4:hover, .TAG-5:hover{border-bottom: 35px solid rgba(255, 255, 255, .66); text-shadow: 0 0 4px rgba(0, 0, 0, .3)}
 .TAG-1Words, .TAG-2Words, .TAG-3Words, .TAG-4Words, .TAG-5Words{display: block; width: 34px; position: relative; top: -25px; margin: 0 0 0 38px; cursor: pointer; background: transparent; text-shadow: 0 0 4px rgba(0, 0, 0, .3); letter-spacing: .1em; text-indent: .1em; pointer-events: none}
 .TAG-2{left: 90px}.TAG-3{left: 180px}.TAG-4{left: 270px}.TAG-5{left: 360px}
 .TAG-2Words{margin-left: 125px; margin-top: -20px}
@@ -163,18 +167,18 @@ li{list-style: none}
 .isTime a.selected, .isPrice a.selected, .CityA a.selected, .CityB a.selected{display: inline-block; transform: rotate(180deg); }
 .ulSUGGEST{display: block; width: 100%; min-height: 200px; background: #f5f5f5}
 @keyframes starBlin{
-    0%{opacity: .6; box-shadow: 0 3px 8px #0000ffee }
-    25%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
-    50%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
-    75%{opacity: 1; box-shadow: 0 3px 18px #0000ffee}
-    100%{opacity: .6; box-shadow: 0 3px 8px #0000ffee}  
+    0%{opacity: .6; box-shadow: 0 3px 8px rgba(0, 0, 255, .93); -khtml-opacity: .6;}
+    25%{opacity: 1; box-shadow: 0 3px 18px rgba(0, 0, 255, .93); -khtml-opacity: 1;}
+    50%{opacity: 1; box-shadow: 0 3px 18px rgba(0, 0, 255, .93); -khtml-opacity: 1;}
+    75%{opacity: 1; box-shadow: 0 3px 18px rgba(0, 0, 255, .93); -khtml-opacity: 1;}
+    100%{opacity: .6; box-shadow: 0 3px 8px rgba(0, 0, 255, .93); -khtml-opacity: .6;}  
     }
 @keyframes archieveBlin{
-    0%{opacity: .6; box-shadow: 0 3px 8px #e80a4fee }
-    25%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
-    50%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
-    75%{opacity: 1; box-shadow: 0 3px 18px #e80a4fee}
-    100%{opacity: .6; box-shadow: 0 3px 8px #e80a4fee}  
+    0%{opacity: .6; box-shadow: 0 3px 8px rgba(232,10, 79, .93); -khtml-opacity: .6;}
+    25%{opacity: 1; box-shadow: 0 3px 18px rgba(232,10, 79, .93); -khtml-opacity: 1;}
+    50%{opacity: 1; box-shadow: 0 3px 18px rgba(232,10, 79, .93); -khtml-opacity: 1;}
+    75%{opacity: 1; box-shadow: 0 3px 18px rgba(232,10, 79, .93); -khtml-opacity: 1;}
+    100%{opacity: .6; box-shadow: 0 3px 8px rgba(232,10, 79, .93); -khtml-opacity: .6;}  
     }
 .ulSUGGEST.noInfo::after, .ulTRAIN.noInfo::after, .ulBUS.noInfo::after, .ulPLANE.noInfo::after, .ulSHIP.noInfo::after{content: "暂无查询结果"; display: block; background: white; margin: -40px auto; text-align: center; font: 200 20px/20px '微软雅黑'; position: relative; z-index: 99; height: 60px; padding-top: 30px; letter-spacing: .08em; text-indent: .08em; text-shadow: 0 0 6px rgba(0, 0, 0, .08); border-bottom: 1px dashed blue; box-shadow: 0 5px 5px rgba(0, 0, 0, .08)}
 .ulSUGGEST.noInfo::before, .ulTRAIN.noInfo::before, .ulBUS.noInfo::before, .ulPLANE.noInfo::before, .ulSHIP.noInfo::before{content: ""; display: block; background: blue url('../img/bug.svg') no-repeat center; background-size: 22px; border-radius: 3px; box-shadow: 0 3px 8px #0000ffee; height: 28px; width: 28px; position: absolute; z-index: 99999; margin: 30px 0; left: calc(50% - 14px); animation: 5s starBlin infinite}/**/
@@ -328,23 +332,23 @@ JZC  JZLC  ZC  JLC  JLQF  JLQFC          C
 .throughDots{width: 10px; height: 10px; background: white; position: relative; bottom: 4.5px; border-radius: 50%; display: none; border: 3px solid #989898; box-shadow: 0 0 3px rgba(0, 0, 0, .16); pointer-events: none; 
     transition-property: all;
     transition-duration: 0.4s;}
-.throughDots:hover{border-color: #57ACF6; cursor: pointer; box-shadow: 0 0 6px#57ACF6cc; }
+.throughDots:hover{border-color: #57ACF6; cursor: pointer; box-shadow: 0 0 6px rgba(87, 172, 246, .93); }
 .STAT{display: none; pointer-events: none; position: relative; top: -37.5px; height: 104px; width: 643.7px; align-items: center}
-.saveStationsGap{pointer-events: none; z-index: 99999; position: relative; top: 0; width: 643.7px; height: 20px; background: transparent; display: flex; flex-wrap: nowrap; text-align: center; margin-top: 10px; opacity: 0; 
+.saveStationsGap{pointer-events: none; z-index: 99999; position: relative; top: 0; width: 643.7px; height: 20px; background: transparent; display: flex; flex-wrap: nowrap; text-align: center; margin-top: 10px; opacity: 0; -khtml-opacity: 0;
     transition-property: all;
     transition-duration: 0.8s;}
 .saveStationsGap div{font: 400 12px/12px 'Neue'; color: #6c6c6c; letter-spacing: 1px; text-indent: 1px}
-.saveStationsGap.SHOW{opacity: 1;}
+.saveStationsGap.SHOW{opacity: 1; -khtml-opacity: 1;}
 .lists.Normal.F .moreTags .stations .StationCenter .throughStations .line .STAT .saveStationsGap div{margin: 0 auto!important; text-indent: -20px }
 .lists.Normal.F .moreTags .stations .StationCenter .throughStations .line .lineThroughDots div{display: none!important}
 /* .saveStationsGap div:first-child{height: 100%; width: 61px; } */
 /* .saveStationsGap div:last-child{height: 100%; width: 61px; } */
 /* .saveStationsGap div:nth-child(2), .saveStationsGap div:nth-child(3), .saveStationsGap div:nth-child(4), .saveStationsGap div:nth-child(5), .saveStationsGap div:nth-child(6), .saveStationsGap div:nth-child(7), .saveStationsGap div:nth-child(8){width: 58px; } */
-.saveStationsName{pointer-events: auto; z-index: 99999; position: relative; bottom: 0; width: 643.7px; height: 35.5px; background: none; display: flex; flex-wrap: nowrap; text-align: center; justify-content: center; opacity: 0; padding-top: 15px; 
+.saveStationsName{pointer-events: auto; z-index: 99999; position: relative; bottom: 0; width: 643.7px; height: 35.5px; background: none; display: flex; flex-wrap: nowrap; text-align: center; justify-content: center; opacity: 0; padding-top: 15px; -khtml-opacity: 0;
     transition-property: all;
     transition-duration: 0.3s;}
 .saveStationsName div{font: 200 10px/22px '微软雅黑'; letter-spacing: 1px; text-indent: 1px; text-shadow: 0 0 0 rgba(0, 0, 0, .1)}
-.saveStationsName.SHOW{opacity: 1;}
+.saveStationsName.SHOW{opacity: 1; -khtml-opacity: 1;}
 .saveStationsGap.SHOW div::after{content: "km"; font: 400 8px/8px 'Neue'; color: #bbb; transition-property: all; transition-duration: 0.3s; text-shadow: 0 0 3px rgba(0, 0, 0, .08)}
 .space{pointer-events: none; width: 623.7px; height: 4px; background: none; margin: 0 10px}
 
@@ -362,3 +366,32 @@ footer.footer {
     font-style: italic;
     color: inherit;
   }
+  @-webkit-keyframes rotateplane {
+    0% {
+        -webkit-transform: perspective(120px)
+    }
+    50% {
+        -webkit-transform: perspective(120px) rotateY(180deg)
+    }
+    100% {
+        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+    }
+}
+
+@keyframes rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        opacity: .6;
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        opacity: .6;
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+    }
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        opacity: .6;
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}

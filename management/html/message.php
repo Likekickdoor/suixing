@@ -25,6 +25,7 @@ if(empty($_SESSION['login'])){
 </head>
 
 <body>
+   
     <div id="header">
         <p class="title">随行后台管理系统</p>
 
@@ -40,7 +41,23 @@ if(empty($_SESSION['login'])){
         </a>
     </div>
     <div class="content1">
+    <div class="bigbox">
+    <div class="look">
+                    <div class="news2">
+                        <img class="head2" src="../img/name.png">
+                        <div class="poxes">
+                        <span class="first2">Json</span>
+                        <p class="mail">123456789@qq.com</p>
+                        </div>
+                        <i class="time2">right   sdasf   a</i>
+                        <img class="tui2" src="../img/tui1.png">                        
+                    </div>
+                    <div class="pp">
+                        <p class="nice2"> Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription.</p>                        
+                    </div>
+                </div>
 
+        </div>
         <div class="left">
 
             <div class="profile">
@@ -332,21 +349,7 @@ if(empty($_SESSION['login'])){
                 </div>
             </div>
 
-             <div class="look">
-                    <div class="news2">
-                        <img class="head2" src="../img/name.png">
-                        <div class="poxes">
-                        <span class="first2">Json</span>
-                        <p class="mail">123456789@qq.com</p>
-                        </div>
-                        <i class="time2">right   sdasf   a</i>
-                        <img class="tui2" src="../img/tui1.png">                        
-                    </div>
-                    <div class="pp">
-                        <p class="nice2"> Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription Diana Kennedy purchased a year subscription.</p>                        
-                    </div>
-                </div>
-
+   
             <div class="picture">
 
                 <div class="page-wrap">
@@ -438,6 +441,8 @@ if(empty($_SESSION['login'])){
             </div>
 
         </div>
+    </div>
+    </div>
     </div>
     <div id="elevator_item">
         <a id="elevator" onclick="return false;" title="000"></a>

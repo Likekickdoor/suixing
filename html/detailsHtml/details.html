@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut Icon" href="html/detailsHtml/favicon.ico">
     <link rel="stylesheet" href="html/detailsHtml/css/details.css">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="theBackBoard">
-        <img src="html/detailsHtml/img/screen.jpg" />
+        <!-- <img src="html/detailsHtml/img/screen.jpg" /> -->
     </div>
     <div class="searchArea">
         <form action="index.php" method="GET" id="mainForm">
@@ -138,7 +138,7 @@
                         <div class="moreTagsRight">
                             <span class="currencySymbol">￥</span>
                             <span class="prices">
-                            <?=isset($dataOne['hardSeat'])?$dataOne['hardSeat']:$dataOne['bSeat'];?>
+                            <?=isset($dataOne['hardSeat'])?abs($dataOne['hardSeat']):abs($dataOne['bSeat']);?>
                             </span>
                         </div>
                         <div class="stations">
