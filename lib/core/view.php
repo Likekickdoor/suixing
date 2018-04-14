@@ -11,8 +11,9 @@
         }
         //把数据显示到模板文件
         public static function display($file,$data){
-            $path = self::$config['PATH'].'\\'.$file.'.'.self::$config['FORMAT'];
-            if(!is_file($path)){
+            $path = self::$config['PATH'].'/'.$file.'.'.self::$config['FORMAT'];
+             
+	     if(!is_file($path)){
                 p('模板文件不存在');
                 die;
             }

@@ -1,4 +1,20 @@
-.liu{
+html,
+body {
+    /* width: 100%; */
+    height: 100%;
+}
+
+.bigbox {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    display: none;
+    left: 0;
+    top: 0;
+}
+
+.liu {
     display: none;
     height: auto;
     margin-left: 17px;
@@ -6,25 +22,31 @@
     display: none;
 }
 
-.contain{
+.contain {
     width: 700px;
     height: auto;
     margin-left: 30px;
 }
-.tuo{
+
+.tuo {
     width: 100%;
     height: 100px;
     background: #f6f6f6;
     border-bottom: 1px #ccc solid;
-    
     /* background: rebeccapurple; */
 }
-.head1{
+
+.head1 {
     width: 60px;
     height: 60px;
     margin: 10px;
 }
-.first1{
+
+.first1 {
+    width: 80px;
+    height: 20px;
+    /* background: pink; */
+    overflow: hidden;
     color: #222;
     font-size: 18px;
     font-weight: bold;
@@ -33,27 +55,30 @@
     margin: 20px 0 0 10px;
     display: inline-block;
 }
-.time1{
+
+.time1 {
     color: #222;
     font-size: 16px;
     margin-right: 20px;
     position: absolute;
-    margin:20px 0 0 200px;
+    margin: 20px 0 0 200px;
     display: inline-block;
 }
-.nice1{
+
+.nice1 {
     width: 350px;
     height: 30px;
     color: #666;
     /* background: rebeccapurple; */
     font-size: 14px;
     position: absolute;
-    margin:50px 0 0 0;
+    margin: 50px 0 0 0;
     display: inline-block;
-    overflow:hidden;
+    overflow: hidden;
     line-height: 30px;
 }
-.hui{
+
+.hui {
     float: right;
     margin: 30px;
     width: 70px;
@@ -65,17 +90,16 @@
     cursor: pointer;
 }
 
-.h2{
+.h2 {
     text-align: center;
 }
 
 @media (min-width: 0px) and (max-width: 1150px) {
     .message_num {
         display: none
-       
     }
-    
 }
+
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
                                  成员管理                                                                    / 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -96,8 +120,8 @@
 }
 
 .center {
-    margin: 10px auto!important;
-    display: block!important;
+    margin: 10px auto !important;
+    display: block !important;
     text-align: center;
 }
 
@@ -145,7 +169,6 @@ select {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
 }
-
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////
                                  留言 评论                                                                     / 
@@ -319,7 +342,8 @@ select {
     display: none;
     text-align: center
 }
-.qr-popup img{
+
+.qr-popup img {
     width: 90%;
     height: 90%
 }
@@ -344,22 +368,22 @@ select {
     bottom: 14px
 }
 
-
 /*/////////////////////@@@@@@@@////////////////////////////////////////////////////////////////////*/
 
-
 /*******/
-.bug{
+
+.bug {
     float: left;
-    width:70px;
+    width: 70px;
     height: 50px;
     position: relative;
 }
-a{
+
+a {
     text-decoration: none;
 }
 
-.title{
+.title {
     height: 100%;
     line-height: 50px;
     font-size: 20px;
@@ -367,17 +391,16 @@ a{
     margin: 0 50px 0 0;
     text-indent: 20px;
     letter-spacing: 0;
-   
 }
 
-.icon-0{
+.icon-0 {
     width: 30px;
     height: 30px;
     margin-top: 10px;
     margin-left: 30px;
 }
 
-.num{
+.num {
     width: 20px;
     height: 20px;
     background: rgb(247, 123, 123);
@@ -390,7 +413,7 @@ a{
     display: inline-block;
 }
 
-.angle{
+.angle {
     width: 0;
     height: 0;
     border-width: 8px 8px;
@@ -405,44 +428,55 @@ a{
     display: none;
 }
 
-.hidden{
+.hidden {
     width: 280px;
     height: auto;
+    /* height: 400px; */
     position: absolute;
     top: 100%;
     left: 17%;
     display: none;
     background: #fff;
-    
+    /* overflow: hidden; */
 }
 
-.summit{
+.summit {
     width: 100%;
     height: 12%;
     background: rgb(247, 123, 123);
 }
-.summit p{
-    margin: 0 ;
-    padding:10px 0 0 45px;
+
+.summit p {
+    margin: 0;
+    padding: 10px 0 0 45px;
     color: #fff;
 }
-.boo{
+
+.boo {
     width: 100%;
-    height:auto ;
+    height: auto;
+    /* overflow: hidden; */
     background: #fff;
     border-radius: 10px;
 }
-.news{
+
+.news {
     width: 100%;
     height: 60px;
     border-bottom: 1px solid #ccc;
 }
-.head{
+
+.head {
     width: 40px;
     height: 40px;
     margin: 10px;
 }
-.first{
+
+.first {
+    width: 80px;
+    height: 20px;
+    /* background: pink; */
+    overflow: hidden;
     color: #222;
     font-size: 14px;
     font-weight: bold;
@@ -451,117 +485,138 @@ a{
     margin-top: 10px;
     display: inline-block;
 }
-.time{
+
+.time {
     color: #222;
     font-size: 12px;
     margin-right: 20px;
     position: absolute;
-    margin:10px 0 0 100px;
+    margin: 10px 0 0 100px;
     display: inline-block;
 }
-.nice{
+
+.nice {
     width: 78%;
     height: 30px;
     color: #666;
     font-size: 12px;
     position: absolute;
-    margin:25px 0 0 -5px;
+    margin: 25px 0 0 -5px;
     display: inline-block;
-    overflow:hidden;
+    overflow: hidden;
     line-height: 30px;
 }
-.zi{
+
+.zi {
     margin: 0;
     font-size: 14px;
     color: #666;
     padding: 10px;
 }
-.bar{
+
+.bar {
     background: lightgreen;
-    border-radius: 10px;    
+    border-radius: 10px;
 }
-.aa{
+
+.aa {
     background: lightcoral;
-    border-radius: 10px;  
+    border-radius: 10px;
 }
-.ab{
+
+.ab {
     background: lightblue;
-    border-radius: 10px;  
+    border-radius: 10px;
 }
-.ac{
+
+.ac {
     background: lightsalmon;
-    border-radius: 10px;  
+    border-radius: 10px;
 }
-.ad{
+
+.ad {
     background: lightslategray;
-    border-radius: 10px;  
+    border-radius: 10px;
 }
-.sever{
+
+.sever {
     width: 150px;
     height: 10px;
     margin: -5px 0 0 10px;
     border-radius: 10px;
-    background:#f6f6f6;
+    background: #f6f6f6;
 }
-font{
+
+font {
     font-size: 14px;
     color: #666;
     float: right;
-    margin:-17px 10px 0 0;
+    margin: -17px 10px 0 0;
 }
-.footer{
+
+.footer {
     width: 100%;
     height: 50px;
     background: #fff;
     /* position: relative; */
 }
-.footer p{
-color: #666;
-font-size: 14px;
-display: block;
-margin-top: 20px;
-cursor: pointer;
+
+.footer p {
+    color: #666;
+    font-size: 14px;
+    display: block;
+    margin-top: 20px;
+    cursor: pointer;
 }
-.exit{
+
+.exit {
     float: right;
     width: 30px;
     height: 30px;
     margin: 10px 30px 0 0;
 }
 
-.look{
+.look {
     width: 500px;
     height: 300px;
     position: relative;
-    background:#f6f6f6;
-     /* top: -25%;
+    background: #f6f6f6;
+    /* top: -25%;
      left: 30%;; */
     border-radius: 10px;
     display: none;
-    position: relative;
-    top: -600px;
-    left: 450px;
-    
+    /* z-index: 10000; */
+    /* position: relative; */
+    top: 100px;
+    left: 650px;
 }
-.news2{
+
+.news2 {
     width: 100%;
     height: 100px;
     /* background: red; */
     border-bottom: 1px solid #ccc;
 }
-.head2{
+
+.head2 {
     width: 70px;
     height: 70px;
     margin: 10px;
     float: left;
 }
-.poxes{
+
+.poxes {
     width: 200px;
     height: 100px;
     /* background: red; */
     float: left;
 }
-.first2{
+
+.first2 {
+    width: 80px;
+    height: 20px;
+    /* background: pink; */
+    overflow: hidden;
     color: #222;
     font-size: 18px;
     font-weight: bold;
@@ -571,7 +626,8 @@ cursor: pointer;
     margin: 25px 0 0 20px;
     display: inline-block;
 }
-.mail{
+
+.mail {
     color: #222;
     font-size: 18px;
     margin-right: 20px;
@@ -579,20 +635,23 @@ cursor: pointer;
     margin: 55px 0 0 20px;
     display: inline-block;
 }
-.time2{
+
+.time2 {
     color: #222;
     font-size: 16px;
     float: left;
     margin: 40px 0 0 20px;
-    display:block;
+    display: block;
 }
-.pp{
+
+.pp {
     width: 100%;
     height: auto;
     color: #444;
     /* background: rebeccapurple; */
 }
-.nice2{
+
+.nice2 {
     width: 460px;
     height: auto;
     /* color: #666; */
@@ -602,9 +661,9 @@ cursor: pointer;
     display: inline-block;
     line-height: 30px;
     padding: 10px 20px 0 20px;
-  
 }
-.tui2{
+
+.tui2 {
     width: 30px;
     height: 30px;
     float: right;

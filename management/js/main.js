@@ -65,6 +65,7 @@ window.onload = function () {
         $('.daily').css('display','none'); 
         $('.liu').css('display','none');  
         $('.picture').css('display','none'); 
+        $('.bigbox').css('display','none');                
         $('.look').css('display','none');
     })
     $('.nav-0').eq(1).on('click',function(){
@@ -73,6 +74,7 @@ window.onload = function () {
         $('.daily').css('display','none'); 
         $('.liu').css('display','none');  
         $('.picture').css('display','none');  
+        $('.bigbox').css('display','none');                
         $('.look').css('display','none');
     })
     $('.nav-0').eq(2).on('click',function(){
@@ -81,6 +83,7 @@ window.onload = function () {
         $('.daily').css('display','block');   
         $('.liu').css('display','none');  
         $('.picture').css('display','none'); 
+        $('.bigbox').css('display','none');        
         $('.look').css('display','none');
     })
    
@@ -89,7 +92,9 @@ window.onload = function () {
         $('.data').css('display','none');    
         $('.daily').css('display','none');   
         $('.liu').css('display','none');                                                                      
-        $('.picture').css('display','block');  $('.look').css('display','none');
+        $('.picture').css('display','block');  
+        $('.bigbox').css('display','none');        
+        $('.look').css('display','none');
     })
   
     $('.nav-0').eq(4).on('click',function(){
@@ -97,8 +102,10 @@ window.onload = function () {
         $('.data').css('display','none');    
         $('.daily').css('display','none');   
         $('.liu').css('display','block'); 
-        $('.picture').css('display','none');   $('.liu').css('opacity',1);
-
+        $('.picture').css('display','none');   
+        $('.liu').css('opacity',1);
+        $('.bigbox').css('display','none');        
+        $('.look').css('display','none');
     })
 
     //查看
@@ -113,6 +120,7 @@ window.onload = function () {
         $('.daily').css('display','none');   
         $('.liu').css('opacity',0.2); 
         $('.picture').css('display','none');
+        $('.bigbox').css({"display":"block"});
         $('.look').css('display','block');
     
         })
@@ -144,5 +152,7 @@ window.onload = function () {
         $('.liu').css('opacity',1); 
         $('.picture').css('display','none');
         $('.look').css('display','none');
+        $('.bigbox').css('display','none');        
+        // $('.look').css('display','block');
     })
 };
