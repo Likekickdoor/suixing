@@ -139,12 +139,20 @@ window.onload = function () {
     var oChange=document.querySelector('.change');
     oChange.onclick=function(){
         arra({
+<<<<<<< HEAD
             url: '../../phpImageChecked/setImageChecked.php',
+=======
+            url: 'http://localhost/suixing/phpImageChecked/setImageChecked.php',
+>>>>>>> 14b5cd170ebe1a05a8ee36c0c4e3e5bf80c674a0
             
 
             success: function (arr1) {
                
+<<<<<<< HEAD
                $(".yan").attr('src',"../../phpImageChecked/setImageChecked.php"); 
+=======
+               $(".yan").attr('src',"http://localhost/suixing/phpImageChecked/setImageChecked.php"); 
+>>>>>>> 14b5cd170ebe1a05a8ee36c0c4e3e5bf80c674a0
             }
         })
     }

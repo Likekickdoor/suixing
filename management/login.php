@@ -37,6 +37,7 @@ class loginCheck {
      */
     public function checkCheck($check){
         if(!empty($_SESSION['check_checks'])){
+            // var_dump($_SESSION['check_checks']);die;
             if($_SESSION['check_checks']==$check){
                 return true;
             }else{
