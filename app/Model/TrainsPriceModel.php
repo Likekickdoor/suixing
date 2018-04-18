@@ -28,7 +28,7 @@ class TrainsPrice
 			}
 			$trainTable=self::noAgainData($results);//此数据是唯一的有效车次信息表	
 			$trainTable=self::computeTicket($trainTable);//将价格加上后
-			// self::TimeUpSort($trainTable);
+			$trainTable=self::TimeUpSort($trainTable);
 			return  $trainTable;
 		}
 		
