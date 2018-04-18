@@ -3,6 +3,7 @@ namespace app\Model;
 use lib\core\DB;
 /**
 * 车票价Modle类，得到的是计算后的价格对比
+/home/www/htdocs/suixing/app/Model/TrainsPriceModel.php
 */
 class TrainsPrice
 {
@@ -27,7 +28,7 @@ class TrainsPrice
 			}
 			$trainTable=self::noAgainData($results);//此数据是唯一的有效车次信息表	
 			$trainTable=self::computeTicket($trainTable);//将价格加上后
-			$trainTable=self::PriceUpSort($trainTable);
+			// self::TimeUpSort($trainTable);
 			return  $trainTable;
 		}
 		
@@ -44,8 +45,11 @@ class TrainsPrice
 	    	$train_type=mb_substr(strtoupper($train['trainNo']), 0,1,'utf-8');//得到某种类型的车G.D.C.K.Z.T.P.S.Y.2262
 	    	if($train_type=='K'||$train_type=='T'||$train_type=='Z')
 	    	{
-	           $distance=$train['Bdistance']-$train['Adistance'];      
-	           if($distance<=200){
+	           $distance=$train['Bdistance']-$train['Adistance'];
+	           if($distance<=0){
+	           	continue;
+	           }
+	           if($distance<=200&&$distance>0){
 	               $baise_pri=0.05861*$distance;//基础价
 	               $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
@@ -79,7 +83,10 @@ class TrainsPrice
 	    	}else if($train_type=='G'){
 	    	   /*高铁票价实行递远递减优惠，500-1000km部分打9折，1000-1500km部分打8折，1500-2000km部分打7折，2000km以上部分打6折，不同席别的票价差异体现为费率的不同，由于商务座或特等座受市场价浮动严重不计算*/
 	    	   $distance=$train['Bdistance']-$train['Adistance'];
-	    	   if($distance<=500){
+	    	   if($distance<=0){
+	           	continue;
+	           }
+	    	   if($distance<=500&&$distance>0){
 	    	   	   if($distance<=20){
 	    	   	   	$bSeat=0.46*20.0;//二等座
 	    	   	   	$aSeat=0.74*20.0;//一等座
@@ -117,7 +124,10 @@ class TrainsPrice
 	    	   }
 	    	}else if($train_type=='C'||$train_type=='D'){
 	         $distance=$train['Bdistance']-$train['Adistance'];
-	    	   if($distance<=500){
+	           if($distance<=0){
+	           	continue;
+	           }
+	    	   if($distance<=500&&$distance>0){
 	    	   	   if($distance<=20){
 	    	   	   	$bSeat=0.30*20.0;//二等座
 	    	   	   	$aSeat=0.37*20.0;//一等座
@@ -155,8 +165,11 @@ class TrainsPrice
 	    	   }
 	    	}else{
 	    	     /*铺快列车如：7768*/
-	           $distance=$train['Bdistance']-$train['Adistance'];      
-	           if($distance<=200){
+	           $distance=$train['Bdistance']-$train['Adistance'];
+	           if($distance<=0){
+	           	continue;
+	           }   
+	           if($distance<=200&&$distance>0){
 	               $baise_pri=0.05861*$distance;//基础价
 	               $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
@@ -355,7 +368,7 @@ class TrainsPrice
 	/**
 	*按价格升序排列
 	*/
-	static function PriceUpSort($trainsTable){
+	function PriceUpSort($trainsTable){
 	  for($i=0;$i<count($trainsTable)-1;$i++)
 	  {
 	      for($j=0;$j<count($trainsTable)-$i-1;$j++)
@@ -386,7 +399,7 @@ class TrainsPrice
 	/**
 	*按时间升序排列
 	*/
-	static function TimeUpSort($trainsTable){
+	function TimeUpSort($trainsTable){
 	  for($i=0;$i<count($trainsTable)-1;$i++)
 	  {
 	      for($j=0;$j<count($trainsTable)-$i-1;$j++)

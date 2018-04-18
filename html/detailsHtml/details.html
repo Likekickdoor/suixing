@@ -147,7 +147,7 @@
                                 <div class="costTime">
                                     <?php
                                     $runtime=$dataOne['BrunTime']-$dataOne['ArunTime'];
-                                    if($runtime/60>0){
+                                    if($runtime>60){
                                         $h=floor($runtime/60);
                                         $i=$runtime%60;
                                         echo $h.'时'.$i.'分';
