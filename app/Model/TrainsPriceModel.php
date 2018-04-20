@@ -3,19 +3,18 @@ namespace app\Model;
 use lib\core\DB;
 /**
 * 车票价Modle类，得到的是计算后的价格对比
-/home/www/htdocs/suixing/app/Model/TrainsPriceModel.php
 */
 class TrainsPrice
 {
-	private static $dpplace;
-	private static $arrplace;
-	public static function Search_trains($dpplace,$arrplace){
+	private $dpplace;
+	private $arrplace;
+	public function Search_trains($dpplace,$arrplace){
 		
 		if(empty($dpplace)||empty($arrplace)){
 			throw new Exception("没有参数传入,需要两个参数！");
 		}else{
-			self::$dpplace=$dpplace;
-			self::$arrplace=$arrplace;
+			$this->$dpplace=$dpplace;
+			$this->$arrplace=$arrplace;
 			$sql="SELECT A.about_id,A.trainNo,A.stationSort AS dpSort,B.stationSort AS arrSort,A.runTime as ArunTime,B.runTime as BrunTime,A.distance as Adistance,B.distance as Bdistance,A.stationName AS dpSta,B.stationName AS arrSta,A.startTime AS AstartTime,B.startTime AS BstartTime FROM station_stop AS A,station_stop AS B WHERE A.stationName like '{$dpplace}%' AND B.stationName  like '{$arrplace}%' AND A.about_id=B.about_id AND A.stationSort<B.stationSort";
 			// echo $sql;exit();
 
@@ -26,9 +25,9 @@ class TrainsPrice
 			if(empty($results)){
 				return null;
 			}
-			$trainTable=self::noAgainData($results);//此数据是唯一的有效车次信息表	
-			$trainTable=self::computeTicket($trainTable);//将价格加上后
-			$trainTable=self::TimeUpSort($trainTable);
+			$trainTable=$this->noAgainData($results);//此数据是唯一的有效车次信息表	
+			$trainTable=$this->computeTicket($trainTable);//将价格加上后
+			$trainTable=$this->PriceUpSort($trainTable);
 			return  $trainTable;
 		}
 		
@@ -38,55 +37,49 @@ class TrainsPrice
 	*@param 计算各个车次的各种票价
 	*return 加上了票价的$trainTible车次表 
 	*/
-	private static function computeTicket($trainTable){
+	private function computeTicket($trainTable){
 		$Add_price_table=[];
 	    foreach ($trainTable as $train) {
 
 	    	$train_type=mb_substr(strtoupper($train['trainNo']), 0,1,'utf-8');//得到某种类型的车G.D.C.K.Z.T.P.S.Y.2262
 	    	if($train_type=='K'||$train_type=='T'||$train_type=='Z')
 	    	{
-	           $distance=$train['Bdistance']-$train['Adistance'];
-	           if($distance<=0){
-	           	continue;
-	           }
-	           if($distance<=200&&$distance>0){
+	           $distance=$train['Bdistance']-$train['Adistance'];      
+	           if($distance<=200){
 	               $baise_pri=0.05861*$distance;//基础价
-	               $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=201&&$distance<=500){
 	           	   $baise_pri=0.052749*($distance-200)+11.722;//基础价
-	           	   $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	           	   $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=501&&$distance<=1000){
 	           	   $baise_pri=0.046888*($distance-500)+27.5467;//基础价
-	           	   $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	           	   $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=1001&&$distance<=1500){
 	          	   $baise_pri=0.041027*($distance-1000)+50.9907;//基础价
-	               $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=1501&&$distance<=2500){
 	          	   $baise_pri=0.035166*($distance-1501)+71.5042;//基础价
-	               $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=2501){
 	          	   $baise_pri=0.029305*($distance-2500)+106.6702;//基础价
-	               $train=self::do_price($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 
 	    	}else if($train_type=='G'){
 	    	   /*高铁票价实行递远递减优惠，500-1000km部分打9折，1000-1500km部分打8折，1500-2000km部分打7折，2000km以上部分打6折，不同席别的票价差异体现为费率的不同，由于商务座或特等座受市场价浮动严重不计算*/
 	    	   $distance=$train['Bdistance']-$train['Adistance'];
-	    	   if($distance<=0){
-	           	continue;
-	           }
-	    	   if($distance<=500&&$distance>0){
+	    	   if($distance<=500){
 	    	   	   if($distance<=20){
 	    	   	   	$bSeat=0.46*20.0;//二等座
 	    	   	   	$aSeat=0.74*20.0;//一等座
@@ -124,10 +117,7 @@ class TrainsPrice
 	    	   }
 	    	}else if($train_type=='C'||$train_type=='D'){
 	         $distance=$train['Bdistance']-$train['Adistance'];
-	           if($distance<=0){
-	           	continue;
-	           }
-	    	   if($distance<=500&&$distance>0){
+	    	   if($distance<=500){
 	    	   	   if($distance<=20){
 	    	   	   	$bSeat=0.30*20.0;//二等座
 	    	   	   	$aSeat=0.37*20.0;//一等座
@@ -165,38 +155,35 @@ class TrainsPrice
 	    	   }
 	    	}else{
 	    	     /*铺快列车如：7768*/
-	           $distance=$train['Bdistance']-$train['Adistance'];
-	           if($distance<=0){
-	           	continue;
-	           }   
-	           if($distance<=200&&$distance>0){
+	           $distance=$train['Bdistance']-$train['Adistance'];      
+	           if($distance<=200){
 	               $baise_pri=0.05861*$distance;//基础价
-	               $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=201&&$distance<=500){
 	           	   $baise_pri=0.052749*($distance-200)+11.722;//基础价
-	           	   $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	           	   $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=501&&$distance<=1000){
 	           	   $baise_pri=0.046888*($distance-500)+27.5467;//基础价
-	           	   $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	           	   $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=1001&&$distance<=1500){
 	          	   $baise_pri=0.041027*($distance-1000)+50.9907;//基础价
-	               $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=1501&&$distance<=2500){
 	          	   $baise_pri=0.035166*($distance-1501)+71.5042;//基础价
-	               $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           }
 	           if($distance>=2501){
 	          	   $baise_pri=0.029305*($distance-2500)+106.6702;//基础价
-	               $train=self::do_price2($baise_pri,$train);//加工基础价得到各种座位价格
+	               $train=$this->do_price2($baise_pri,$train);//加工基础价得到各种座位价格
 	               array_push($Add_price_table,$train);
 	           } 
 	    	}
@@ -207,7 +194,7 @@ class TrainsPrice
 	/**
 	*@param 得到车次结果表里价格最低的车次'下标'=$result_key
 	*/
-	private static function MinPricekey($trainTable){
+	private  function MinPricekey($trainTable){
 	    
 	  foreach ($trainTable as $key => $train) {    
 	      if(!empty($train['hardSeat'])){
@@ -235,7 +222,7 @@ class TrainsPrice
 	/**
 	*@param 得到车次结果表里价格最高的车次'下标'=$result_key
 	*/
-	private static function MaxPricekey($trainTable){
+	private  function MaxPricekey($trainTable){
 	    
 	  foreach ($trainTable as $key => $train) {    
 	      if(!empty($train['hardSeat'])){
@@ -263,7 +250,7 @@ class TrainsPrice
 	/**
 	*@param 计算K/Z/T车型票价 
 	*/
-	private static function do_price($baise_pri,$train){
+	private  function do_price($baise_pri,$train){
 	               $add_train_type=0.4*$baise_pri;//K车型附加票价
 	           	   $add_kongtiao=0.25*$baise_pri;//空调费         
 	               $hardSeat=($baise_pri+$add_train_type+$add_kongtiao)*1.5+1.0;//硬座基础价+空调+车型 x浮动价 1元铁路发展基金
@@ -279,7 +266,7 @@ class TrainsPrice
 	/**
 	*@param 计算铺快和其他
 	*/
-	private static function do_price2($baise_pri,$train){
+	private  function do_price2($baise_pri,$train){
 	               $add_train_type=0.2*$baise_pri;//K车型附加票价
 	           	      
 	               $hardSeat=($baise_pri+$add_train_type)*1.5+1.0;//硬座基础价+空调+车型 x浮动价 1元铁路发展基金
@@ -295,7 +282,7 @@ class TrainsPrice
 	/**
 	*@param 与栈里面的数据对比，得到保持车次不重复，即G1312/G1213只出现一次
 	*/
-	private static function stickOnly($arrData,$arrs){
+	private  function stickOnly($arrData,$arrs){
 		$count=count($arrs)-1;
 		while($count>=0){
 			if($arrs[$count]['trainNo']==$arrData['trainNo']){
@@ -316,7 +303,7 @@ class TrainsPrice
 	/**
 	*@param 得到唯一的有效车次信息表
 	*/
-	private static function noAgainData($arrDatas){
+	private  function noAgainData($arrDatas){
 	   $arrs=[];
 	   foreach ($arrDatas  as $key=> $arrData) {
 	   	    if($key==0){
@@ -326,7 +313,7 @@ class TrainsPrice
 	   	    continue;	
 	   	    }
 
-	   	    if(self::stickOnly($arrData,$arrs)==true){
+	   	    if($this->stickOnly($arrData,$arrs)==true){
 	   	    array_push($arrs, $arrData);
 	   	    }
 	   }
@@ -368,7 +355,7 @@ class TrainsPrice
 	/**
 	*按价格升序排列
 	*/
-	function PriceUpSort($trainsTable){
+	 function PriceUpSort($trainsTable){
 	  for($i=0;$i<count($trainsTable)-1;$i++)
 	  {
 	      for($j=0;$j<count($trainsTable)-$i-1;$j++)
@@ -399,7 +386,7 @@ class TrainsPrice
 	/**
 	*按时间升序排列
 	*/
-	function TimeUpSort($trainsTable){
+	 function TimeUpSort($trainsTable){
 	  for($i=0;$i<count($trainsTable)-1;$i++)
 	  {
 	      for($j=0;$j<count($trainsTable)-$i-1;$j++)
