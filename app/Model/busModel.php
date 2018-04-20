@@ -46,11 +46,12 @@
                         $this->end_id = $result['id'];
                 }
             }
-            if($this->start_id == NULL || $this->end_id == NULL)
-                return $this->data;
+            // if($this->start_id == NULL || $this->end_id == NULL)
+            //     return $this->data;
         }
         //获取线路信息
         function get_bus($start,$end,$order){
+            $this->data = [];
             $this->init($start,$end);
             DB::find("city_to_station","city_id={$this->start_id} and station_id={$this->end_id}");
             if(DB::$rowcount > 0){
@@ -64,6 +65,7 @@
                 // $this->get_interchange($order);
                 $this->data = [];
             }
+            // var_dump($this->data);p("");p("");
             return $this->data;
         }
     }

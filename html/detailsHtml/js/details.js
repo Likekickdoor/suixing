@@ -38,259 +38,149 @@
                 // alert($('.ulSUGGEST').children('div').length);
                 // console.log(data);
                 var dataLength = data.length;
+                var costTime = "";
+                var number = "";
+                var startTime = "";
+                var startPlace = "";
+                var endTime = "";
+                var endPlace = "";
+                var prices = "";
+                var dataFeature = "";
+                // var firstW = data[0];
+                // var DataFeature = "";
                 // alert(dataLength);
-                var firstW = data[0];
-                var DataFeature = "";
-                // alert(dataLength);
-                if(data == ''){
-                    // console.log($('.ulSUGGEST').children('div').length);
+                // alert(data);
+                // alert(data[1]);
+                if(data == ','){
                     $('.ulSUGGEST').addClass('noresult');
-                    // alert('none');
-                    // alert(data);
-                };
-                if(data[0].trainNo){
-                    // alert('isTrain');
-                    DataFeature = 'H';
-                }else if(data[0].end_station_name){
-                    // alert('isBUS');
-                    DataFeature = 'Q';
-                }
-                // alert(trainDataFeature);
-                
-                if(DataFeature == 'H'){
-                    var trainHTMLs = "";
-                    for(var ts=0; ts<dataLength; ts++){
-                        var aStartTime = data[ts].AstartTime;
-                        var ARRaStartTime = aStartTime.split(':');
-                        var ARRaStartTimeSF = ARRaStartTime[ts] + ':' + ARRaStartTime[ts];
-                        var bStartTime = data[ts].BstartTime;
-                        var ARRbStartTime = bStartTime.split(':');
-                        var ARRbStartTimeSF = ARRbStartTime[ts] + ':' + ARRbStartTime[ts];
-                        var RUNingTIME = data[ts].BrunTime - data[ts].ArunTime;
-                        RUNTIME = Math.floor(RUNingTIME/60) + '时' + RUNingTIME%60 + '分';
-                        var SEATPRICE = ""
-                        if(data[ts].hardSeat){
-                            SEATPRICE = data[ts].hardSeat;
-                        }else if(data[ts].bSeat){
-                            SEATPRICE = data[ts].bSeat;
-                        }
-                        // alert(RUNTIME);
-                        // alert(ARRaStartTimeSF);
-                        // alert(ARRbStartTimeSF);
-                        var trainHTML = 
-                        `
-                        <li class="lists Normal H">
-                        <div class="dotss"></div>
-                        <div class="moreTags">
-                            <div class="moreTagsLeft">
-                                <div class="tg1">荐</div>
-                                <div class="tg2">直达</div>
-                                <div class="tg3">路线最短</div>
-                                <span class="tg4">
-                                    <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
-                                    <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
-                                    <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
-                                    <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
-                                </span>
-                                <span class="showHideWindow"></span>
-                                <sapn class="showHideBtn">
-                                    <span class="showHideStationsName"></span>
-                                    <span class="showHideKm"></span>
-                                    <span class="foldBtn"></span>
-                                </span>
-                            </div>
-                            <div class="moreTagsRight">
-                                <span class="currencySymbol">￥</span>
-                                <span class="prices">
-                                `+
-                                SEATPRICE
-                                +
-                                `
-                                </span>
-                            </div>
-                            <div class="stations">
-                                <div class="StationLeft">
-                                    <div class="number">${data[ts].trainNo}</div>
-                                    <div class="costTime">
-                                    `+
-                                    RUNTIME
-                                   +` 
-                                    </div>
-                                </div>
-                                <div class="StationCenter">
-                                    <div class="startStation">
-                                        <div class="startTime">
-                                    `+ARRaStartTimeSF+
-
-                                    `
-                                        </div>
-                                        <div class="startPlace">${data[ts].dpSta}</div>
-                                    </div>
-                                    <div class="throughStations slideRight">
-                                        <div class="line" id="first">
-                                            <div class="SaEdots"></div>
-                                            <div class="CenterDots"></div>
-                                            <div class="btnSlideRight" onclick="station_stopApi(<?=$id.','.$dataOne['about_id'].','.$dataOne['dpSort'].','.$dataOne['arrSort']; ?>)">经停信息</div>
-                                            <div class="lineThroughDots"></div>
-                                            <div class="STAT"  id=<?php echo '"train_stop'."$id".'"';?> >
-                                                <div class="saveStationsGap">
-                                                     <!-- <div>666</div> -->
-                                                     <!-- 停站距离 -->
-                                                </div>
-                                                <div class="space"></div>
-                                                <div class="saveStationsName">
-                                                    <div>默认站X</div>
-                                                    <!-- 留一站才停站信息按钮显示 -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="endStation">
-                                        <div class="endTime">
-                                        `+ARRbStartTimeSF+
-                                        `
-                                        </div>
-                                        <div class="endPlace">${data[ts].arrSta}</div>
-                                    </div>
-                                </div>
-                                <div class="StationRight"></div>
-                            </div>
-                        </div>
-                        <div class="fullCover" id="fullCover">
-                            <div class="centerBox">
-                                <div class="caption">
-                                    <div class="closeBtn" id="closeWindow"><div class="foldBtn"></div></div>
-                                    <div class="StarttoEnd">
-                                        <div class="wlineInfo">
-                                            <div class="wStart">长沙南</div>
-                                            <div class="to">至</div>
-                                            <div class="wEnd">北京西</div>
-                                        </div>
-                                        <div class="wCostTime">22时02分</div>
-                                        <div class="wStationNum">34</div>
-                                    </div>
-                                    <div class="wNumber"></div>
-                                </div>
-                                <div class="content">
-                                    <div class="outOFcolumn">
-                                        <div class="column" id=<?php echo '"train_stopWin'."$id".'"';?> >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                        `             
-                        trainHTMLs += trainHTML;
-                    }
-                    $('.ulSUGGEST').append(trainHTMLs);
-                    $('.ulSUGGEST').find('.lists.Normal').addClass('J');
-                    $('.number').each(function(){
-                        $(this).addClass('addci');
-                            var numberLength = $(this).html().length * 10;
-                            if(numberLength > 60){
-                                $(this).removeClass('addci');
-                                $(this).css({"width": "100%", "padding": "0", "fontSize": "14px"});
-                                $(this).parent().children('.costTime').css({"width": "100%", "padding": "0"});
+                }else{
+                    var HTMLs = "";
+                    for(var p=0; p<2; p++){
+                        // alert(p2);
+                        if(data[p]){
+                            // alert(p);
+                            if(data[p].Adistance){
+                                dataFeature = "H";
+                                costTime = Math.floor((data[p].BrunTime - data[p].ArunTime)/60) + "时" + (data[p].BrunTime - data[p].ArunTime)%60 + '分';
+                                number = data[p].trainNo;
+                                startTime = data[p].AstartTime.substr(0,5);
+                                startPlace = data[p].dpSta;
+                                endTime = data[p].BstartTime.substr(0,5);
+                                endPlace = data[p].arrSta;
+                                prices = "";
+                                if(data[p].hardSeat){
+                                    prices = data[p].hardSeat;
+                                }else if(data[p].bSeat){
+                                    prices = data[p].bSeat;
+                                }
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);
                             }
-                    });
-                    // console.log(trainHTMLs);
-                // alert($('.ulSUGGEST').children('div').length);
-                // $('.ulSUGGEST').append('<div></div>');
-                }else if(DataFeature == 'Q'){
-                    var busHTMLs = "";
-                    for(var bs=0; bs<dataLength; bs++){
-                        var busHTML = 
-                        `
-                        <li class="lists Normal Q">
-                        <div class="dotss"></div>
-                        <div class="moreTags">
-                            <div class="moreTagsLeft">
-                                <div class="tg1">荐</div>
-                                <div class="tg2">直达</div>
-                                <div class="tg3">路线最短</div>
-                                <span class="tg4">
-                                    <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
-                                    <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
-                                    <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
-                                    <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
-                                </span>
-                                <span class="showHideWindow"></span>
-                                <sapn class="showHideBtn">
-                                    <span class="showHideStationsName"></span>
-                                    <span class="showHideKm"></span>
-                                    <span class="foldBtn"></span>
-                                </span>
-                            </div>
-                            <div class="moreTagsRight">
-                                <span class="currencySymbol">￥</span>
-                                <span class="prices">
-                                ${data[bs].price}
-                                </span>
-                            </div>
-                            <div class="stations">
-                                <div class="StationLeft">
-                                    <div class="number"></div>
-                                    <div class="costTime">
-                                    ${data[bs].timer}
-                                    </div>
+                            if(data[p].valuation){
+                                dataFeature = "F";
+                                costTime = data[p].f_flightTime;
+                                number = data[p].f_flightCode;
+                                startTime = "";
+                                startPlace = data[p].f_fromAirport;
+                                endTime = "";
+                                endPlace = data[p].f_toAirport;
+                                prices = data[p].valuation;
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);
+                            }
+                            if(data[p].arrive_time){
+                                dataFeature = "Q";
+                                costTime = data[p].time;
+                                number = "";
+                                startTime = data[p].start_time;
+                                startPlace = data[p].start_station_name;
+                                endTime = data[p].arrive_time;
+                                endPlace = data[p].end_station_name;
+                                prices = data[p].price;
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);                                
+                            }
+                            var HTML =
+                            `
+                            <li class="lists Normal ${dataFeature} ">
+                            <div class="dotss"></div>
+                            <div class="moreTags">
+                                <div class="moreTagsLeft">
+                                    <div class="tg1">荐</div>
+                                    <div class="Jtg2">价格最低</div>
+                                    <div class="Jtg3">路线最短</div>
+                                    <span class="tg4">
+                                        <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                        <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                        <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                        <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                                    </span>
+                                    <span class="showHideWindow"></span>
+                                    <sapn class="showHideBtn">
+                                        <span class="showHideStationsName"></span>
+                                        <span class="showHideKm"></span>
+                                        <span class="foldBtn"></span>
+                                    </span>
                                 </div>
-                                <div class="StationCenter">
-                                    <div class="startStation">
-                                        <div class="startTime">${data[bs].start_time}
-                                        </div>
-                                        <div class="startPlace">${data[bs].start_station_name}</div>
+                                <div class="moreTagsRight">
+                                    <span class="currencySymbol">￥</span>
+                                    <span class="prices">${prices}</span>
+                                </div>
+                                <div class="stations">
+                                    <div class="StationLeft">
+                                        <div class="number">${number}</div>
+                                        <div class="costTime">${costTime}</div>
                                     </div>
-                                    <div class="throughStations slideRight">
-                                        <div class="line" id="first">
-                                            <div class="SaEdots"></div>
-                                            <div class="CenterDots"></div>
-                                            <div class="btnSlideRight" onclick="station_stopApi(<?=$id.','.$dataOne['about_id'].','.$dataOne['dpSort'].','.$dataOne['arrSort']; ?>)">经停信息</div>
-                                            <div class="lineThroughDots"></div>
-                                            <div class="STAT"  id=<?php echo '"train_stop'."$id".'"';?> >
-                                                <div class="saveStationsGap">
-                                                     <!-- <div>666</div> -->
-                                                     <!-- 停站距离 -->
-                                                </div>
-                                                <div class="space"></div>
-                                                <div class="saveStationsName">
-                                                    <div>默认站X</div>
-                                                    <!-- 留一站才停站信息按钮显示 -->
+                                    <div class="StationCenter">
+                                        <div class="startStation">
+                                            <div class="startTime">${startTime}</div>
+                                            <div class="startPlace">${startPlace}</div>
+                                        </div>
+                                        <div class="throughStations slideRight">
+                                            <div class="line" id="first">
+                                                <div class="SaEdots"></div>
+                                                <div class="CenterDots"></div>
+                                                <div class="btnSlideRight">经停信息</div>
+                                                <div class="lineThroughDots"></div>
+                                                <div class="STAT" >
+                                                    <div class="saveStationsGap">
+                                                    </div>
+                                                    <div class="space"></div>
+                                                    <div class="saveStationsName">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="endStation">
-                                        <div class="endTime">${data[bs].arrive_time}
+                                        <div class="endStation">
+                                            <div class="endTime">${endTime}</div>
+                                            <div class="endPlace">${endPlace}</div>
                                         </div>
-                                        <div class="endPlace">${data[bs].end_station_name}</div>
                                     </div>
+                                    <div class="StationRight"></div>
                                 </div>
-                                <div class="StationRight"></div>
                             </div>
-                        </div>
-                    </li>
-                        `
-                        busHTMLs += busHTML;
-                    }
-                }
-                $('.ulSUGGEST').append(busHTMLs);
-                $('.ulSUGGEST').find('.lists.Normal').addClass('J');
-                $('.number').each(function(){
-                    $(this).addClass('addci');
-                        var numberLength = $(this).html().length * 10;
-                        if(numberLength > 60){
-                            $(this).removeClass('addci');
-                            $(this).css({"width": "100%", "padding": "0", "fontSize": "14px"});
-                            $(this).parent().children('.costTime').css({"width": "100%", "padding": "0"});
+                        </li>
+                            `             
+                            HTMLs += HTML;
+                            // console.log(HTMLs);
                         }
-                });
-                // console.log(trainHTMLs);
-                // // alert(data[0].Adistance);
-                // if($('.ulSUGGEST').children('div').length == 3){
-                //     // alert('a');
-                //     $('.ulSUGGEST').addClass('noresult');
-                // }
+                        $('.ulSUGGEST').append(HTMLs);
+                        $('.ulSUGGEST').find('.lists.Normal').addClass('J').addClass('Z');
+                        $('.ulSUGGEST').children('li').eq(0).css({"display": "none"});
+                        $('.number').each(function(){
+                            $(this).addClass('addci');
+                                var numberLength = $(this).html().length * 10;
+                                if(numberLength > 60){
+                                    $(this).removeClass('addci');
+                                    $(this).css({"width": "100%", "padding": "0", "fontSize": "14px"});
+                                    $(this).parent().children('.costTime').css({"width": "100%", "padding": "0"});
+                                }
+                        });
+                        if($('.ulSUGGEST').children('li').length == 2){
+                            $('.ulSUGGEST').children('li').eq(1).addClass('zuidi').addClass('zuiduan');
+                        }else{
+                            $('.ulSUGGEST').children('li').eq(1).addClass('zuidi');
+                            $('.ulSUGGEST').children('li').eq(2).addClass('zuiduan');
+                        }
+                    }
+                };
             },
             error: function(){
                 // alert('失败');
@@ -379,7 +269,7 @@
                                     $('.BCity').html('<span class="Udot"></span><span class="Bdot"></span>' + BCitiesHTMLs);
                                 },
                                 error: function(){
-                                    alert('failed');
+                                    // alert('failed');
                                 }
                             });
                         });
@@ -400,6 +290,12 @@
     $('#start, #end').on('focus', function(){
         $(this).parent().children('.listCityName').fadeIn('fast', function(){
             $(this).stop().animate({margin: '-30px auto'}, 100);
+        });
+        $(document).keydown(function(e){
+            var key = e.keyCode;
+            if(key == 13){
+                $('#submit').click();
+            }
         });
     });
     ///点击输入候选列表城市名功能

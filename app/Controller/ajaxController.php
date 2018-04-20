@@ -71,6 +71,8 @@
             }
             $mod = M('recommend');
             $this->recommend = $mod->getRecommend($this->busData,$trainDatas,$this->flightData,$this->shipData);
+            // p($this->recommend);
+            // die;
         }
 
         function show(){
