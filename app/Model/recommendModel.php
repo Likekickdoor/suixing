@@ -23,18 +23,22 @@
             $price = $this->getPriceRecommend();
             $time = $this->getTimeRecommend();
             array_push($this->data,$price);
-            // array_push($this->data,$time);
+            // if($price[0] != $time[0] || $price[1] != $time[1])
+                array_push($this->data,$time);
+            // var_dump($this->data);
+            // p($time);
+            // die;
             return $this->data;                
         }
 
         function getPriceRecommend(){
             $priceAll = [];
-            if(is_array($this->busData)){
+            if(!empty($this->busData)){
                 $busPrice = $this->busData[0];
                 array_push($priceAll,$busPrice['price']);
                 // p($busPrice);
             }
-            if(is_array($this->trainData)){
+            if(!empty($this->trainData)){
                 $trainPrice = $this->trainData[0][0];
                 if(array_key_exists("bSeat",$trainPrice)){
                     array_push($priceAll,$trainPrice['bSeat']);
@@ -44,66 +48,86 @@
                 }
                 // p($trainPrice);
             }
-            if(is_array($this->flightData)){
+            if(!empty($this->flightData)){
                 $flightPrice = $this->flightData[0];
                 array_push($priceAll,$flightPrice['valuation']);
                 // p($flightPrice);
             }
-            if(is_array($this->shipData)){
+            if(!empty($this->shipData)){
                 $shipPrice = $this->shipData[0];
                 array_push($priceAll,$shipPrice[5]);
                 // p($shipPrice);
             }
             sort($priceAll);
-            if(is_array($this->busData) && $priceAll[0] == $busPrice['price'])
+            if(!empty($this->busData) && $priceAll[0] == $busPrice['price']) 
                 return $busPrice;
-            if(is_array($this->trainData)){
+            if(!empty($this->trainData)){
                 if(array_key_exists("bSeat",$trainPrice) && $priceAll[0] == $trainPrice['bSeat'])
-                    return $trainPrice;
+                return $trainPrice;
                 if(array_key_exists("hardSeat",$trainPrice) && $priceAll[0] == $trainPrice['hardSeat'])
-                    return $trainPrice;
+                return $trainPrice;
             }
-            if(is_array($this->flightData) && $priceAll[0] == $filghtPrice['valuation'])
-                return $filghtPrice;
-            if(is_array($this->shipData) && $priceAll[0] == $shipPrice[5])
-                return $shipPrice;
-        }
+            if(!empty($this->flightData) && $priceAll[0] == $filghtPrice['valuation']){
+            return $filghtPrice;
+            }
+            if(!empty($this->shipData) && $priceAll[0] == $shipPrice[5]){
+            return $shipPrice;
+            }
+       }
 
-        function getTimeRecommend(){
+	   function getTimeRecommend(){
             $timeAll = [];
-            if(is_array($this->busData)){
+            $time1 = "";
+            $time2 = "";
+            if(!empty($this->busData)){
                 $busTime = $this->busData[0];
+                $time1 = $busTime['time'];
+                $temp = explode("时",$busTime['time']);
+                $min = $temp[0] * 60;
+                $min += str_replace("分",'',$temp[1]);
+                $busTime['time'] = $min;
                 array_push($timeAll,$busTime['time']);
-                // p($busPrice);
+                // p($busTime['time']);
             }
-            if(is_array($this->trainData)){
+            if(!empty($this->trainData)){
                 $trainTime = $this->trainData[0][0];
                 array_push($timeAll,($trainTime['BrunTime']-$trainTime['ArunTime']));
-                // p($trainPrice);
+                // p($trainTime['BrunTime']-$trainTime['ArunTime']);
             }
-            if(is_array($this->flightData)){
-                $flightPrice = $this->flightData[0];
-                array_push($priceAll,$flightPrice['valuation']);
-                // p($flightPrice);
+            if(!empty($this->flightData)){
+                $flightTime = $this->flightData[0];
+                $time2 = $flightTime['f_flightTime'];
+                $temp = explode("小时",$flightTime['f_flightTime']);
+                $min = $temp[0] * 60;
+                $min += str_replace("分",'',$temp[1]);
+                $flightTime['f_flightTime'] = $min;
+                array_push($timeAll,$flightTime['f_flightTime']);
+                // p($flightTime['f_flightTime']);
             }
-            if(is_array($this->shipData)){
-                $shipPrice = $this->shipData[0];
-                array_push($priceAll,$shipPrice[5]);
-                // p($shipPrice);
+            if(!empty($this->shipData)){
+                $shipTime = $this->shipData[3];
+                array_push($timeAll,$shipTime[5]);
+                // p($shipTime);
             }
-            sort($priceAll);
-            if(is_array($this->busData) && $priceAll[0] == $busPrice['price'])
-                return $busPrice;
-            if(is_array($this->trainData)){
-                if(array_key_exists("bSeat",$trainPrice) && $priceAll[0] == $trainPrice['bSeat'])
-                    return $trainPrice;
-                if(array_key_exists("hardSeat",$trainPrice) && $priceAll[0] == $trainPrice['hardSeat'])
-                    return $trainPrice;
+            sort($timeAll);
+            // p($timeAll);
+            // die;
+            if(!empty($this->busData) && $timeeAll[0] == $busTime['price']){
+                $busTime['time'] = $time1;
+                return $busTime;
             }
-            if(is_array($this->flightData) && $priceAll[0] == $filghtPrice['valuation'])
-                return $filghtPrice;
-            if(is_array($this->shipData) && $priceAll[0] == $shipPrice[5])
-                return $shipPrice;
+            if(!empty($this->trainData)){
+                if(array_key_exists("bSeat",$trainTime) && $timeAll[0] == $trainTime['bSeat'])
+                    return $trainTime;
+                if(array_key_exists("hardSeat",$trainTime) && $timeAll[0] == $trainTime['hardSeat'])
+                    return $trainTime;
+            }
+            if(!empty($this->flightData) && $timeAll[0] == $flightTime['f_flightTime']){
+                $flightTime['f_flightTime'] = str_replace(array("小","钟"),"",$time2);
+                return $flightTime;
+            }
+            if(!empty($this->shipData) && $timeAll[0] == $shipTime[5])
+                return $shipTime;
         }
 
     }

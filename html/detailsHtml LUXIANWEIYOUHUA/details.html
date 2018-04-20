@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut Icon" href="html/detailsHtml/favicon.ico">
+    <link rel="stylesheet" href="html/detailsHtml/css/details.css">
+    <link rel="stylesheet" type="text/css" href="html/detailsHtml/css/Plugins/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="html/detailsHtml/css/Plugins/daterangepicker.css">
+    <title>详情页</title>
+</head>
+<body onselectstart="return false">
+    <div class="header">
+        <div class="headerContent">
+            <div class="siteName">
+                <a href="./index.php"><img src="favicon.ico" /><span>随行网</span></a>
+            </div>
+            <div class="siteContents">
+                <li><a href="./index.php">首页</a></li>
+                <li><a href="./index.php" class="active">查询</a></li>
+                <li><a href="./index.php#about">关于</a></li>
+                <li><a href="./index.php#advantage">优势</a></li>
+                <li><a href="./index.php#feature">未来</a></li>
+                <li><a href="./index.php#contact">联系我们</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="theBackBoard">
+        <img src="html/detailsHtml/img/screen.jpg" />
+    </div>
+    <div class="searchArea">
+        <form action="index.php" method="GET" id="mainForm">
+        <div class="InputWhere">
+            <div class="start">
+                <input type="text" id="start" name="dpplace" placeholder="输入起点" autocomplete="off" spellcheck="false"/>
+                <!-- 此处为下拉城市名列表 -->
+                <ul class="listCityName">
+                    
+                </ul>
+            </div>
+            <div class="SEbutton">
+                <input type="button" id="SEbutton" /></div>
+            <div class="end">
+                <input type="text" id="end" name="arrplace" placeholder="输入终点" autocomplete="off" spellcheck="false"/>
+                <ul class="listCityName">
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="InputWhen">
+            <input type="text" name="dateRange" placeholder="选择日期">
+        </div>
+        <div class="addScreen"><a>添加筛选</a></div>
+        <div class="screenMenu">
+            <div class="grayLine">
+                <div>是否直达</div>
+                <div><input name="SFZD" type="checkbox"/></div>
+            </div>
+            <div class="grayLine">
+                <div>交通工具</div>
+                <div>
+                    <li><div>火车</div><div><input name="trainCheck" type="checkbox"/></div></li>
+                    <li><div>汽车</div><div><input name="busCheck" type="checkbox"/></div></li>
+                    <li><div>飞机</div><div><input name="planeCheck" type="checkbox"/></div></li>
+                </div>
+            </div>
+            <div class="btnScreen"><a>关闭</a></div>
+        </div>
+        <div class="InputSubmit">
+            <input type="button" id="submit" value="查&nbsp;询" />
+        </div>
+        <div class="wait">请稍后</div>
+    </form>
+    </div>
+    <div class="resultsArea">
+        <div class="TAG-1 active" id="tag"></div>
+        <span class="TAG-1Words" id="tag">推荐</span>
+        <div class="TAG-2" id="tag"></div>
+        <span class="TAG-2Words" id="tag">火车</span>
+        <div class="TAG-3" id="tag"></div>
+        <span class="TAG-3Words" id="tag">汽车</span>
+        <div class="TAG-4" id="tag"></div>
+        <span class="TAG-4Words" id="tag">飞机</span>
+        <div class="TAG-5" id="tag"></div>
+        <span class="TAG-5Words" id="tag">轮船</span>
+        <div class="listAll">
+            <div class="LAtitle">
+                <h1>查询结果</h1>
+            </div>
+            <ul class="ulSUGGEST" id="ul">
+                <div class="sorts">
+                    <div class="CityA">选择中转城市<a></a></div>
+                    <div class="CityB">选择中转城市<a></a></div>
+                    <!-- <span class="clearCities"></span> -->
+                </div>
+                <div class="ACity">
+                    <span class="Udot"></span>
+                    <span class="Bdot"></span>
+                </div>
+                <div class="BCity">
+                    <span class="Udot"></span>
+                    <span class="Bdot"></span>
+                </div>
+            </ul>
+            <ul class="ulTRAIN" id="ul"><!--XUNHUAN-->
+                <div class="sorts">
+                    <div class="isThrough">是否直达</div>
+                    <div class="isTime">时间<a></a></div>
+                    <div class="isPrice">价格<a></a></div>
+                </div>
+            <?php 
+            if(!empty($data[1])){
+            foreach($data[1] as $key =>$dataOne):
+                $id=$key+1;
+                $Dots=$dataOne['arrSort']-$dataOne['dpSort']-1;
+            ?>
+                <li class="lists Normal">
+                    <div class="dotss"></div>
+                    <div class="moreTags">
+                        <div class="moreTagsLeft">
+                            <div class="tg1">荐</div>
+                            <div class="tg2">直达</div>
+                            <div class="tg3">路线最短</div>
+                            <span class="tg4">
+                                <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                            </span>
+                            <span class="showHideWindow"></span>
+                            <sapn class="showHideBtn">
+                                <span class="showHideStationsName"></span>
+                                <span class="showHideKm"></span>
+                                <span class="foldBtn"></span>
+                            </span>
+                        </div>
+                        <div class="moreTagsRight">
+                            <span class="currencySymbol">￥</span>
+                            <span class="prices">
+                            <?=isset($dataOne['hardSeat'])?abs($dataOne['hardSeat']):abs($dataOne['bSeat']);?>
+                            </span>
+                        </div>
+                        <div class="stations">
+                            <div class="StationLeft">
+                                <div class="number"><?=$dataOne['trainNo'];?></div>
+                                <div class="costTime">
+                                    <?php
+                                    $runtime=$dataOne['BrunTime']-$dataOne['ArunTime'];
+                                    if($runtime/60>0){
+                                        $h=floor($runtime/60);
+                                        $i=$runtime%60;
+                                        echo $h.'时'.$i.'分';
+                                    }else{
+                                        echo $runtime.'分';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="StationCenter">
+                                <div class="startStation">
+                                    <div class="startTime"><?=date('H:i',strtotime($dataOne['AstartTime']));?></div>
+                                    <div class="startPlace"><?=$dataOne['dpSta'];?></div>
+                                </div>
+                                <div class="throughStations slideRight">
+                                    <div class="line" id="first">
+                                        <div class="SaEdots"></div>
+                                        <div class="CenterDots"></div>
+                                        <div class="btnSlideRight" onclick="station_stopApi(<?=$id.','.$dataOne['about_id'].','.$dataOne['dpSort'].','.$dataOne['arrSort']; ?>)">经停信息</div>
+                                        <div class="lineThroughDots"></div>
+                                        <div class="STAT"  id=<?php echo '"train_stop'."$id".'"';?> >
+                                            <div class="saveStationsGap">
+                                                 <!-- <div>666</div> -->
+                                                 <!-- 停站距离 -->
+                                            </div>
+                                            <div class="space"></div>
+                                            <div class="saveStationsName">
+                                                <?php for($x=0;$x<$Dots;$x++){ ?>
+                                                <div>默认站X</div>
+                                                <?php } ?>
+                                                <!-- 留一站才停站信息按钮显示 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="endStation">
+                                    <div class="endTime"><?=date('H:i',strtotime($dataOne['BstartTime']));?></div>
+                                    <div class="endPlace"><?=$dataOne['arrSta'];?></div>
+                                </div>
+                            </div>
+                            <div class="StationRight"></div>
+                        </div>
+                    </div>
+                    <div class="fullCover" id="fullCover">
+                        <div class="centerBox">
+                            <div class="caption">
+                                <div class="closeBtn" id="closeWindow"><div class="foldBtn"></div></div>
+                                <div class="StarttoEnd">
+                                    <div class="wlineInfo">
+                                        <div class="wStart">长沙南</div>
+                                        <div class="to">至</div>
+                                        <div class="wEnd">北京西</div>
+                                    </div>
+                                    <div class="wCostTime">22时02分</div>
+                                    <div class="wStationNum">34</div>
+                                </div>
+                                <div class="wNumber"></div>
+                            </div>
+                            <div class="content">
+                                <div class="outOFcolumn">
+                                    <div class="column" id=<?php echo '"train_stopWin'."$id".'"';?> >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; } ?>
+            </ul>
+            <ul class="ulBUS" id="ul">
+                <div class="sorts">
+                    <div class="isThrough">是否直达</div>
+                    <div class="isTime">时间<a></a></div>
+                    <div class="isPrice">价格<a></a></div>
+                </div>
+                <?php
+                    if(!empty($data[0])){
+                    $busData = $data[0];
+                    foreach($busData as $value){
+                ?>
+                <li class="lists Normal">
+                    <div class="dotss"></div>
+                    <div class="moreTags">
+                        <div class="moreTagsLeft">
+                            <div class="tg1">荐</div>
+                            <div class="tg2">直达</div>
+                            <div class="tg3">路线最短</div>
+                            <span class="tg4">
+                                <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                            </span>
+                            <sapn class="showHideBtn">
+                                <span class="showHideStationsName"></span>
+                                <span class="showHideKm"></span>
+                                <span class="foldBtn"></span>
+                            </span>
+                        </div>
+                        <div class="moreTagsRight">
+                            <span class="currencySymbol">￥</span>
+                            <span class="prices"><?php echo $value['price'] ?></span>
+                        </div>
+                        <div class="stations">
+                            <div class="StationLeft">
+                                <div class="number">K9001</div>
+                                <div class="costTime"><?php echo $value['time'] ?></div>
+                            </div>
+                            <div class="StationCenter">
+                                <div class="startStation">
+                                    <div class="startTime"><?php echo $value['start_time'] ?></div>
+                                    <div class="startPlace"><?php echo $value['start_station_name'] ?></div>
+                                </div>
+                                <div class="throughStations slideRight">
+                                    <div class="line" id="first">
+                                        <div class="SaEdots"></div>
+                                        <div class="CenterDots"></div>
+                                        <div class="btnSlideRight">经停信息</div>
+                                        <div class="lineThroughDots"></div>
+                                        <div class="STAT">
+                                            <div class="saveStationsGap">
+                                            </div>
+                                            <div class="space"></div>
+                                            <div class="saveStationsName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="endStation">
+                                    <div class="endTime"><?php echo $value['arrive_time'] ?></div>
+                                    <div class="endPlace"><?php echo $value['end_station_name'] ?></div>
+                                </div>
+                            </div>
+                            <div class="StationRight"></div>
+                        </div>
+                    </div>
+                </li>
+                <?php } } ?>
+            </ul>
+            <ul class="ulPLANE" id="ul">
+                <div class="sorts"></div>
+                    <?php 
+                    if(!empty($data[2])){
+                        foreach($data[2] as $key =>$dataOne):
+                    ?>
+                    <li class="lists Normal">
+                        <div class="dotss"></div>
+                        <div class="moreTags">
+                            <div class="moreTagsLeft">
+                                <div class="tg1">荐</div>
+                                <div class="tg2">直达</div>
+                                <div class="tg3">路线最短</div>
+                                <span class="tg4">
+                                    <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                    <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                    <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                    <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                                </span>
+                                <sapn class="showHideBtn">
+                                    <span class="showHideStationsName"></span>
+                                    <span class="showHideKm"></span>
+                                    <span class="foldBtn"></span>
+                                </span>
+                            </div>
+                            <div class="moreTagsRight">
+                                <span class="currencySymbol">￥</span>
+                                <span class="prices">
+                                <?php echo $dataOne['valuation'];?>
+                                </span>
+                            </div>
+                            <div class="stations">
+                                <div class="StationLeft">
+                                    <div class="number"><?php echo $dataOne['f_flightCode'];?></div>
+                                    <div class="costTime">
+                                        <?php
+                                        $dataOne['f_flightTime'] = str_replace(array("小","钟"),"",$dataOne['f_flightTime']);
+                                        echo $dataOne['f_flightTime'];
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="StationCenter">
+                                    <div class="startStation">
+                                        <div class="startTime"></div>
+                                        <div class="startPlace"><?php
+                                            echo $dataOne['f_fromAirport'];
+                                            ?></div>
+                                    </div>
+                                    <div class="throughStations slideRight">
+                                        <div class="line" id="first">
+                                            <div class="SaEdots"></div>
+                                            <div class="CenterDots"></div>
+                                            <div class="btnSlideRight">详细信息</div>
+                                            <div class="lineThroughDots"></div>
+                                            <div class="STAT">
+                                                <div class="saveStationsGap">
+                                                    <div><?php
+                                                        echo $dataOne['mileage'];
+                                                        ?></div>
+                                                    <!-- 停站距离 -->
+                                                </div>
+                                                <div class="space"></div>
+                                                <div class="saveStationsName">
+                                                    
+                                                    <div>机型：<?php
+                                                        echo $dataOne['f_planModel'];
+                                                        ?></div>
+                                                    
+                                                    <!-- 留一站才停站信息按钮显示 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="endStation">
+                                        <div class="endTime"></div>
+                                        <div class="endPlace"><?php
+                                            echo $dataOne['f_toAirport'];
+                                            ?></div>
+                                    </div>
+                                </div>
+                                <div class="StationRight"></div>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; 
+                }else{
+                    
+                }
+                ?>
+            </ul>
+            <ul class="ulSHIP" id="ul">
+                <div class="sorts">
+                    <div class="isThrough">是否直达</div>
+                    <div class="isTime">时间<a></a></div>
+                    <div class="isPrice">价格<a></a></div>
+                </div>
+                <?php 
+                if(!empty($data[3])){
+                foreach($data[3] as $key =>$dataOne):
+                    
+                ?>
+                <li class="lists Normal">
+                        <div class="dotss"></div>
+                        <div class="moreTags">
+                            <div class="moreTagsLeft">
+                                <div class="tg1">荐</div>
+                                <div class="tg2">直达</div>
+                                <div class="tg3">路线最短</div>
+                                <span class="tg4">
+                                    <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                    <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                    <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                    <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                                </span>
+                                <sapn class="showHideBtn">
+                                    <span class="showHideStationsName"></span>
+                                    <span class="showHideKm"></span>
+                                    <span class="foldBtn"></span>
+                                </span>
+                            </div>
+                            <div class="moreTagsRight">
+                                <span class="currencySymbol">￥</span>
+                                <span class="prices"><?php echo $dataOne[5]?></span>
+                            </div>
+                            <div class="stations">
+                                <div class="StationLeft">
+                                    <div class="number">
+                                        <?php 
+                                    if($dataOne[7]){
+                                        echo $dataOne[7];
+                                    }else{
+                                        
+                                    }
+                                    ;?>
+                                    </div>
+                                    <div class="costTime">
+                                        <?php 
+                                        if($dataOne[3]!== " "){
+                                        echo $dataOne[3];
+                                    }else{
+                                        
+                                    }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="StationCenter">
+                                    <div class="startStation">
+                                        <div class="startTime"></div>
+                                        <div class="startPlace"><?php echo $dataOne[0];?></div>
+                                    </div>
+                                    <div class="throughStations slideRight">
+                                        <div class="line" id="first">
+                                            <div class="SaEdots"></div>
+                                            <div class="CenterDots"></div>
+                                            <div class="btnSlideRight">经停信息</div>
+                                            <div class="lineThroughDots"></div>
+                                            <div class="STAT">
+                                                <div class="saveStationsGap">
+                                                </div>
+                                                <div class="space"></div>
+                                                <div class="saveStationsName">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="endStation">
+                                        <div class="endTime"></div>
+                                        <div class="endPlace"><?=$dataOne[1];?></div>
+                                    </div>
+                                    <div class="endStationRight">
+                                        <div class="RunTime">
+                                            <div><?=$dataOne[4];?></div>
+                                        </div>
+                                        <div class="RunLine">
+                                            <div><?=$dataOne[2];?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="StationRight"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <?php endforeach; ?>
+                    <?php  }else{
+                    
+                }?>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    function createXMLRequest()
+    {
+        var xmlhttp=0;
+        if (window.XMLHttpRequest)
+        {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+          xmlhttp=new XMLHttpRequest();
+        }else{
+        // IE6, IE5 浏览器执行代码
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xmlhttp;
+    }
+    function station_stopWin(id,about_id,dpSort,arrSort)
+    {
+        var xmlhttp=createXMLRequest();
+        var queryString='index.php?con=ajax&med=station_stopWin&'+'about_id='+about_id+'&dpSort='+dpSort+'&arrSort='+arrSort;
+        id='train_stopWin'+id;
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                document.getElementById(id).innerHTML=xmlhttp.responseText;
+                return true;
+            }
+        }
+        xmlhttp.open("GET",queryString,true);
+        xmlhttp.send();
+    }
+
+    function station_stop(id,about_id,dpSort,arrSort)
+    {
+        var xmlhttp=createXMLRequest();
+        var queryString='index.php?con=ajax&med=station_stop&'+'about_id='+about_id+'&dpSort='+dpSort+'&arrSort='+arrSort;
+        id='train_stop'+id;
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                document.getElementById(id).innerHTML=xmlhttp.responseText;
+                return true;
+            }
+        }
+        xmlhttp.open("GET",queryString,true);
+        xmlhttp.send();
+    }
+
+    function station_stopApi(id,about_id,dpSort,arrSort)
+    {
+        station_stop(id,about_id,dpSort,arrSort);
+        station_stopWin(id,about_id,dpSort,arrSort);
+    }
+</script>
+<script src="html/detailsHtml/js/jquery-3.3.1.js"></script>
+<script src="html/detailsHtml/js/Plugins/moment.js"></script>
+<script src="html/detailsHtml/js/Plugins/daterangepicker.js"></script>
+<script src="html/detailsHtml/js/details.js"></script>
+<script>$(document).ready(function () {
+        //判断浏览器，并提示用户换成 Chrome 或 Firefox 浏览器查看本页面主要是 IE 等一些浏览器版本不兼容
+        if(navigator.userAgent.indexOf('Firefox') == -1 && navigator.userAgent.indexOf('Chrome') == -1){
+            alert('温馨提示：' + '\n使用谷歌或火狐浏览器将会最大程度来使用本网站功能');
+        }else if(navigator.userAgent.indexOf('Edge') != -1){
+            alert('温馨提示：' + '\n使用谷歌或火狐浏览器将会最大程度来使用本网站功能');
+        };
+        $('input[name="dateRange"]').daterangepicker({
+            format: 'YYYY-MM-DD',
+            singleDatePicker: true,
+            minDate: new Date(),
+
+        });
+    //城市名称输入预览
+    //  判断字节数（2字节/汉字 1字节/字母）
+    ////////////////////////新增////////////////////////
+    //  判断字节数（2字节/汉字 1字节/字母），至少输入2个字母或1个汉字才能显示城市名候选下拉列表【.listCityName】
+ 
+    $('#start').on('input', function (){
+        var inputContent = $(this).val();
+        var inputCityNameLength = $(this).val().length;
+            if(inputContent.match(/^[\u4E00-\u9FA5]{1,}$/)){
+                if(inputCityNameLength > 0){
+                    $(this).parent().children('.listCityName').fadeIn(100, function(){
+                        $(this).stop().animate({margin: '-30px auto'}, 100);
+                    });
+                    
+                    
+                    // if(crAjax){
+                    //     console.log(1);
+                    //     crAjax.abort();
+                    // }
+                    
+                    
+                    //crAjax = null;
+                    
+                        crAjax = $.ajax({
+                            url: 'indexMessage/getCity.php',
+                            beforeSend: function(){},
+                            dataType: 'json',
+                            data: {'city':inputContent},
+                            
+                            type: 'POST',
+                            success:function(data){
+                        //     console.log(data);
+                            $('.start').each(function(){
+                                $('.start').children('.listCityName').html("");
+                                var dataLength = data.length;
+                                //alert(dataLength);
+                                for(var i=0; i<dataLength; i++){
+                                    $('<li />').appendTo($(this).children('.listCityName')).end();
+                                    var datalLess = data[i].replace(/[a-zA-Z,（）\s]+/,"");
+                        //                console.log(datalLess);
+                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
+                                        $('.listCityName').children('li').each(function(){
+                                            $(this).click(function(){
+                                                // alert($(this).attr('class'));
+                                                var tempCityName = $(this).html();
+                                                $(this).parent().parent().children('input').val(tempCityName);
+                                            });
+                                        }); 
+                                }
+                            });
+                        }
+                        
+                        });
+                    //    console.log(crAjax);
+                    
+                    
+                    
+                 
+                }else{
+                    $(this).parent().children('.listCityName').fadeOut(100, function(){
+                        $(this).stop().animate({margin: '-10px auto'}, 100);
+                    });
+                };
+            }else{
+                if(inputCityNameLength > 1){
+                    $(this).parent().children('.listCityName').fadeIn(100, function(){
+                        $(this).stop().animate({margin: '-30px auto'}, 100);
+                    });
+
+                    // if(crAjax){
+                    //     console.log(1);
+                    //     crAjax.abort();
+                    // }
+                    // alert(typeof crAjax);
+                    
+                    //crAjax = null;
+                    
+                        crAjax = $.ajax({
+                            
+                            url: 'indexMessage/getCity.php',
+                            beforeSend: function(){},
+                            dataType: 'json',
+                            data: {'city':inputContent},
+                            
+                            type: 'POST',
+                            success:function(data){
+                                if(crAjax){
+                    //            console.log(data);
+                                $('.start').each(function(){
+                                    $('.start').children('.listCityName').html("");
+                                    var dataLength = data.length;
+                                    for(var i=0; i<dataLength; i++){
+                                        $('<li />').appendTo($(this).children('.listCityName')).end();
+                                        var datalLess = data[i].replace(/[a-zA-Z,（）\s]+/,"");
+                    //                    console.log(datalLess);
+                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
+                                    }
+                                });
+                            }
+                        }
+                        
+                        });
+                    //    console.log(crAjax);
+
+                }else{
+                    $(this).parent().children('.listCityName').fadeOut(100, function(){
+                        $(this).stop().animate({margin: '-10px auto'}, 100);
+                    });
+                };
+            };
+
+            
+            
+
+    });
+
+    $('#end').on('input', function (){
+        var inputContent = $(this).val();
+        var inputCityNameLength = $(this).val().length;
+            if(inputContent.match(/^[\u4E00-\u9FA5]{1,}$/)){
+                if(inputCityNameLength > 0){
+                    $(this).parent().children('.listCityName').fadeIn(100, function(){
+                        // alert('a');
+                        $(this).css({"display": "table"});
+                        $(this).stop().animate({margin: '-30px auto'}, 100, function(){
+                        $(this).css({"opacity": "1"});
+                        });
+                    });
+                    
+                    
+                    // if(crAjax){
+                    //     console.log(1);
+                    //     crAjax.abort();
+                    // }
+                    
+                    
+                    //crAjax = null;
+                    
+                        crAjax = $.ajax({
+                            url: 'indexMessage/getCity.php',
+                            beforeSend: function(){},
+                            dataType: 'json',
+                            data: {'city':inputContent},
+                            
+                            type: 'POST',
+                            success:function(data){
+                        //     console.log(data);
+                            $('.end').each(function(){
+                                $('.end').children('.listCityName').html("");
+                                var dataLength = data.length;
+                                for(var i=0; i<dataLength; i++){
+                                    $('<li />').appendTo($(this).children('.listCityName')).end();
+                                    var datalLess = data[i].replace(/[a-zA-Z,（）]+/,"");
+                        //                console.log(datalLess);
+                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
+                                        $(this).children('.listCityName').children('li:last-child').addClass('last');
+                                        $('.listCityName').children('li').each(function(){
+                                            $(this).click(function(){
+                                                // alert($(this).attr('class'));
+                                                var tempCityName = $(this).html();
+                                                $(this).parent().parent().children('input').val(tempCityName);
+                                            });
+                                        }); 
+                                }
+                            });
+                        }
+                        
+                        });
+                    //    console.log(crAjax);
+                    
+                    
+                    
+                 
+                }else{
+                    $(this).parent().children('.listCityName').fadeOut(100, function(){
+                        $(this).stop().animate({margin: '-10px auto'}, 100);
+                    });
+                };
+            }else{
+                if(inputCityNameLength > 1){
+                    $(this).parent().children('.listCityName').fadeIn(100, function(){
+                        $(this).stop().animate({margin: '-30px auto'}, 100);
+                    });
+
+                    // if(crAjax){
+                    //     console.log(1);
+                    //     crAjax.abort();
+                    // }
+                    // alert(typeof crAjax);
+                    
+                    //crAjax = null;
+                    
+                        crAjax = $.ajax({
+                            
+                            url: 'indexMessage/getCity.php',
+                            beforeSend: function(){},
+                            dataType: 'json',
+                            data: {'city':inputContent},
+                            
+                            type: 'POST',
+                            success:function(data){
+                                if(crAjax){
+                    //            console.log(data);
+                                $('.end').each(function(){
+                                    $('.end').children('.listCityName').html("");
+                                    var dataLength = data.length;
+                                    for(var i=0; i<dataLength; i++){
+                                        $('<li />').appendTo($(this).children('.listCityName')).end();
+                                        var datalLess = data[i].replace(/[a-zA-Z,（）]+/,"");
+                    //                    console.log(datalLess);
+                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
+                                        $(this).children('.listCityName').children('li:last-child').addClass('last');
+                                    }
+                                });
+                            }
+                        }
+                        
+                        });
+                    //    console.log(crAjax);
+
+                }else{
+                    $(this).parent().children('.listCityName').fadeOut(100, function(){
+                        $(this).stop().animate({margin: '-10px auto'}, 100);
+                    });
+                };
+            };
+
+            
+            
+
+    });
+    });
+</script>
+</html>

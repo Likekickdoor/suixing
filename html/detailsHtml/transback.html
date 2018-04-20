@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut Icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/details.css">
+    <link rel="stylesheet" type="text/css" href="css/transCity.css">
+    <link rel="stylesheet" type="text/css" href="css/Plugins/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/Plugins/daterangepicker.css">
+    <title>换乘界面</title>
+</head>
+<body onselectstart="return false" huaban_collector_injected="true">
+    <div class="header">
+        <div class="headerContent">
+            <div class="siteName">
+                <a href="../../index.php"><img src="favicon.ico"><span>随行网</span></a>
+            </div>
+            <div class="siteContents">
+                <li><a href="../../index.php">首页</a></li>
+                <li><a href="../../index.php" class="active">查询</a></li>
+                <li><a href="../../index.php#about">关于</a></li>
+                <li><a href="../../index.php#advantage">优势</a></li>
+                <li><a href="../../index.php#feature">未来</a></li>
+                <li><a href="../../index.php#contact">联系我们</a></li>
+            </div>
+        </div>
+    </div>
+    <div class="theBackBoard">
+        <!-- <img src="img/screen.jpg" /> -->
+    </div>
+    <div class="searchArea">
+        <form action="index.php" method="GET" id="mainForm">
+        <div class="InputWhere">
+            <div class="start">
+                <input type="text" id="start" name="dpplace" placeholder="输入起点" autocomplete="off" spellcheck="false">
+                <!-- 此处为下拉城市名列表 -->
+                <ul class="listCityName">
+                    
+                </ul>
+            </div>
+            <div class="SEbutton">
+                <input type="button" id="SEbutton"></div>
+            <div class="end">
+                <input type="text" id="end" name="arrplace" placeholder="输入终点" autocomplete="off" spellcheck="false">
+                <ul class="listCityName">
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="InputWhen">
+            <input type="text" name="dateRange" placeholder="选择日期">
+        </div>
+        <div class="addScreen"><a>添加筛选</a></div>
+        <div class="screenMenu">
+            <div class="grayLine">
+                <div>是否直达</div>
+                <div><input name="SFZD" type="checkbox"></div>
+            </div>
+            <div class="grayLine">
+                <div>交通工具</div>
+                <div>
+                    <li><div>火车</div><div><input name="trainCheck" type="checkbox"></div></li>
+                    <li><div>汽车</div><div><input name="busCheck" type="checkbox"></div></li>
+                    <li><div>飞机</div><div><input name="planeCheck" type="checkbox"></div></li>
+                </div>
+            </div>
+            <div class="btnScreen"><a>关闭</a></div>
+        </div>
+        <div class="InputSubmit">
+            <input type="button" id="submit" value="查&nbsp;询">
+        </div>
+        <div class="wait" style="display: none">请稍后</div>
+    </form>
+    </div>
+    <div class="zCard">
+        <section class="zTitle">
+            <section class="zLeft">
+                <div></div>
+                <div>洪江</div>
+                <div>至</div>
+                <div>桃源</div>
+                <section class="title">需换乘</section>
+            </section>
+        </section>
+        <ul class="ulTRANSCITIES">
+            <li class="Normal zTRAIN zBUS zSHIP">
+                <div class="zMoreInfo">
+                    <div class="zCostTime">
+                        <span class="zTime">5时20分</span>
+                    </div>
+                    <div class="zPrices">
+                        <span class="currencySymbol">￥</span>
+                        <span class="prices">200</span>
+                    </div>
+                </div>
+                <section class="ranking"><span>01</span></section>
+                <section class="split">
+                    <div class="info">
+                        <div><span></span></div>
+                        <div><span></span></div>
+                        <div><span></span></div>
+                        <div><span></span></div>
+                        <div><span></span></div>
+                        <p><span>长沙市</span><span class="has">武汉市</span></p>
+                    </div>
+                    <div class="expandSection"></div>
+                </section>
+                <section class="splits">
+                    <p><span style="color: #12a81e">洪江</span><span class="circleSpanTRAIN">0</span><span>长沙市</span></p>
+                    <div class="expandSection">
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                    </div>
+                </section>
+                <section class="splits">
+                    <p><span>长沙市</span><span class="circleSpanSHIP">0</span><span>武汉市</span></p>
+                    <div class="expandSection">
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                    </div>
+                </section>
+                <section class="splits">
+                    <p><span>武汉市</span><span class="circleSpanBUS">0</span><span style="color: #2186fa">桃源</span></p>
+                    <div class="expandSection">
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div><div>A城市</div>
+                        <div>A城市</div><div>A城市</div>
+                    </div>
+                </section>
+            </li>
+        </ul>
+    </div>
+
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/Plugins/moment.js"></script>
+<script src="js/Plugins/daterangepicker.js"></script>
+<script src="js/details.js"></script>
+<script>
+    $(document).ready(function(){
+        $('li .zMoreInfo').each(function(){
+            $(this).parent().children('.split').children('.info').children('div').eq(4).children('span').click(function(){
+                $(this).parent().fadeOut('fast');
+                $(this).parent().parent().parent().parent().find('p').removeClass('selected');
+                // alert($(this).parent().parent().parent().parent().find('p').attr('class'));
+            });
+        });
+        $('.splits').click(function(){
+            $(this).children('.expandSection').stop().slideToggle(400);
+            var splitColor = $(this).children('p').children('span').eq(1).css('backgroundColor').split(', ');
+            splitBGColor = splitColor[0].split('(')[0].replace('rgb', 'rgba') + '(' + splitColor[0].split('(')[1] + ', ' + splitColor[1] + ', ' + splitColor[2].replace(')',', .8)')
+            $(this).children('.expandSection').css({"backgroundColor": splitBGColor});
+        });
+        $('.splits p').click(function(){
+            var oExSLength = $(this).parent().parent().find('.expandSection').length -1;
+            $(this).toggleClass('selected');
+            var selectedLength = $(this).parent().parent().find('.selected').length;
+            if(selectedLength == 0){
+                $(this).parent().parent().children('.split').children('.info').children('div').eq(4).fadeOut(400);
+            }else{
+                $(this).parent().parent().children('.split').children('.info').children('div').eq(4).fadeIn(400);
+            }
+        });
+
+        $('.ulTRANSCITIES li .split .info').each(function(){
+            $(this).click(function(){
+                $(this).parent().parent().children('.splits').find('.expandSection').slideUp(400);
+            });
+        });
+    });
+    // alert(GETplace());
+    $('#submit').click(function(){
+        var zStartPlace = $('#start').val().replace(/\ +/g, "").replace(/[1-9]+/g, "");
+        var zEndPlace = $('#end').val().replace(/\ +/g, "").replace(/[1-9]+/g, "");
+        // alert(zStartPlace);
+        // alert(zEndPlace);
+        if(zStartPlace != 0 && zEndPlace != 0 && zStartPlace != zEndPlace){
+            window.location.href = '../../index.php?con=details&med=display&start=' + zStartPlace + '&end=' + zEndPlace;
+        }else if(zStartPlace != 0 && zEndPlace == 0){
+            $('#end').focus();
+            $('#end').css({"outlineColor": "#e81123"});
+            $('#end').css({"backgroundColor": "#fff0f0"});
+        }else if(zStartPlace == 0 && zEndPlace != 0){
+            $('#start').focus();
+            $('#start').css({"outlineColor": "#e81123"});
+            $('#start').css({"backgroundColor": "#fff0f0"});
+        }else{
+            $('#end').focus();
+            $('#end').css({"outlineColor": "#e81123"});
+            $('#end').css({"backgroundColor": "#fff0f0"});
+            $('#start').focus();
+            $('#start').css({"outlineColor": "#e81123"});
+            $('#start').css({"backgroundColor": "#fff0f0"});
+            if(zStartPlace == zEndPlace){
+                $(this).parent().addClass('error');
+            }
+        }
+    });
+    $('#start, #end').on('input', function(){
+        // console.log($(this).css('outlineColor'));
+        $(this).css({"outlineColor": "#57acf6"});
+        $(this).css({"backgroundColor": "rgba(255, 255, 255, .8)"});
+        $(document).keydown(function(e){
+            var key = e.keyCode;
+            if(key == 13){
+                jQuery("#submit").click();
+            }
+        });
+    });
+</script>
+</body>
+</html>

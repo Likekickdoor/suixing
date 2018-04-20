@@ -53,7 +53,7 @@ class ship
       // echo "<br/>";
   	}
     // self::ferry_city('重庆','吴淞');
-    // echo "<br/>";
+    //echo "<br/>";
   	if($diff_end){
   		// echo $end."是城市";
       // echo "<br/>";
@@ -62,18 +62,18 @@ class ship
   		// echo $end."不是城市";
       // echo "<br/>";
   	}
-    // echo "<br/>";
+    //echo "<br/>";
     // self::ferry_city('朝天门',$diff_end_char);
 
     if($diff_start && $diff_end){
       $aa = self::city_two($diff_start_char,$diff_end_char);
-      // echo "<br/>";
+      //echo "<br/>";
       // echo "两个都是城市";
       return $aa;
     }
     else if(!$diff_start && $diff_end){
       $aa = self::ferry_city($start,$diff_end_char);
-      // echo "<br/>";
+     // echo "<br/>";
       // echo "起点不是城市，终点是城市";
       return $aa;
     }
@@ -84,7 +84,7 @@ class ship
     }
     else if(!$diff_start && !$diff_end){
       $aa = self::ferry_two($start,$end);
-      // echo "<br/>";
+      //echo "<br/>";
       // echo "起点和终点都不是城市";
       return $aa;
     }
@@ -205,7 +205,7 @@ class ship
      if($shipmessage_arrss){
       return $shipmessage_arrss;
     }else{
-      echo " ";
+      //echo " ";
     } 
   }
 

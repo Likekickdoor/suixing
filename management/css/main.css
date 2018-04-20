@@ -1,35 +1,28 @@
-body{
-    margin: 0 auto;
+
+* {
+    margin: 0;
     padding: 0;
 }
-a{
-    text-decoration: none;
+body{
+    margin: 0 auto;
 }
-#header{
-    width: 100%;
-    height: 50px;
-    background: rgb(113, 203, 255);
-    position: fixed;
-    z-index: 222;
-}
+
 .title{
     height: 100%;
     line-height: 50px;
     font-size: 20px;
     color: #fff;
-    margin: 0 50px 0 0;
+    margin: 0;
     text-indent: 20px;
     letter-spacing: 0;
     float: left;
 }
-
-.icon-0{
+.icon{
     width: 30px;
     height: 30px;
     margin-top: 10px;
     margin-left: 30px;
 }
-
 .num{
     width: 20px;
     height: 20px;
@@ -43,161 +36,6 @@ a{
     display: inline-block;
 }
 
-.angle{
-    width: 0;
-    height: 0;
-    border-width: 8px 8px;
-    border-style: solid dashed dashed;
-    border-color: transparent rgb(247, 123, 123) transparent transparent;
-    position: absolute;
-    top: 70%;
-    left: 21%;
-    transform: rotate(90deg);
-    font-size: 0;
-    line-height: 0;
-    display: none;
-}
-.angle-1{
-    width: 0;
-    height: 0;
-    border-width: 8px 8px;
-    border-style: solid dashed dashed;
-    border-color: transparent rgb(247, 123, 123) transparent transparent;
-    position: absolute;
-    top: 70%;
-    left: 25%;
-    transform: rotate(90deg);
-    font-size: 0;
-    line-height: 0;
-    display:none;
-}
-.hidden{
-    width: 230px;
-    height: 400px;
-    /* background: yellow; */
-    position: absolute;
-    top: 100%;
-    left: 20%;
-    display: none;
-}
-.hidden-1{
-    width: 230px;
-    height: 400px;
-    /* background: yellow; */
-    position: absolute;
-    top: 100%;
-    left: 24%;
-    display: none; 
-}
-.summit{
-    width: 100%;
-    height: 12%;
-    background: rgb(247, 123, 123);
-    /* border-radius: 10px; */
-}
-.summit p{
-    margin: 0 ;
-    padding:10px 0 0 45px;
-    color: #fff;
-}
-.boo{
-    width: 100%;
-    height:77% ;
-    background: #fff;
-    border-radius: 10px;
-}
-.news{
-    width: 100%;
-    height: 60px;
-    /* background: red; */
-    border-bottom: 1px solid #ccc;
-}
-.head{
-    width: 40px;
-    height: 40px;
-    margin: 10px;
-}
-.first{
-    color: #222;
-    font-size: 14px;
-    font-weight: bold;
-    margin-right: 20px;
-    /* background: yellow; */
-    position: absolute;
-    margin-top: 10px;
-    display: inline-block;
-}
-.time{
-    color: #222;
-    font-size: 14px;
-    /* font-weight: bold; */
-    margin-right: 20px;
-    /* background: yellow; */
-    position: absolute;
-    margin:10px 0 0 100px;
-    display: inline-block;
-}
-.nice{
-    width: 78%;
-    height: 30px;
-    color: #666;
-    font-size: 12px;
-    position: absolute;
-    margin:25px 0 0 -5px;
-    display: inline-block;
-    overflow:hidden;
-    line-height: 30px;
-}
-.zi{
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-    padding: 10px;
-}
-.bar{
-    background: lightgreen;
-    border-radius: 10px;    
-}
-.aa{
-    background: lightcoral;
-    border-radius: 10px;  
-}
-.ab{
-    background: lightblue;
-    border-radius: 10px;  
-}
-.ac{
-    background: lightsalmon;
-    border-radius: 10px;  
-}
-.ad{
-    background: lightslategray;
-    border-radius: 10px;  
-}
-.sever{
-    width: 150px;
-    height: 10px;
-    margin: -5px 0 0 10px;
-    border-radius: 10px;
-    background:#f6f6f6;
-}
-font{
-    font-size: 14px;
-    color: #666;
-    float: right;
-    margin:-17px 10px 0 0;
-}
-.footer{
-    width: 100%;
-    height: 8%;
-    background: #fff;
-}
-.footer a{
-text-decoration: none;
-color: #666;
-font-size: 14px;
-margin: 20px;
-}
 .exit{
     float: right;
     width: 30px;
@@ -205,41 +43,20 @@ margin: 20px;
     margin: 10px 30px 0 0;
 }
 
-#content{
-    width: 100%;
-    height: 700px;
-    background: #fff;
-    clear: both;
-    position: absolute;
-    top: 7%;
-}
-.left{
-    width: 15%;
-    height: 100%;
-    background: #444;
-    float: left;
-    /* position: fixed; */
-}
-.top{
-    width: 100%;
-    height: 18%;
-    /* background: red; */
-}
 .pic{
     width: 70px;;
     height: 70px;
-    margin:20px 0 0 70px;
+    margin:19px 0 0 44px;
 }
 .name{
     font-size: 20px;
     color: #fff;
-    margin-left: 78px;
+    margin-left: 56px;
     margin-top: 0;
 }
-.main{
+.main1{
     width: 100%;
-    height:70%;
-    /* background: yellow; */
+    height:100%;
 }
 
 ul{
@@ -250,7 +67,6 @@ ul{
     width:95%; 
     height:50px;
     list-style: none;
-    /* background: red; */
     margin:10px 0 0 5px;
 }
 
@@ -266,34 +82,55 @@ ul{
     text-decoration: none;
     color: #fff;
     font-size: 16px;
-    /* background: green; */
 }
-.nav-0:hover{
-    background: #fff;
-    color: lightseagreen;
-}
+
 .write{ 
     display: block;
     margin:-25px 0 0 50px;
 }
-.control{
-    width: 85%;
-    height: 100%;
-    /* background: blue; */
+
+#foot{
+    width: 100%;
+    height:50px;
+    background: #71CBFF;
+    position: absolute;
+    /* 修改 */
+    bottom:-70%;
+}
+#foot p{
+    text-align: center;
+    color: #fff;
+}
+
+.mua {
+    
+      float: left;
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////*/
+
+.right{
+    width: auto;
+    height: auto;
     float: left;
-    /* display: none; */
+}
+.control{
+    width: auto;
+    height: auto;
+    margin-left: 17px;
+    float: left;
 }
 .data{
     width: 85%;
     height: 100%;
-    /* background: blue; */
+    margin-left: 17px;
     float: left;
     display: none;
 }
 .daily{
     width: 85%;
     height: 100%;
-    /* background: blue; */
+    margin-left: 17px;
     float: left;
     display: none;
 }
@@ -306,11 +143,13 @@ ul{
     padding: 20px;
     border-bottom: 1px dotted #ccc;
 }
+.small{
+    height: 40px;
+}
 .sTitle{
-    width: 98%;
+    width: 100%;
     height: 30px;
     margin: 10px;
-    /* background: red; */
     border-bottom: 1px dotted #ccc;
 }
 .sPic{
@@ -324,13 +163,12 @@ ul{
     color:rgb(247, 123, 123);
     display: inline-block;
     position: absolute;
-    /* margin-top: 0px; */
 }
 .table{
-    width: 98%;
+    width: 1000px;
     margin: 10px;
-    /* height: 150px; */
-    /* border: 1px solid #ccc; */
+    height: 300px;
+    margin-left: 30px;
 }
 .fir{
     background: #f6f6f6;
@@ -345,9 +183,12 @@ td{
     text-align: center;
     color: #666;
 }
+.t0{
+    width: 40px;
+    height: 40px;
+}
 
 .t1{
-    width: 80px;
     height: 40px;
 }
 .t2{
@@ -362,11 +203,31 @@ td{
 #foot{
     width: 100%;
     height:50px;
-    background: #71CBFF;
-    position: absolute;
-    top: 112%;
+    background: rgb(14, 163, 250);
+    z-index: 11;
+    position: fixed;
+    bottom:0;
 }
 #foot p{
     text-align: center;
     color: #fff;
+    line-height: 50px;
+}
+
+h4,h3,h2{
+    color: #666666;
+    font: 100 16px/10px '微软黑体';
+    padding-bottom: 5px;
+}
+
+@media screen and (max-width: 450px){
+    .bug{
+        display: none;
+    }
+    
+}
+@media screen and (max-width: 310px){
+    .exit{
+        display: none;
+    }
 }

@@ -265,6 +265,8 @@ def get_result_from_tuniu(start,end,date,re_time,start_station_id,end_station_id
     return True
         
 def get_data(station1,station2,date,cursor,i):
+    # station2 = "高各庄"
+    # station1 = "唐山"
     sql = "select id from city where city like '%" + station1 + "%' and state=1"
     cursor.execute(sql)
     station1_id = cursor.fetchone()[0]
@@ -295,7 +297,7 @@ def get_data(station1,station2,date,cursor,i):
         get_result_from_114(station2,station1,date,re_time,station2_id,station1_id,cursor)
         # print('途牛:')
         # get_result_from_tuniu(station2,station1,date,re_time,station2_id,station1_id,cursor)
-        time.sleep(1)
+    time.sleep(1)
 
 def main():
     db = pymysql.connect('localhost','root','','project',charset =  "utf8")
@@ -308,12 +310,12 @@ def main():
         date = '2018-03-13'
     if day == '21':
         date = '2018-03-23'
-    date = '2018-04-10'
+    date = '2018-04-20'
     sql = u"select * from city where state=1"
     cursor.execute(sql)
     if cursor.rowcount > 0:
         citys = cursor.fetchall()
-        f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','r')
+        f = open('1.txt','r')
         num = f.readline()
         if len(num) != 0:
             num = num.split(',',1)
@@ -327,6 +329,7 @@ def main():
         i = 1
         for city in citys:
             print(city[0])
+            # return 0
             if city[0] <= num1:
                 continue
             sql = u"select * from city_to_station where city_id=%d and state=1" % (city[0])
@@ -351,12 +354,12 @@ def main():
                     if i == 1:
                         i = 2
                     else: i = 1
-                    f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','w')
+                    f = open('1.txt','w')
                     f.write(str(city[0] - 1) + ',' + str(responsible[0]))
                     f.close()
                     if responsible[0] % 50 == 0:
                         time.sleep(30)
-        f = open('C:\\Users\\Shinelon\\Desktop\\1.txt','w')
+        f = open('1.txt','w')
         f.close()
 
 if __name__ == '__main__':

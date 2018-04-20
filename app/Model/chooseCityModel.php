@@ -22,8 +22,6 @@
                 if(strstr($to_end,$key))
                     $this->data .= $key.",";
             }
-            p($secondCitys);
-            p($to_end);
             $this->data = substr($this->data,0,strlen($this->data)-1);
             return $this->data;
         }

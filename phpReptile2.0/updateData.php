@@ -28,7 +28,7 @@ set_time_limit(0);//脚本运行时间不受时间限制
     $test = new participleClass();      //更新索引表和关系表
     $test->setindex_table();
 
-    $test = new pinyin_index();         //更新拼音,应为生成拼音这个方法会出错，所以插入数据库的时候回出现一些问题
+    $test = new pinyin_index();         //更新拼音,应为生成拼音这个方法会出错，所以插入数据库的时候回出现一些问题（已经修正）
     $test->updateIndex();
 
     

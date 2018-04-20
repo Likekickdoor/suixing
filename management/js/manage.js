@@ -69,6 +69,33 @@ window.onload = function () {
             return;
         }
     }
+
+    //看不清换一张
+    /* var oChange=document.querySelector('.change');
+    oChange.onclick=function(){
+        arra({
+            url: 'login.php',
+            type: 'POST',
+            data: {
+                login_user: oTxt.value,
+                login_pass: oPsw.value,
+                yan:oCode.value,
+            },
+
+            success: function (arr1) {
+                if (arr1 == 'true') {
+                  
+                   
+                }
+                else {
+                    alert("加载失误！")
+                }
+            }
+        })
+    } */
+
+
+
     //登录验证
     // var oLogin = document.getElementById('btn-login');
 
@@ -93,15 +120,14 @@ window.onload = function () {
                 },
 
                 success: function (arr1) {
-                    
                     if (arr1 == 'true') {
                         // oTs1[0].style.display = 'block';
-                        // oTs1[1].style.display = 'block';
-                        window.location.href='main.html'
+                        // oTs2[1].style.display = 'block';
+                        window.location.href='message.php'
                         // addCookie(oTxt2, oTxt2.value, 1);
                     }
                     else {
-                        alert("验证码或密码错误！")
+                        alert("用户名或密码错误！")
                     }
                 }
             })
@@ -109,18 +135,16 @@ window.onload = function () {
         }
     }
 
-    /**
-     * 改变验证码图片
-     */
+
     var oChange=document.querySelector('.change');
     oChange.onclick=function(){
         arra({
-            url: 'http://localhost/aviation/phpImageChecked/setImageChecked.php',
+            url: '../../phpImageChecked/setImageChecked.php',
             
 
             success: function (arr1) {
                
-               $(".yan").attr('src',"http://localhost/aviation/phpImageChecked/setImageChecked.php"); 
+               $(".yan").attr('src',"../../phpImageChecked/setImageChecked.php"); 
             }
         })
     }

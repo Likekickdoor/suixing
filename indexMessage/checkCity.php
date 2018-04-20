@@ -88,24 +88,36 @@ chdir($cur_dir); //把当前的目录改变为指定的目录。
        */
       public function select_City(){
           if(!empty($_POST['city'])){
-            $s_city = $this->checkCity_one($_POST['city']);
+            $checkCity = str_replace(array("'",'"',"，","“","\\","/"," ","\t\n","\n","\t"),"",$_POST['city']);      //去掉字符的引号和空格
+            $s_city = $this->checkCity_one($checkCity);
            
             
             if(count($s_city)>5){
                 for($i=0;$i<5;$i++){
-                    $selectCity[] = $s_city[$i];
+
+                    $city_one = str_replace(array("（","）"," ","\t\n","\n","\t","市","省","特别行政区","县"),"",$s_city[$i][1]);
+                    $city_one = preg_replace('|[0-9a-zA-Z/]+|',"",$city_one);
+                    $selectCity[] = $city_one;
                 }
             }else{
                 for($i=0;$i<count($s_city);$i++){
-                    $selectCity[] = $s_city[$i];
+                    $city_one = str_replace(array("（","）"," ","\t\n","\n","\t","市","省","特别行政区","县"),"",$s_city[$i][1]);
+                    $city_one = preg_replace('|[0-9a-zA-Z/]+|',"",$city_one);
+                    $selectCity[] = $city_one;
                 }
 
             }
 
             if(empty($selectCity)){
-                $selectCity[][1]='未找到匹配城市';
+                $selectCity[]='未找到匹配城市';
             }
-            echo json_encode($selectCity,JSON_UNESCAPED_UNICODE);//JSON_UNESCAPED_UNICODE让中文不编码
+            
+            $selectCity = array_unique($selectCity);
+            foreach($selectCity as $value){
+                $one_selectCity[] = $value;
+            }
+
+            echo json_encode($one_selectCity,JSON_UNESCAPED_UNICODE);//JSON_UNESCAPED_UNICODE让中文不编码
             exit;
 
           }else{

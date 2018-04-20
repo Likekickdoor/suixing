@@ -1,292 +1,281 @@
-    $(document).ready(function () {
-        //判断浏览器，并提示用户换成 Chrome 或 Firefox 浏览器查看本页面主要是 IE 等一些浏览器版本不兼容
-        if(navigator.userAgent.indexOf('Firefox') == -1 && navigator.userAgent.indexOf('Chrome') == -1){
-            alert('温馨提示：' + '\n使用谷歌或火狐浏览器将会最大程度来使用本网站功能');
-        }else if(navigator.userAgent.indexOf('Edge') != -1){
-            alert('温馨提示：' + '\n使用谷歌或火狐浏览器将会最大程度来使用本网站功能');
-        };
-
-        $('input[name="dateRange"]').daterangepicker({
-            format: 'YYYY-MM-DD',
-            singleDatePicker: true,
-            minDate: new Date(),
-
-        });
-        function GETplace(){
-            //以下添加自动填写表单内容
-            var urlStr = decodeURIComponent(window.location.search);
-            // alert(urlStr);
-            var arrStr = urlStr.split('=');
-            var URLdpplace = arrStr[3].replace(/[^\u4e00-\u9fa5]/gi, "");
-            var URLarrplace = arrStr[4];
+    function GETplace(){
+        //以下添加自动填写表单内容
+        var urlStr = decodeURIComponent(window.location.search);
+        // alert(urlStr);
+        var arrStr = urlStr.split('=');
+        var URLdpplace = arrStr[3].replace(/[^\u4e00-\u9fa5]/gi, "");
+        var URLarrplace = arrStr[4];
+        if(URLdpplace != 0 && URLarrplace != 0){
             $('[name="dpplace"]').attr("placeholder", URLdpplace);//css({"value": URLdpplace});
             $('[name="arrplace"]').attr("placeholder", URLarrplace);//css({"value": URLarrplace});
-            // alert(arrStr[2].replace(/[^\u4e00-\u9fa5]/gi, ""));
-            // alert(arrStr[3]);
-            // alert(urlStr.replace(/[^\u4e00-\u9fa5]/gi, ""));
-            return URLdpplace + ',' + URLarrplace;
-        };
-        GETplace();
-        var strSandEplace = GETplace();
-        // alert(strSandEplace);
-        arrSandEplace = strSandEplace.split(',');
-        var startPlace = arrSandEplace[0];
-        var endPlace = arrSandEplace[1];
-        // alert(startPlace);
-        // alert(endPlace);
-        // alert(startPlace);
-        // alert(endPlace);
-            $.ajax({
-                url: 'index.php?con=details&med=show&start=' + startPlace + '&end=' + endPlace,
-                dataType: 'json',
-                type: 'GET',
-                success: function(data){
-                    console.log(data);
-                    var z = data.length
-                },
-                error: function(){
-                    alert('失败');
-                }
-            });
-            $.ajax({
-                // index.php?con=ajax&med=getCenterCity&start=洪江&end=桃源
-                url: 'index.php?con=ajax&med=getCenterCity&start=' + startPlace + '&end=' + endPlace,
-                dataType: 'text',
-                type: 'GET',
-                success: function(data){
-                    console.log(data);
-                    if(data == 'true'){
-                        $('.sorts').css({"display": "none"});
-                        $('.ACity').css({"display": "none"});
-                        $('.BCity').css({"display": "none"});
-                        $('.ulSUGGEST, .ulTRAIN, .ulBUS, .ulPLANE, .ulSHIP').css({"paddingTop": "15px"});
-                    }else{
-                        $('.ulSUGGEST, .ulTRAIN, .ulBUS, .ulPLANE, .ulSHIP').css({"paddingTop": "15px"});
-                        var arrData = data.split('|');
-                        var ACities = arrData[0].split(',');
-                        // alert(ACities);
-                        var ACitiesLength = ACities.length;
-                        var htmlACs = "";
-                        for(var x=0; x<ACitiesLength; x++){
-                            var htmlAC = '<div>' + ACities[x] + '</div>'
-                            htmlACs += htmlAC;
+        }
+        // alert(arrStr[2].replace(/[^\u4e00-\u9fa5]/gi, ""));
+        // alert(arrStr[3]);
+        // alert(urlStr.replace(/[^\u4e00-\u9fa5]/gi, ""));
+        return URLdpplace + ',' + URLarrplace;
+    };
+    GETplace();
+    var strSandEplace = GETplace();
+    // alert(strSandEplace);
+    arrSandEplace = strSandEplace.split(',');
+    var startPlace = arrSandEplace[0];
+    var endPlace = arrSandEplace[1];
+    // alert(startPlace);//hongjiang
+    // alert(endPlace);//taoyuan
+    // alert(startPlace);
+    // alert(endPlace);
+        $.ajax({
+            url: 'index.php?con=details&med=show&start=' + startPlace + '&end=' + endPlace,
+            dataType: 'json',
+            type: 'GET',
+            beforeSend: function(){
+                $('.wait').css({"display": "block"});
+            },
+            complete: function(){
+                $('.wait').css({"display": "none"});
+            },
+            success: function(data){
+                // alert($('.ulSUGGEST').children('div').length);
+                // console.log(data);
+                var dataLength = data.length;
+                var costTime = "";
+                var number = "";
+                var startTime = "";
+                var startPlace = "";
+                var endTime = "";
+                var endPlace = "";
+                var prices = "";
+                var dataFeature = "";
+                // var firstW = data[0];
+                // var DataFeature = "";
+                // alert(dataLength);
+                // alert(data);
+                // alert(data[1]);
+                if(data == ','){
+                    $('.ulSUGGEST').addClass('noresult');
+                }else{
+                    var HTMLs = "";
+                    for(var p=0; p<2; p++){
+                        // alert(p2);
+                        if(data[p]){
+                            // alert(p);
+                            if(data[p].Adistance){
+                                dataFeature = "H";
+                                costTime = Math.floor((data[p].BrunTime - data[p].ArunTime)/60) + "时" + (data[p].BrunTime - data[p].ArunTime)%60 + '分';
+                                number = data[p].trainNo;
+                                startTime = data[p].AstartTime.substr(0,5);
+                                startPlace = data[p].dpSta;
+                                endTime = data[p].BstartTime.substr(0,5);
+                                endPlace = data[p].arrSta;
+                                prices = "";
+                                if(data[p].hardSeat){
+                                    prices = data[p].hardSeat;
+                                }else if(data[p].bSeat){
+                                    prices = data[p].bSeat;
+                                }
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);
+                            }
+                            if(data[p].valuation){
+                                dataFeature = "F";
+                                costTime = data[p].f_flightTime;
+                                number = data[p].f_flightCode;
+                                startTime = "";
+                                startPlace = data[p].f_fromAirport;
+                                endTime = "";
+                                endPlace = data[p].f_toAirport;
+                                prices = data[p].valuation;
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);
+                            }
+                            if(data[p].arrive_time){
+                                dataFeature = "Q";
+                                costTime = data[p].time;
+                                number = "";
+                                startTime = data[p].start_time;
+                                startPlace = data[p].start_station_name;
+                                endTime = data[p].arrive_time;
+                                endPlace = data[p].end_station_name;
+                                prices = data[p].price;
+                                // console.log(costTime, number, startTime, startPlace, endTime, endPlace, prices);                                
+                            }
+                            var HTML =
+                            `
+                            <li class="lists Normal ${dataFeature} ">
+                            <div class="dotss"></div>
+                            <div class="moreTags">
+                                <div class="moreTagsLeft">
+                                    <div class="tg1">荐</div>
+                                    <div class="tg2">直达</div>
+                                    <div class="tg3">路线最短</div>
+                                    <span class="tg4">
+                                        <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
+                                        <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
+                                        <span class="tt3"><img src="html/detailsHtml/img/plane.svg" /></span>
+                                        <span class="tt4"><img src="html/detailsHtml/img/ship.svg" /></span>
+                                    </span>
+                                    <span class="showHideWindow"></span>
+                                    <sapn class="showHideBtn">
+                                        <span class="showHideStationsName"></span>
+                                        <span class="showHideKm"></span>
+                                        <span class="foldBtn"></span>
+                                    </span>
+                                </div>
+                                <div class="moreTagsRight">
+                                    <span class="currencySymbol">￥</span>
+                                    <span class="prices">${prices}</span>
+                                </div>
+                                <div class="stations">
+                                    <div class="StationLeft">
+                                        <div class="number">${number}</div>
+                                        <div class="costTime">${costTime}</div>
+                                    </div>
+                                    <div class="StationCenter">
+                                        <div class="startStation">
+                                            <div class="startTime">${startTime}</div>
+                                            <div class="startPlace">${startPlace}</div>
+                                        </div>
+                                        <div class="throughStations slideRight">
+                                            <div class="line" id="first">
+                                                <div class="SaEdots"></div>
+                                                <div class="CenterDots"></div>
+                                                <div class="btnSlideRight">经停信息</div>
+                                                <div class="lineThroughDots"></div>
+                                                <div class="STAT" >
+                                                    <div class="saveStationsGap">
+                                                    </div>
+                                                    <div class="space"></div>
+                                                    <div class="saveStationsName">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="endStation">
+                                            <div class="endTime">${endTime}</div>
+                                            <div class="endPlace">${endPlace}</div>
+                                        </div>
+                                    </div>
+                                    <div class="StationRight"></div>
+                                </div>
+                            </div>
+                        </li>
+                            `             
+                            HTMLs += HTML;
+                            // console.log(HTMLs);
                         }
-                        $('.ACity').html('<span class="Udot"></span><span class="Bdot"></span>' + htmlACs);
-                        
-                        var BCities = arrData[1].split(',');
-                        // alert(arrData[1]);
-                        var BCitiesLength = BCities.length;
-                        var htmlBCs = "";
-                        for(var y=0; y<BCitiesLength; y++){
-                            var htmlBC = '<div>' + BCities[y] + '</div>'
-                            htmlBCs += htmlBC;
-                        }
-                        $('.BCity').html('<span class="Udot"></span><span class="Bdot"></span>' + htmlBCs);
-                        // alert(arrData[0]);
-                        // alert(arrData[1]);
-                        // alert('success');
-                        $('.BCity div').each(function(){
-                            $(this).click(function(){
-                                var strCity = $(this).html();
-                                $(this).parent().parent().children('.sorts').children('.clearCities').css({"margin-left": "-200px"});
-                                $(this).parent().parent().children('.sorts').children('.CityB').stop().animate({width: "20%"}, 200, function(){
-                                    $(this).html('第二个中转城市：' + '<b style="color: #57acf6">' + strCity + '</b>' + '<a></a>');
-                                });
-                            });
-                        });
-                        $('.ACity div').each(function(){
-                            $(this).click(function(){
-                                var strCity = $(this).html();
-                                $(this).parent().parent().children('.sorts').children('.CityA').stop().animate({width: "20%"}, 200, function(){
-                                    $(this).html('第一个中转城市：' + '<b style="color: #57acf6">' + strCity + '</b>' + '<a></a>');
-                                });
-                            });
+                        $('.ulSUGGEST').append(HTMLs);
+                        $('.ulSUGGEST').find('.lists.Normal').addClass('J').addClass('Z');
+                        $('.ulSUGGEST').children('li').eq(0).css({"display": "none"});
+                        $('.ulSUGGEST').children('li').eq(2).addClass('L');
+                        $('.number').each(function(){
+                            $(this).addClass('addci');
+                                var numberLength = $(this).html().length * 10;
+                                if(numberLength > 60){
+                                    $(this).removeClass('addci');
+                                    $(this).css({"width": "100%", "padding": "0", "fontSize": "14px"});
+                                    $(this).parent().children('.costTime').css({"width": "100%", "padding": "0"});
+                                }
                         });
                     }
-                },
-                error: function(){
-                    // alert('failed');
+                };
+            },
+            error: function(){
+                // alert('失败');
+            }
+        });
+        $.ajax({
+            // index.php?con=ajax&med=getCenterCity&start=洪江&end=桃源
+            url: 'index.php?con=ajax&med=getCenterCity&start=' + startPlace + '&end=' + endPlace,
+            dataType: 'text',
+            type: 'GET',
+            beforeSend: function(){
+                $('.wait').css({"display": "block"});
+            },
+            complete: function(){
+                $('.wait').css({"display": "none"});
+            },
+            success: function(data){
+                // console.log(data);
+                if(data == 'true'){
+                    $('.sorts').css({"display": "none"});
+                    $('.ACity').css({"display": "none"});
+                    $('.BCity').css({"display": "none"});
+                    $('.ulSUGGEST, .ulTRAIN, .ulBUS, .ulPLANE, .ulSHIP').css({"paddingTop": "15px"});
+                }else{
+                    $('.ulSUGGEST, .ulTRAIN, .ulBUS, .ulPLANE, .ulSHIP').css({"paddingTop": "15px"});
+                    var arrData = data.split('|');
+                    var ACities = arrData[0].split(',');
+                    // alert(ACities);
+                    var ACitiesLength = ACities.length;
+                    var htmlACs = "";
+                    for(var x=0; x<ACitiesLength; x++){
+                        var htmlAC = '<div>' + ACities[x] + '</div>'
+                        htmlACs += htmlAC;
+                    }
+                    $('.ACity').html('<span class="Udot"></span><span class="Bdot"></span>' + htmlACs);
+                    
+                    var BCities = arrData[1].split(',');
+                    // alert(arrData[1]);
+                    var BCitiesLength = BCities.length;
+                    var htmlBCs = "";
+                    for(var y=0; y<BCitiesLength; y++){
+                        var htmlBC = '<div>' + BCities[y] + '</div>'
+                        htmlBCs += htmlBC;
+                    }
+                    $('.BCity').html('<span class="Udot"></span><span class="Bdot"></span>' + htmlBCs);
+                    // alert(arrData[0]);
+                    // alert(arrData[1]);
+                    // alert('success');
+                    $('.BCity div').each(function(){
+                        $(this).click(function(){
+                            var strCity = $(this).html();
+                            $(this).parent().parent().children('.sorts').children('.clearCities').css({"margin-left": "-200px"});
+                            $(this).parent().parent().children('.sorts').children('.CityB').stop().animate({width: "25%"}, 200, function(){
+                                $(this).html('第二个中转城市：' + '<b style="color: #57acf6">' + strCity + '</b>' + '<a></a>');
+                            });
+                        });
+                    });
+                    $('.ACity div').each(function(){
+                        $(this).click(function(){
+                            var strCity = $(this).html();
+                            $(this).parent().parent().children('.sorts').children('.CityA').stop().animate({width: "25%"}, 200, function(){
+                                $(this).html('第一个中转城市：' + '<b style="color: #57acf6">' + strCity + '</b>' + '<a></a>');
+                            });
+                            $.ajax({
+                                url: 'index.php?con=ajax&med=chooseFristCity&start=' + startPlace + '&end=' + endPlace + '&fristCity=' + strCity,
+                                type: 'GET',
+                                dataType: 'text',
+                                beforeSend: function(){
+                                    $('.wait').css({"display": "block"});
+                                },
+                                complete: function(){
+                                    $('.wait').css({"display": "none"});
+                                },
+                                success: function(BCitiesNames){
+                                    // alert(BCitiesNamesLength);
+                                    // console.log(BCitiesNames);
+                                    arrBCitiesNames = BCitiesNames.split(',');
+                                    // alert(arrBCitiesNames[0]);
+                                    // alert(arrBCitiesNames[1]);
+                                    var BCitiesNamesLength = arrBCitiesNames.length;
+                                    var BCitiesHTMLs = "";
+                                    for(var a=0; a<BCitiesNamesLength-1; a++){
+                                        var BCitiesHTML = '<div>' + arrBCitiesNames[a] + '</div>'
+                                        BCitiesHTMLs += BCitiesHTML;
+                                    }
+                                    $('.BCity').html('<span class="Udot"></span><span class="Bdot"></span>' + BCitiesHTMLs);
+                                },
+                                error: function(){
+                                    // alert('failed');
+                                }
+                            });
+                        });
+                    });
                 }
-            });
-        
-    //城市名称输入预览
-    //  判断字节数（2字节/汉字 1字节/字母）
-    ////////////////////////新增////////////////////////
-    //  判断字节数（2字节/汉字 1字节/字母），至少输入2个字母或1个汉字才能显示城市名候选下拉列表【.listCityName】
-    // $('#start, #end').on('input', function (){
-    //     var inputContent = $(this).val();
-    //     var inputCityNameLength = $(this).val().length;
-    //         if(inputContent.match(/^[\u4E00-\u9FA5]{1,}$/)){
-    //             if(inputCityNameLength > 0){
-    //                 $(this).parent().children('.listCityName').fadeIn(100, function(){
-    //                     $(this).stop().animate({margin: '-30px auto'}, 100);
-    //                 });
-    //             }else{
-    //                 $(this).parent().children('.listCityName').fadeOut(100, function(){
-    //                     $(this).stop().animate({margin: '-10px auto'}, 100);
-    //                 });
-    //             };
-    //         }else{
-    //             if(inputCityNameLength > 1){
-    //                 $(this).parent().children('.listCityName').fadeIn(100, function(){
-    //                     $(this).stop().animate({margin: '-30px auto'}, 100);
-    //                 });
-    //             }else{
-    //                 $(this).parent().children('.listCityName').fadeOut(100, function(){
-    //                     $(this).stop().animate({margin: '-10px auto'}, 100);
-    //                 });
-    //             };
-    //         }
-    // });
-    $('#start').on('input', function (){
-        var inputContent = $(this).val();
-        var inputCityNameLength = $(this).val().length;
-            if(inputContent.match(/^[\u4E00-\u9FA5]{1,}$/)){
-                if(inputCityNameLength > 0){
-                    $(this).parent().children('.listCityName').fadeIn(100, function(){
-                        $(this).stop().animate({margin: '-30px auto'}, 100);
-                    });
-                        crAjax = $.ajax({
-                            url: 'indexMessage/getCity.php',
-                            beforeSend: function(){},
-                            dataType: 'json',
-                            data: {'city':inputContent},
-                            
-                            type: 'POST',
-                            success:function(data){
-                            $('.start').each(function(){
-                                $('.start').children('.listCityName').html("");
-                                var dataLength = data.length;
-                                for(var i=0; i<dataLength; i++){
-                                    $('<li />').appendTo($(this).children('.listCityName')).end();
-                                    var datalLess = data[i][1].replace(/[a-zA-Z,（）\s]+/,"");
-                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
-                                        $('.listCityName').children('li').each(function(){
-                                            $(this).click(function(){
-                                                var tempCityName = $(this).html();
-                                                $(this).parent().parent().children('input').val(tempCityName);
-                                            });
-                                        }); 
-                                }
-                            });
-                        }
-                        
-                        });
-                }else{
-                    $(this).parent().children('.listCityName').fadeOut(100, function(){
-                        $(this).stop().animate({margin: '-10px auto'}, 100);
-                    });
-                };
-            }else{
-                if(inputCityNameLength > 1){
-                    $(this).parent().children('.listCityName').fadeIn(100, function(){
-                        $(this).stop().animate({margin: '-30px auto'}, 100);
-                    });
-                        crAjax = $.ajax({
-                            
-                            url: 'indexMessage/getCity.php',
-                            beforeSend: function(){},
-                            dataType: 'json',
-                            data: {'city':inputContent},
-                            
-                            type: 'POST',
-                            success:function(data){
-                                if(crAjax){
-                                $('.start').each(function(){
-                                    $('.start').children('.listCityName').html("");
-                                    var dataLength = data.length;
-                                    for(var i=0; i<dataLength; i++){
-                                        $('<li />').appendTo($(this).children('.listCityName')).end();
-                                        var datalLess = data[i][1].replace(/[a-zA-Z,（）\s]+/,"");
-                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
-                                    }
-                                });
-                            }
-                        }
-                        
-                        });
-                }else{
-                    $(this).parent().children('.listCityName').fadeOut(100, function(){
-                        $(this).stop().animate({margin: '-10px auto'}, 100);
-                    });
-                };
-            };
-    });
-    $('#end').on('input', function (){
-        var inputContent = $(this).val();
-        var inputCityNameLength = $(this).val().length;
-            if(inputContent.match(/^[\u4E00-\u9FA5]{1,}$/)){
-                if(inputCityNameLength > 0){
-                    $(this).parent().children('.listCityName').fadeIn(100, function(){
-                        $(this).stop().animate({margin: '-30px auto'}, 100);
-                    });
-                        crAjax = $.ajax({
-                            url: 'indexMessage/getCity.php',
-                            beforeSend: function(){},
-                            dataType: 'json',
-                            data: {'city':inputContent},
-                            
-                            type: 'POST',
-                            success:function(data){
-                            $('.end').each(function(){
-                                $('.end').children('.listCityName').html("");
-                                var dataLength = data.length;
-                                for(var i=0; i<dataLength; i++){
-                                    $('<li />').appendTo($(this).children('.listCityName')).end();
-                                    var datalLess = data[i][1].replace(/[a-zA-Z,（）]+/,"");
-                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
-                                        $('.listCityName').children('li').each(function(){
-                                            $(this).click(function(){
-                                                var tempCityName = $(this).html();
-                                                $(this).parent().parent().children('input').val(tempCityName);
-                                            });
-                                        }); 
-                                }
-                            });
-                        }
-                        
-                        });
-                }else{
-                    $(this).parent().children('.listCityName').fadeOut(100, function(){
-                        $(this).stop().animate({margin: '-10px auto'}, 100);
-                    });
-                };
-            }else{
-                if(inputCityNameLength > 1){
-                    $(this).parent().children('.listCityName').fadeIn(100, function(){
-                        $(this).stop().animate({margin: '-30px auto'}, 100);
-                    });
-                        crAjax = $.ajax({
-                            
-                            url: 'indexMessage/getCity.php',
-                            beforeSend: function(){},
-                            dataType: 'json',
-                            data: {'city':inputContent},
-                            
-                            type: 'POST',
-                            success:function(data){
-                                if(crAjax){
-                                $('.end').each(function(){
-                                    $('.end').children('.listCityName').html("");
-                                    var dataLength = data.length;
-                                    for(var i=0; i<dataLength; i++){
-                                        $('<li />').appendTo($(this).children('.listCityName')).end();
-                                        var datalLess = data[i][1].replace(/[a-zA-Z,（）]+/,"");
-                                        $(this).children('.listCityName').children('li').eq(i).html(datalLess);
-                                    }
-                                });
-                            }
-                        }
-                        
-                        });
-                }else{
-                    $(this).parent().children('.listCityName').fadeOut(100, function(){
-                        $(this).stop().animate({margin: '-10px auto'}, 100);
-                    });
-                };
-            };
-    });
-    });
+            },
+            error: function(){
+                // alert('failed');
+            }
+        });
+  
     // alert(GETplace());
     $('#start, #end').on('blur', function(){
         $(this).parent().children('.listCityName').fadeOut('fast', function(){
@@ -296,6 +285,12 @@
     $('#start, #end').on('focus', function(){
         $(this).parent().children('.listCityName').fadeIn('fast', function(){
             $(this).stop().animate({margin: '-30px auto'}, 100);
+        });
+        $(document).keydown(function(e){
+            var key = e.keyCode;
+            if(key == 13){
+                $('#submit').click();
+            }
         });
     });
     ///点击输入候选列表城市名功能
@@ -318,11 +313,11 @@
         };
     });
     //激活在火车标签 .ulTRAIN 下的 li 下的的火车图标标签 .tt1，以及相应激活对应的图标标签
-    $('.ulSUGGEST').find('.lists.Normal').addClass('J');
-    $('.ulTRAIN').find('.lists.Normal').addClass('H');
+    $('.ulSUGGEST').find('.lists.Normal').addClass('J').addClass('Z');
+    $('.ulTRAIN').find('.lists.Normal').addClass('H').addClass('Z');
     $('.ulBUS').find('.lists.Normal').addClass('Q');
     $('.ulPLANE').find('.lists.Normal').addClass('F').addClass('Z').addClass('L');
-    $('.ulSHIP').find('.lists.Normal').addClass('C');
+    $('.ulSHIP').find('.lists.Normal').addClass('C').addClass('Z');
 
     $('ul').children('li:last-child').addClass('last');//【line #216】
     $('#SEbutton').click(function () {
@@ -331,8 +326,10 @@
         var str3 = $('#start').attr('placeholder');
         var str4 = $('#end').attr('placeholder');
         if(str1.length==0 && str2.length==0){
-            $('#start').attr('placeholder', str4);
-            $('#end').attr('placeholder', str3);
+            if(str3 != '输入起点' && str4 != '输入终点' && str1.length != 0 && str2.length != 0 ){
+                $('#start').attr('placeholder', str4);
+                $('#end').attr('placeholder', str3);
+            }
         }else if(str1.length!=0 && str2.length==0){
             $('#start').val(str4);
             $('#end').val(str1)
@@ -357,7 +354,7 @@
     });
     $('.TAG-1').click(function(){
         $(this).parents().find('.listAll').find('ul').css({"display": "none"});
-        $('.ulSUGGEST').slideDown('slow');
+        $('.ulSUGGEST').css({"display": "table"});
     });
     $('.TAG-2').click(function(){
         $(this).parents().find('.listAll').find('ul').css({"display": "none"});
@@ -399,6 +396,7 @@
         var listLength = $(this).children('.lists').length;
             if(listLength == 0){
                 $(this).addClass('noInfo');
+                $('.ulSUGGEST').removeClass('noInfo');
             }
         var strTransName = $(this).parent().parent().parent().children('.active').next().html();
     });
@@ -517,6 +515,8 @@
 //要添加：
 //判断【起点】、【终点】数据是否存在，存在则执行submit函数
 
+// alert(startPlace);
+// alert(endPlace);
     $('#submit').click(function(){
         var startPlace = $('#start').val().replace(/\ +/g, "");
         var endPlace = $('#end').val().replace(/\ +/g, "");
@@ -524,15 +524,19 @@
         //     // './index.php?con=details&med=show&start=' + startPlace + '&end=' + endPlace
         // }
         // alert('ok');
-        // alert(startPlace);
-        // alert(endPlace);
+        // if(startPlace.length==0 || endPlace.length==0){
+
+        // }else{
+            
+        // }
         if(startPlace.length != 0 && endPlace.length == 0){
             if(startPlace != $('#end').attr('placeholder')){
                 window.location.href = './index.php?con=details&med=display&start=' + startPlace + '&end=' + $('#end').attr('placeholder');
             }else{
                 $(this).parent().addClass('error');
             }
-        }else if(startPlace.length == 0 && startPlace.length !=0){
+        }else if(startPlace.length == 0 && endPlace.length !=0){
+                // alert('a');
             if($('#start').attr('placeholder') != endPlace){
                 window.location.href = './index.php?con=details&med=display&start=' + $('#start').attr('placeholder') + '&end=' + endPlace;
             }else{
@@ -616,15 +620,21 @@ $('.number').each(function(){
         $(this).parent().parent().children('.ACity').slideToggle(400);
         $(this).parent().parent().children('.ACity').css({"display": "flex"});
     });
-    $('.ACity div').each(function(){
-        $(this).click(function(){
-            var strCity = $(this).html();
-            $(this).parent().parent().children('.sorts').children('.CityA').html('已选择中转城市：' + strCity + '<a></a>');
-        });
-    });
+    // $('.ACity div').each(function(){
+    //     $(this).click(function(){
+    //         alert(startPlace);
+    //         alert(endPlace);
+    //         var strCity = $(this).html();
+    //         $(this).parent().parent().children('.sorts').children('.CityA').html('已选择中转城市：' + strCity + '<a></a>');
+    //         // alert(startPlace);
+    //         // alert(endPlace);
+    //         // $.ajax({});
+    //     });
+    // });
     $('.CityB').click(function(){
         $(this).parent().children('.CityA').children('.selected').removeClass('selected');
         $(this).parent().parent().children('.ACity').slideUp(400);
         $(this).parent().parent().children('.BCity').slideToggle(400);
         $(this).parent().parent().children('.BCity').css({"display": "flex"});
     });
+    

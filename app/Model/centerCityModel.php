@@ -1,143 +1,217 @@
 <?php
     namespace app\Model;
     use lib\core\DB;
+    error_reporting(0);
     class centerCity{
 
-        private $data = "";
+        private $data = [];
         private $start;
         private $end;
 
         function set(){
             set_time_limit(0);
-            // $result = DB::findAll("city","state=1");
-            // foreach ($result as $key) {
-            //     $city = $key['city'];
-            //     DB::find("center_city","place='{$city}'");
-            //     if(DB::$rowcount > 0)
-            //         continue;
-            //     $temp = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$city}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
-            //     $it_to = $temp->fetchall();
-            //     $data1 = "";
-            //     $size = count($it_to);
-            //     for ($i = 0;$i<$size;$i++) {
-            //         if(stristr($data1,$it_to[$i]['city']) == false)
-            //             if($i == $size - 1)
-            //                 $data1 .= $it_to[$i]['city'];
-            //             else  $data1 .= $it_to[$i]['city'].",";
-            //     }
-            //     $temp = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$city}' and a.id=b.station_id and b.city_id=c.id");
-            //     $to_it = $temp->fetchall();
-            //     $size = count($to_it);
-            //     $data2 = "";
-            //     for ($i = 0;$i<$size;$i++) {
-            //         if(!stristr($data2,$to_it[$i]['city']))
-            //             if($i == $size - 1)
-            //                 $data2 .= $to_it[$i]['city'];
-            //             else  $data2 .= $to_it[$i]['city'].",";
-            //     }
-            //     DB::insert("center_city","place,it_to,to_it","'{$city}','{$data1}','{$data2}'");
-            //     p($city);
-            //     p($data1);
-            //     p($data2);
-            //     p("");
-            //     // die;
-            // }
-            // die;
-            $result = DB::findAll("station","state=1");
+            $result = DB::findAll("city","state=1");
             foreach ($result as $key) {
-                $station = $key['name'];
-                DB::find("center_city","place='{$station}'");
+                $city = $key['city'];
+                DB::find("center_city","place='{$city}'");
                 if(DB::$rowcount > 0)
                     continue;
-                DB::find("city","city like '%{$station}%'");
-                if(DB::$rowcount > 0)
-                    continue;
-                $temp = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$station}' and a.id=b.station_id and b.city_id=c.id");
-                $to_it = $temp->fetchall();
-                $size = count($to_it);
-                $data2 = "";
-                for($i=0;$i<$size;$i++){
-                    if(!stristr($data2,$to_it[$i]['city']))
-                        if($i == $size - 1)
-                            $data2 .= $to_it[$i]['city'];
-                        else  $data2 .= $to_it[$i]['city'].",";
-                }
-                $temp = DB::query("select c.city from station a,line b,city c where a.name='{$station}' and a.id=b.start_station_id and b.end_station_id=c.id");
-                $it_to = $temp->fetchall();
-                $size = count($it_to);
-                $data1 = "";
-                for($i=0;$i<$size;$i++){
-                    if(!stristr($data1,$it_to[$i]['city']))
-                        if($i == $size - 1)
-                            $data1 .= $it_to[$i]['city'];
-                        else  $data1 .= $it_to[$i]['city'].",";
-                }
-                p($station);
-                p($data1);
-                p($data2);
-                p("");
-                DB::insert("center_city","place,it_to,to_it","'{$station}','{$data1}','{$data2}'");
+                $city_id = DB::find("city","city like '%{$city}%'")['id'];
+                //汽车
+                $bus_data = $this->get_bus($city,$city_id);
+                //飞机
+                $flight_data = $this->get_flight($city);
+                //火车
+                $train_data = $this->get_train($city);
+                //轮船
+                $ship_data = $this->get_ship($city);
+                // var_dump(($bus_data));
+                // var_dump($train_data);
+                // var_dump($flight_data);
+                // var_dump($ship_data);
+                // die;
+                DB::insert("center_city","place,bus,train,flight,ship","'{$city}','{$bus_data}','{$train_data}','{$flight_data}','{$ship_data}'");
                 // die;
             }
         }
+
+        private function get_bus($city,$city_id){
+            $bus_city = DB::query("select b.name from line a,station b where a.start_station_id={$city_id} and b.id=a.end_station_id");
+            $bus_data = "";
+            if($bus_city != NULL){
+                $bus_city = $bus_city->fetchall();
+                for ($i=0; $i < count($bus_city); $i++) { 
+                    for($j=$i+1;$j < count($bus_city);$j++){
+                        if(empty($bus_city[$i]) || empty($bus_city[$j]))
+                            continue;
+                        if($bus_city[$i]['name'] == $bus_city[$j]['name']){
+                            unset($bus_city[$j]);
+                        }
+                    }
+                    if(!empty($bus_city[$i]))
+                        $bus_data .= $bus_city[$i]['name'].',';
+                }
+                $bus_data = substr($bus_data,0,strlen($bus_data) - 1);
+            }
+            return $bus_data;
+        }
+
+        private function get_flight($city){
+            $flight_city = str_replace(array("市","区","省","特别行政区"),"",$city);
+            $s_cityFrom = DB::query("SELECT id FROM city where city like '%$flight_city%'");
+            $s_cityFrom = $s_cityFrom->fetchall();
+            $flight_data = "";
+            foreach($s_cityFrom as $value){
+                $s_cityTo = DB::query("SELECT r_to_id from route_table where r_from_id=".$value['id']);
+                $s_cityTo = $s_cityTo->fetchall();
+                foreach($s_cityTo as $v){
+                    $_cityToName = DB::query("SELECT city from city where id=".$v['r_to_id']);
+                    $_cityToName = $_cityToName->fetchall();
+                    // var_dump($_cityToName);
+                    $flight_data .= $_cityToName[0]['city'].',';
+                }
+            }
+            $flight_data = substr($flight_data,0,strlen($flight_data) - 1);
+            return $flight_data;
+        }
+
+        private function get_train($city){
+            $result = DB::query("SELECT  DISTINCT Res_city.stationName AS cityName
+            FROM `station_stop` AS Res_city
+            WHERE Res_city.trainNo IN(
+              
+            SELECT DISTINCT  First.trainNo
+            FROM `station_stop` AS First
+            WHERE First.stationName LIKE '{$city}%'
+            
+            ) AND  Res_city.stationName NOT LIKE '{$city}%'");
+            $train_data = "";
+            foreach ($result as $value) {
+                $train_data .= $value['cityName'].',';
+            }
+            $train_data = substr($train_data,0,strlen($train_data) - 1);
+            return $train_data;
+        }
+
+        private function get_ship($city){
+            $condition = "name = '{$city}'";
+            $con = DB::findAlls("id","station",$condition);
+            foreach ($con as $value) {
+            $sss = $value['id'];      //station表中对应的name的id
+            // echo $sss;
+            // echo "<br/>";
+            $condition = "city_id = '{$sss}'";
+            $con1 = DB::findAlls("name","ferry_id",$condition);
+            foreach ($con1 as $value1) {
+              $www = $value1['name'];    //ferry_id表中
+              // echo $www;
+              // echo "<br/>";
+              $condi = "start = '{$www}'";
+              $con2 = DB::findAlls("ferry_id",'details',$condi);
+              foreach ($con2 as $value2) {
+                $rr = $value2['ferry_id'];
+                $condition1 = "ferry_id = '{$rr}'";
+                $con2 = DB::findAlls("end","details",$condition1);
+                foreach ($con2 as $value3) {
+                  $ttt = $value3["end"];
+                  $condition2 = "start = '{$ttt}'";
+                  $con3 = DB::findAlls("ferry_id","details",$condition2);
+                  foreach ($con3 as $value4){
+                    $uuuu = $value4['ferry_id'];
+                    $condition4 = "id = '{$uuuu}'";
+                    $con4 = DB::findAlls("city_id","ferry_id",$condition4);
+                    foreach ($con4 as $value5) {
+                      $rrr =  $value5['city_id'];
+                      $condition3 = "id = '{$rrr}'";
+                      $con5 = DB::findAlls("name","station",$condition3);
+                      foreach ($con5 as $value6) {
+                        $value7[] = $value6['name'];
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            }
+            $ship_data = array_unique($value7);
+            $ship = "";
+            foreach ($ship_data as $value) {
+                $ship .= $value.',';
+            }
+            $ship = str_replace($city.',','',$ship);
+            $ship = substr($ship,0,strlen($ship)-1);
+            return $ship;//返回二维数组
+        }
+                
 
         function init(){
             $this->start = $_GET['start'];
             $this->end = $_GET['end'];
         }
 
+        private function get_data($tool){
+            $result = DB::findAll("center_city","{$tool} like '%{$this->end}%'");
+            // var_dump($result);die;
+            if(!empty($result)){
+                foreach ($result as $value) {
+                    // p($value['place']);
+                    if(strpos($this->bus_center_city,$value['place']) != false)
+                        $bus[] = $value['place'];
+                    if(strpos($this->train_center_city,$value['place']) != false)
+                        $train[] = $value['place'];
+                    if(strpos($this->flight_center_city,$value['place']) != false)
+                        $flight[] = $value['place'];
+                    if(strpos($this->ship_center_city,$value['place']) != false)
+                        $ship[] = $value['place'];
+                }
+                if(!empty($bus))
+                    $citys[] = $bus;
+                else $citys[] = NULL;
+                if(!empty($train))
+                    $citys[] = $train;
+                else $citys[] = NULL;
+                if(!empty($flight))
+                    $citys[] = $flight;
+                else $citys[] = NULL;
+                if(!empty($ship))
+                    $citys[] = $ship;
+                else $citys[] = NULL;
+                // if(!empty($citys[0]) || !empty($citys[1]) || !empty($citys[2]) || !empty($citys[3]))
+                    $this->data[] = $citys;
+                // var_dump($tool);p("");
+            }
+        }
+
         function getCenterCity(){
             $this->init();
-            // $result = DB::find("city","city like '%{$this->start}%'");
-            // if(DB::$rowcount > 0){
-            //     DB::find("city","city like '%{$this->end}%'");
-            //     if(DB::$rowcount > 0){
-            //         $this->city_to_city();
-            //     }else{
-            //         $this->city_to_station();
-            //     }
-            // }else{
-            //     $result = DB::find("city","city like '{$this->end}'");
-            //     if($result > 0){
-            //         $this->station_to_city();
-            //     }else{
-            //         $this->station_to_station();
-            //     }
-            // }
+            $bus = [];
+            $train = [];
+            $flight = [];
+            $ship = [];
             $result = DB::find("center_city","place like '%{$this->start}%'");
-            $data1 = $result['it_to'].$result['to_it'];
-            $result = DB::find("center_city","place like '%{$this->end}%'");
-            $data2 = $result['it_to'].$result['to_it'];
-            $this->data = $data1."|".$data2;
-            return $this->data;
-        }
-
-        function city_to_city(){
-            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->start}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
-            array_push($this->data,$result->fetchall());
-            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->end}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
-            array_push($this->data,$result->fetchall());
-        }
-
-        function city_to_station(){
-            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->start}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
-            array_push($this->data,$result->fetchall());
-            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->end}' and a.id=b.station_id and b.city_id=c.id");
-            array_push($this->data,$result->fetchall());
-        }
-
-        function station_to_city(){
-            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->start}' and a.id=b.station_id and b.city_id=c.id");
-            array_push($this->data,$result->fetchall());
-            $result = DB::query("select d.city from city a,city_to_station b,station c,city d where a.city like '%{$this->end}%' and a.id=b.city_id and b.station_id=c.id and c.name=d.city");
-            array_push($this->data,$result->fetchall());
-        }
-
-        function station_to_station(){
-            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->start}' and a.id=b.station_id and b.city_id=c.id");
-            array_push($this->data,$result->fetchall());
-            $result = DB::query("select c.city from station a,city_to_station b,city c where a.name='{$this->end}' and a.id=b.station_id and b.city_id=c.id");
-            array_push($this->data,$result->fetchall());
+            // var_dump($result);die;
+            if($result != NULL){
+                $this->bus_center_city = $result['bus'];
+                $this->train_center_city = $result['train'];
+                $this->flight_center_city = $result['flight'];
+                $this->ship_center_city = $result['ship'];
+                // $all_center_city = $this->bus_center_city.$this->train_center_city.$this->flight_center_city.$this->ship_center_city;
+                // var_dump($all_center_city);die;
+                $this->get_data('bus');
+                $this->get_data('train');
+                $this->get_data('flight');
+                $this->get_data('ship');
+                // var_dump($this->data);die;
+                return $this->data;
+            }else{
+                $station_id = DB::find("station","name='{$this->start}'")['id'];
+                // p($station_id);die;
+                $result = DB::findAll("line","start_station_id={$station_id}");
+                var_dump($result);die;
+                foreach ($result as $value) {
+                    # code...
+                }
+            }
         }
     }
 ?>

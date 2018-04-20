@@ -12,22 +12,22 @@
 
         function bus(){
             $mod = M('bus');
-            $this->busData = $mod->get_bus($this->start,$this->end,"price");
+            $this->busData = $mod->get_bus($_GET['start'],$_GET['end'],"price");
         }
 
         function trains(){        
             $trains_obj= M('TrainsPrice');
-            $this->trainData = $trains_obj->Search_trains($this->start,$this->end);
+           $this->trainData = $trains_obj->Search_trains($_GET['start'],$_GET['end']);   
         }
 
         function flight(){
             $flight_obj= M('flight');
-            $this->flightData = $flight_obj->searchFlight($this->start,$this->end);
+            $this->flightData = $flight_obj->searchFlight($_GET['start'],$_GET['end']);
         }
 
         function ship(){
             $mod = M('ship');
-            $this->shipData = $mod->pan($this->start,$this->end);
+            $this->shipData = $mod->pan($_GET['start'],$_GET['end']);
         }
 
         function getStation(){
@@ -61,26 +61,22 @@
         function recommend(){
             if(is_array($this->trainData)){
                 $train_M=M('TrainsPrice');
-                $trainData_Price=$train_M-> PriceUpSort($this->trainData);
+                // $trainData_Price=$train_M-> PriceUpSort($this->trainData);
+                $trainData_Price=$train_M->VaildPriceSort($this->trainData);
                 $trainData_Time=$train_M-> TimeUpSort($this->trainData);
+                
                 $trainDatas=[];
                 array_push($trainDatas,$trainData_Price);
                 array_push($trainDatas,$trainData_Time);
             }
             $mod = M('recommend');
             $this->recommend = $mod->getRecommend($this->busData,$trainDatas,$this->flightData,$this->shipData);
+            // p($this->recommend);
+            // die;
         }
 
         function show(){
             if(!empty($_GET['start']) && !empty($_GET['end'])){
-                if(!empty($_GET['fristCity'])){
-                    $this->end = $_GET['fristCity'];
-                    $this->start = $_GET['start'];
-                }
-                if(!empty($_GET['secondCity'])){
-                    $this->start = $_GET['secondCity'];
-                    $this->end = $_GET['end'];
-                }
                 $this->bus();
                 $this->trains();
                 $this->flight();
@@ -94,11 +90,11 @@
             $data = [];
             array_push($data,$mod->getFristCity());
             $this->show();
-            // p($this->busData);
             array_push($data,$this->recommend);
-            // echo $data[0];
+            p($data[0]);
+            die;
             header('Content-Type: application/json; charset=utf8'); 
-            echo json_encode($data,JSON_UNESCAPED_UNICODE);
+            echo json_encode($data);
         }
 
         function chooseSecondCity(){
@@ -107,8 +103,35 @@
             array_push($data,$mod->getSecondCity());
             $this->show();
             array_push($data,$this->recommend);
+            p($data[0]);
+            die;
             header('Content-Type: application/json; charset=utf8'); 
-            echo json_encode($data,JSON_UNESCAPED_UNICODE);
+            echo json_encode($data);
+        }
+        /**
+        *@param 停站信息Dots调用模型及方法 
+        */
+        function station_stop(){
+            
+            if(empty($_REQUEST['about_id'])||empty($_REQUEST['dpSort'])||empty($_REQUEST['arrSort'])){
+                return null;
+            }else{
+                $station_stop_obj=M('StopInfo');
+                $station_stop=$station_stop_obj->get_stop_info($_REQUEST['about_id'],$_REQUEST['dpSort'],$_REQUEST['arrSort']);
+            }
+        }
+
+        /**
+        *@param 停站信息Winows调用模型及方法 
+        */
+        function station_stopWin(){
+            
+            if(empty($_REQUEST['about_id'])||empty($_REQUEST['dpSort'])||empty($_REQUEST['arrSort'])){
+                return null;
+            }else{
+                $station_stop_obj=M('StopInfo');
+                $station_stop=$station_stop_obj->get_stop_infoWin($_REQUEST['about_id'],$_REQUEST['dpSort'],$_REQUEST['arrSort']);
+            }
         }
 
     }

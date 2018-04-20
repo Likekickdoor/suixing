@@ -1,4 +1,10 @@
 <?php
+/**
+ * 查询航班数据文件
+ * @author rwb
+ * 
+ */
+
 namespace app\Model;
 use lib\core\DB;
 

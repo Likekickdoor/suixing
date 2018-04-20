@@ -49,6 +49,8 @@ let toolFunc = {
   // 平滑滚动
   smoothRolling: function(sObjClick, sObjPos) {
     $(sObjClick).click(function() {
+      $('div.nav').removeClass('on');
+      $('div.nav-btn').removeClass('on');
       $('html,body').animate({scrollTop: $(sObjPos).offset().top}, 1000);
     });
   }
@@ -60,12 +62,12 @@ let toolFunc = {
 $(function() {
   if($(window).scrollTop() === 0) {
     $('body').removeClass('page-scroll');
-    console.log(1);
   } else {
     $('body').addClass('page-scroll');
-    console.log(2);
   }
   toolFunc.headerScroll();
+
+  // 城市输入自动完成列表点击
   $('ul.city-auto').on('click', 'li', function() {
     let sType = $(this).parent().attr('title');
     if(sType === 'from') {
@@ -74,6 +76,7 @@ $(function() {
       $('form.index-query').find('input[title=to]').val($(this).text());
     }
   })
+
 
   // 获得全部城市名称
   $.ajax({
@@ -92,7 +95,7 @@ $(function() {
           aCityName.push(cityName);
         })
         window.aCityName = aCityName;
-        console.log(aCityName);
+        //console.log(aCityName);
       },
       error: function() {
         console.log('城市列表获取失败');
@@ -119,14 +122,39 @@ $(function() {
     });
     if(isPass) {
   //    Ajax提交
+
+  var name = $("#msg-name").val();
+      var email = $("#msg-mail").val();
+      var msg_text = $("#msg-text").val();
+  $.ajax({
+    url: 'management/getopinion.php',
+   
+    dataType: 'text',
+    data: {'y_name':name,
+          'y_email':email,
+        'opinion':msg_text},
+    
+    type: 'post',
+    success:function(data){
+      console.log(data);  
+        alert(data);
+        $("#msg-name").val('');
+        $("#msg-mail").val('');
+        $("#msg-text").val('');
+    }
+})
     }
     return false;
   })
 
   //移动端导航栏显示隐藏
   $('div.nav-btn').click(function() {
+    if($('div.nav').hasClass('on')) {
+      $('div.nav').removeClass('on');
+    } else {
+      $('div.nav').addClass('on');
+    }
     $(this).toggleClass('on');
-    $('header.header').toggleClass('header-show');
   })
 
   // 城市输入自动完成
@@ -141,7 +169,7 @@ $(function() {
     // 去空格
     sInput = sInput.replace(/(^\s+)|(\s+$)/g,"");
     if(sInput != "") {
-      $('form.index-query').find('ul.city-auto').fadeIn('slow');
+      $('form.index-query').find('ul.city-auto').show();
       if(/^[\x00-\xff]/.test(sInput.charAt(0))) {
         $.each(aCityName, function(i, item) {
           if(cnt < 5 && item.en.indexOf(sInput) != -1) {
@@ -161,22 +189,21 @@ $(function() {
           }
         })
       }
-      $('ul.city-auto').find('li').click(function() {
-        console.log(1);
-      })
       if(!cnt) {
-        $('form.index-query').find('ul.city-auto').hide(200);
+        $('form.index-query').find('ul.city-auto').fadeOut();
       }
+
     } else {
-      $('form.index-query').find('ul.city-auto').hide(200);
+      $('form.index-query').find('ul.city-auto').fadeOut();
     }
   });
   $('form.index-query').find('input[type=text]').on('blur', function() {
-    $('form.index-query').find('ul.city-auto').hide(200);
+    $('form.index-query').find('ul.city-auto').fadeOut();
   })
 
   toolFunc.smoothRolling('#to_about', '#about');
-  toolFunc.smoothRolling('#to_team', '#team');
+  toolFunc.smoothRolling('#to_advantage', '#advantage');
+  toolFunc.smoothRolling('#to_feature', '#feature');
   toolFunc.smoothRolling('#to_contact', '#contact');
 
 })

@@ -18,6 +18,7 @@ class StopInfo
 		return $StopInfo;
 	}
 
+	//**Dots样式显示**//
 	function StaPoint($StopInfo,$dpSort,$arrSort){
 		$StaPoint='';
 		foreach ($StopInfo as $key => $value)
@@ -37,7 +38,7 @@ class StopInfo
 			if($key>=($dpSort-1)&&$key<($arrSort-1))
 			{	
 				$distancex=$StopInfo[$key+1]['distance']-$StopInfo[$key]['distance'];
-				$StaDistance.='<div>'.$distancex.'</div> ';
+				$StaDistance.='<div>'.abs($distancex).'</div> ';
 			}
 		}
 		return $StaDistance;
@@ -80,13 +81,57 @@ str;
 str;
 		}	
 	}
+
+	//**Windows样式显示**//
+	function StaPointWin($StopInfo,$dpSort,$arrSort){
+          $StaPoint=[];
+          foreach ($StopInfo as $key => $value)
+          {
+               if($key>($dpSort-1)&&$key<($arrSort-1))
+               {
+                    array_push($StaPoint,$value['stationName']);
+               }
+          }
+          return $StaPoint;
+     }
+
+    function StaDistanceWin($StopInfo,$dpSort,$arrSort){
+          $StaDistance=[];
+          foreach ($StopInfo as $key => $value)
+          {
+               if($key>=($dpSort-1)&&$key<($arrSort-2))
+               {    
+                    $distancex=$StopInfo[$key+1]['distance']-$StopInfo[$key]['distance'];
+                    array_push($StaDistance,abs($distancex));
+               }
+          }
+          return $StaDistance;
+     }
+
+    function get_stop_infoWin($about_id,$dpSort,$arrSort){
+          
+          $Info=new StopInfo;
+          $pdo=DB::$con;//句柄
+          $StopInfo=$Info->info($pdo,$about_id);
+          if(!empty($StopInfo)){
+
+          $StaPoint=$Info->StaPointWin($StopInfo,$dpSort,$arrSort);      
+          $StaDistance=$Info->StaDistanceWin($StopInfo,$dpSort,$arrSort);
+               $str='';
+               for($key=0;$key<count($StaPoint);$key++){
+                    $str.="<div>{$StaPoint[$key]}<span>{$StaDistance[$key]}</span></div>";
+               }
+               echo $str;
+               exit();
+          }else{
+               $str='<div>暂无数据<span>0</span></div>';
+               echo $str;
+               exit();
+          }    
+     }
+
 }
 
-	// $about_id=8980;//前端传来
-	// $dpSort=1;//前端传来
-	// $arrSort=11;//前端传来
-	// $Info=new StopInfo;
-	// $StopInfo=$Info->info($pdo,$about_id);
-	// var_dump($StopInfo);
-	// exit();
+
+
 ?>
