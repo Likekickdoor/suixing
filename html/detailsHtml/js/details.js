@@ -104,8 +104,8 @@
                             <div class="moreTags">
                                 <div class="moreTagsLeft">
                                     <div class="tg1">荐</div>
-                                    <div class="tg2">直达</div>
-                                    <div class="tg3">路线最短</div>
+                                    <div class="Jtg2">价格最低</div>
+                                    <div class="Jtg3">路线最短</div>
                                     <span class="tg4">
                                         <span class="tt1"><img src="html/detailsHtml/img/train.svg" /></span>
                                         <span class="tt2"><img src="html/detailsHtml/img/bus.svg" /></span>
@@ -164,7 +164,6 @@
                         $('.ulSUGGEST').append(HTMLs);
                         $('.ulSUGGEST').find('.lists.Normal').addClass('J').addClass('Z');
                         $('.ulSUGGEST').children('li').eq(0).css({"display": "none"});
-                        $('.ulSUGGEST').children('li').eq(2).addClass('L');
                         $('.number').each(function(){
                             $(this).addClass('addci');
                                 var numberLength = $(this).html().length * 10;
@@ -174,6 +173,12 @@
                                     $(this).parent().children('.costTime').css({"width": "100%", "padding": "0"});
                                 }
                         });
+                        if($('.ulSUGGEST').children('li').length == 2){
+                            $('.ulSUGGEST').children('li').eq(1).addClass('zuidi').addClass('zuiduan');
+                        }else{
+                            $('.ulSUGGEST').children('li').eq(1).addClass('zuidi');
+                            $('.ulSUGGEST').children('li').eq(2).addClass('zuiduan');
+                        }
                     }
                 };
             },

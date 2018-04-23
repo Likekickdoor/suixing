@@ -149,6 +149,7 @@
                 // p($this->recommend);
                 // die;
             }
+            // var_dump($data);die;
             $view = V('details');
             if(empty($this->busData) && empty($this->trainData) && empty($this->flightData) && empty($this->shipData)){
                 $view->display('detailsHtml/transCity','');
@@ -160,10 +161,34 @@
         function interchange(){
             $mod = M('centerCity');
             $result = $mod->getCenterCity();
-            for ($i = 0;$i < count($result);$i ++) {
-                $all_citys = $result[$i];
-                for($j = 0;$j < count($all_citys);$j ++){
-                    $this->get_interchange_line($all_citys[$j],$i,$j);
+            // var_dump($result[0]);die;
+            if(is_array($result[0]))
+                for ($i = 0;$i < count($result);$i ++) {
+                    $all_citys = $result[$i];
+                    for($j = 0;$j < count($all_citys);$j ++){
+                        $this->get_interchange_line($all_citys[$j],$i,$j);
+                    }
+                }
+            else{
+                foreach ($result as $city) {
+                    $bus_mod = M('bus');
+                    $train_mod = M('TrainsPrice');
+                    $flight_mod = M('flight');
+                    $ship_mod = M('ship');
+                    $first = $bus_mod->get_bus($_GET['start'],$city,"price")[0];
+                    $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
+                    if(!empty($second))
+                        $this->interchange[] = array("first" => $first,"second" => $second);
+                    $second = $train_mod->Search_trains($city,$_GET['end'])[0];
+                    if(!empty($second))
+                        $this->interchange[] = array("first" => $first,"second" => $second);
+                    $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
+                    if(!empty($second))
+                        $this->interchange[] = array("first" => $first,"second" => $second);
+                    $second = $ship_mod->pan($city,$_GET['end'])[0];
+                    if(!empty($second))
+                        $this->interchange[] = array("first" => $first,"second" => $second);
+                    // p($this->interchange);die;
                 }
             }
             // var_dump($this->interchange);die;

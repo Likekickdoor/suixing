@@ -39,8 +39,10 @@
             return $result;
         }
         //数据库查找函数，查找一条
-        public static function find($table,$condition){
-            $sql = "select * from $table where $condition";
+        public static function find($table,$condition = "",$find = "*"){
+            if($condition == "")
+                $sql = "select $find from $table";
+            else $sql = "select $find from $table where $condition";
             try{
                 $result = self::$con->query($sql);
                 if(!$result)
@@ -52,8 +54,10 @@
             return $result->fetch();
         }
         //查找所有
-        public static function findAll($table,$condition){
-            $sql = "select * from $table where $condition";
+        public static function findAll($table,$condition = "",$find = "*"){
+            if($condition == "")
+                $sql = "select $find from $table";
+            else $sql = "select $find from $table where $condition";
             try{
                 $result = self::$con->query($sql);
                 if(!$result)
