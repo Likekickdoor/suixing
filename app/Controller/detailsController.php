@@ -50,75 +50,23 @@
             // die;
         }
 
-        private function get_interchange_line($citys,$i,$j){
-            // var_dump($citys);p($i.','.$j);
-            $bus_mod = M('bus');
-            $train_mod = M('TrainsPrice');
-            $flight_mod = M('flight');
-            $ship_mod = M('ship');
-            if($j == 0){
-                foreach ($citys as $city) {
-                    $temp = $bus_mod->get_bus($_GET['start'],$city,"price")[0];
-                    if($i==0)
-                        $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
-                    else if($i==1)
-                        $second = $train_mod->Search_trains($city,$_GET['end'])[0];
-                    else if($i==2)
-                        $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
-                    else
-                        $second = $ship_mod->pan($city,$_GET['end'])[0];
-                    if((!empty($temp)) && (!empty($second))){
-                        $this->interchange[] = array('first'=>$temp,'second'=>$second);
-                    }
-                }
-            }else if($j == 1){
-                foreach ($citys as $city) {
-                    $temp = $train_mod->Search_trains($_GET['start'],$city)[0];
-                    if($i==0)
-                        $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
-                    else if($i==1)
-                        $second = $train_mod->Search_trains($city,$_GET['end'])[0];
-                    else if($i==2)
-                        $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
-                    else
-                        $second = $ship_mod->pan($city,$_GET['end'])[0];
-                    if((!empty($temp)) && (!empty($second))){
-                        $this->interchange[] = array('first'=>$temp,'second'=>$second);
-                    }
-                }
-                // if(!empty($second_lines))
-                //     {var_dump($second_lines);p("");p("");}
-            }else if($j == 2){
-                foreach ($citys as $city) {
-                    $temp = $flight_mod->searchFlight($_GET['start'],$city)[0];
-                    if($i==0)
-                        $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
-                    else if($i==1)
-                        $second = $train_mod->Search_trains($city,$_GET['end'])[0];
-                    else if($i==2)
-                        $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
-                    else
-                        $second = $ship_mod->pan($city,$_GET['end'])[0];
-                    if((!empty($temp)) && (!empty($second))){
-                        $this->interchange[] = array('first'=>$temp,'second'=>$second);
-                    }
-                }
-            }else if($j == 3){
-                foreach ($citys as $city) {
-                    $temp = $ship_mod->pan($_GET['start'],$city)[0];
-                    if($i==0)
-                        $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
-                    else if($i==1)
-                        $second = $train_mod->Search_trains($city,$_GET['end'])[0];
-                    else if($i==2)
-                        $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
-                    else
-                        $second = $ship_mod->pan($city,$_GET['end'])[0];
-                    if((!empty($temp)) && (!empty($second))){
-                        $this->interchange[] = array('first'=>$temp,'second'=>$second);
-                    }
-                }
-            }
+        private function get_interchange_line($bus_mod,$train_mod,$flight_mod,$ship_mod,$first,$city){
+            $second = $bus_mod->get_bus($city,$_GET['end'],"price")[0];
+            // var_dump($second);p("");
+            if(!empty($second))
+                $this->interchange[] = array("first" => $first,"second" => $second);
+            $second = $train_mod->Search_trains($city,$_GET['end'])[0];
+            // var_dump($second);p("");
+            if(!empty($second))
+                $this->interchange[] = array("first" => $first,"second" => $second);
+            $second = $flight_mod->searchFlight($city,$_GET['end'])[0];
+            // var_dump($second);p("");
+            if(!empty($second))
+                $this->interchange[] = array("first" => $first,"second" => $second);
+            $second = $ship_mod->pan($city,$_GET['end'])[0];
+            // var_dump($second);p("");
+            if(!empty($second))
+                $this->interchange[] = array("first" => $first,"second" => $second);
         }
 
         function show(){
@@ -128,10 +76,7 @@
                 $this->flight();
                 $this->ship();
                 $this->recommend();
-                // var_dump($this->recommend);
-                // die;
-                if(!empty($this->recommend[0]))
-                    echo json_encode($this->recommend,JSON_UNESCAPED_UNICODE);
+                echo json_encode($this->recommend,JSON_UNESCAPED_UNICODE);
             }
         }
 
@@ -149,6 +94,7 @@
                 // p($this->recommend);
                 // die;
             }
+            // var_dump($data);die;
             $view = V('details');
             if(empty($this->busData) && empty($this->trainData) && empty($this->flightData) && empty($this->shipData)){
                 $view->display('detailsHtml/transCity','');
@@ -159,14 +105,38 @@
 
         function interchange(){
             $mod = M('centerCity');
+            $bus_mod = M('bus');
+            $train_mod = M('TrainsPrice');
+            $flight_mod = M('flight');
+            $ship_mod = M('ship');
             $result = $mod->getCenterCity();
-            for ($i = 0;$i < count($result);$i ++) {
-                $all_citys = $result[$i];
-                for($j = 0;$j < count($all_citys);$j ++){
-                    $this->get_interchange_line($all_citys[$j],$i,$j);
+            // var_dump($result);die;
+            if(!empty($result)){
+                foreach ($result as $city) {
+                    $first = $bus_mod->get_bus($_GET['start'],$city,"price")[0];
+                    // var_dump($first);p("");
+                    if(!empty($first)){
+                        $this->get_interchange_line($bus_mod,$train_mod,$flight_mod,$ship_mod,$first,$city);
+                    }
+                    $first = $train_mod->Search_trains($_GET['start'],$city)[0];
+                    // var_dump($first);p("");
+                    if(!empty($first)){
+                        $this->get_interchange_line($bus_mod,$train_mod,$flight_mod,$ship_mod,$first,$city);
+                    }
+                    $first = $flight_mod->searchFlight($_GET['start'],$city)[0];
+                    // var_dump($first);p("");
+                    if(!empty($first)){
+                        $this->get_interchange_line($bus_mod,$train_mod,$flight_mod,$ship_mod,$first,$city);
+                    }
+                    $first = $ship_mod->pan($_GET['start'],$city)[0];
+                    // var_dump($first);p("");
+                    if(!empty($first)){
+                        $this->get_interchange_line($bus_mod,$train_mod,$flight_mod,$ship_mod,$first,$city);
+                    }
                 }
+                // var_dump($this->interchange);
+                // die;
             }
-            // var_dump($this->interchange);die;
             echo json_encode($this->interchange,JSON_UNESCAPED_UNICODE);
         }
     }
