@@ -22,7 +22,11 @@
         }
 
         public static function init_med(){
+<<<<<<< HEAD
             $medArr = array('show','getStation','getCenterCity',"display","interchange","chooseFristCity","chooseSecondCity",'station_stopWin','station_stop');//定义方法列表
+=======
+            $medArr = array('show','getStation','getCenterCity','display','interchange','chooseFristCity','chooseSecondCity','station_stopWin','station_stop');//定义方法列表
+>>>>>>> zzw
             self::$med = (isset($_GET['med']) and in_array($_GET['med'],$medArr)) ? $_GET['med'] : 'index';
         }
 
@@ -51,4 +55,8 @@
             // self::init_log($config['logconfig']);
         }
     }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> zzw

@@ -6,13 +6,25 @@ import pymysql
 import re
 import random
 import json
+<<<<<<< HEAD
+=======
+import chardet
+>>>>>>> zzw
 
 #获取时间
 def get_time(start,end):
     last = '从%s到%s有多远' % (start,end)
     last_url = parse.quote_plus(last)
     url = 'http://juli.liecheshike.com/%s' % (last_url)
+<<<<<<< HEAD
     html = requests.get(url).content.decode('utf-8')
+=======
+    html = requests.get(url).content
+    charset = chardet.detect(html)
+    html = html.decode(charset['encoding'])
+    if html.find('网站防火墙') >=0:
+        return 0
+>>>>>>> zzw
     dis = re.findall(r'<h3>(.*)公里</h3>',html)
     if dis == None or len(dis) == 0:
         return 0
@@ -52,11 +64,14 @@ def set_station_id(cursor,station):
 #获取线路信息
 def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,cursor):
     #获取主要信息
+<<<<<<< HEAD
     sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s and state=1" % (start_station_id,end_station_id)
     cursor.execute(sql)
     if cursor.rowcount > 0:
         print(start + " ---> " + end + "\t无数据",end = '\n')
         return False
+=======
+>>>>>>> zzw
     url = 'http://qiche.114piaowu.com/qicheZdz_searchAdapter.action'
     browsers = ['Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063','Mozilla/5.0(Macintosh;U;IntelMacOSX10_6_8;en-us)AppleWebKit/534.50(KHTML,likeGecko)Version/5.1Safari/534.50','Mozilla/5.0(WindowsNT6.1;rv:2.0.1)Gecko/20100101Firefox/4.0.1','Opera/9.80(Macintosh;IntelMacOSX10.6.8;U;en)Presto/2.8.131Version/11.11','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;Maxthon2.0)','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;TheWorld)','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;360SE)']
     i = random.randint(0,6)
@@ -73,6 +88,7 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
         'endStation':end,
         'goDate':date
     }
+<<<<<<< HEAD
     proxies = [{'http':'169.254.195.159:80'},{'http':'169.254.25.181:80'},{'http':'192.168.0.116:80'}]
     html = requests.post(url,headers = headers,data = data,proxies = proxies[i%2]).content.decode('utf-8')
     if html.find('系统错误页面') != -1 or html.find('暂未查询到汽车票数据') != -1:
@@ -84,6 +100,11 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
             city_id = city[0]
             sql = "update city_to_station set state=0 where city_id=%d and station_id=%d" % (city_id,end_station_id)
             cursor.execute(sql)
+=======
+    html = requests.post(url,headers = headers,data = data).content.decode('utf-8')
+    if html.find('系统错误页面') != -1 or html.find('暂未查询到汽车票数据') != -1:
+        print(start + " ---> " + end + "\t无数据",end = '\n')
+>>>>>>> zzw
         sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
         cursor.execute(sql)
         if cursor.rowcount == 0:
@@ -94,6 +115,12 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
     results = soup.find_all('ul',class_ = 'content')
     sql = u"update line set state=0 where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
     cursor.execute(sql)
+<<<<<<< HEAD
+=======
+    if len(results) == 0:
+        print("Notice!")
+        return 0
+>>>>>>> zzw
     for result in results:
         lis = result.find_all('li')
         start_time = lis[0].text.replace(' ','')
@@ -116,11 +143,14 @@ def get_result_from_114(start,end,date,re_time,start_station_id,end_station_id,c
     return True
 
 def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_id,cursor):
+<<<<<<< HEAD
     sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s and state=1" % (start_station_id,end_station_id)
     cursor.execute(sql)
     if cursor.rowcount > 0:
         print(start + " ---> " + end + "\t无数据",end = '\n')
         return False
+=======
+>>>>>>> zzw
     date = date.replace('-','')
     url = 'http://bus.qunar.com/api/search/s2s.json?callback=jQuery17201332145743303843_1521287707552'
     browsers = ['Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063','Mozilla/5.0(Macintosh;U;IntelMacOSX10_6_8;en-us)AppleWebKit/534.50(KHTML,likeGecko)Version/5.1Safari/534.50','Mozilla/5.0(WindowsNT6.1;rv:2.0.1)Gecko/20100101Firefox/4.0.1','Opera/9.80(Macintosh;IntelMacOSX10.6.8;U;en)Presto/2.8.131Version/11.11','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;Maxthon2.0)','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;TheWorld)','Mozilla/4.0(compatible;MSIE7.0;WindowsNT5.1;360SE)']
@@ -141,6 +171,7 @@ def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_i
     html = requests.post(url,headers = headers,data = data).content.decode('utf-8')
     if html.find('系统错误页面') != -1 or html.find('no result') != -1:
         print(start + " ---> " + end + "\t无数据",end = '\n')
+<<<<<<< HEAD
         sql = "select * from city where city like '%" + start + "%' and state=1"
         cursor.execute(sql)
         city = cursor.fetchone()
@@ -148,6 +179,8 @@ def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_i
             city_id = city[0]
             sql = "update city_to_station set state=0 where city_id=%d and station_id=%d" % (city_id,end_station_id)
             cursor.execute(sql)
+=======
+>>>>>>> zzw
         sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
         cursor.execute(sql)
         if cursor.rowcount == 0:
@@ -158,6 +191,12 @@ def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_i
     cursor.execute(sql)
     html = re.sub(r'[\'\"\{\}\-\[\]]','',html)
     results = re.split(r',',html)[19:]
+<<<<<<< HEAD
+=======
+    if len(results) == 0:
+        print("Notice!")
+        return 0
+>>>>>>> zzw
     for x in results:
         if x.find('to:') >= 0:
             end_station = re.sub(r'[a-zA-Z0-9:]','',x)
@@ -184,15 +223,19 @@ def get_result_from_qunaer(start,end,date,re_time,start_station_id,end_station_i
     return True
 
 def get_result_from_xiecheng(start,end,date,re_time,start_station_id,end_station_id,cursor):
+<<<<<<< HEAD
     sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s and state=1" % (start_station_id,end_station_id)
     cursor.execute(sql)
     if cursor.rowcount > 0:
         print(start + " ---> " + end + "\t无数据",end = '\n')
         return False
+=======
+>>>>>>> zzw
     url = 'http://bus.ctrip.com/busListn.html?from=%s&to=%s&date=%s' % (parse.quote_plus(start),parse.quote_plus(end),date)
     html = requests.get(url).content.decode('utf-8')
     if html.find('系统错误页面') != -1 or html.find('您可以试试更改搜索条件重新搜索，或选择中转') != -1:
         print(start + " ---> " + end + "\t无数据",end = '\n')
+<<<<<<< HEAD
         sql = "select * from city where city like '%" + start + "%' and state=1"
         cursor.execute(sql)
         city = cursor.fetchone()
@@ -200,6 +243,8 @@ def get_result_from_xiecheng(start,end,date,re_time,start_station_id,end_station
             city_id = city[0]
             sql = "update city_to_station set state=0 where city_id=%d and station_id=%d" % (city_id,end_station_id)
             cursor.execute(sql)
+=======
+>>>>>>> zzw
         sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
         cursor.execute(sql)
         if cursor.rowcount == 0:
@@ -212,6 +257,12 @@ def get_result_from_xiecheng(start,end,date,re_time,start_station_id,end_station
     trs = trs[3:]
     sql = u"update line set state=0 where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
     cursor.execute(sql)
+<<<<<<< HEAD
+=======
+    if len(trs) == 0:
+        print("Notice!")
+        return 0
+>>>>>>> zzw
     for tr in trs:
         tds = tr.find_all('td')
         start_time = re.sub(r'[\n\r\t]','',tds[0].find('span',class_ = 'railway_time').text.replace(' ',''))
@@ -232,15 +283,19 @@ def get_result_from_xiecheng(start,end,date,re_time,start_station_id,end_station
     print(start + " ---> " + end + "\t已更新",end = '\n')
 
 def get_result_from_tuniu(start,end,date,re_time,start_station_id,end_station_id,cursor):
+<<<<<<< HEAD
     sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s and state=1" % (start_station_id,end_station_id)
     cursor.execute(sql)
     if cursor.rowcount > 0:
         print(start + " ---> " + end + "\t无数据",end = '\n')
         return False
+=======
+>>>>>>> zzw
     url = 'http://bus.tuniu.com/yii.php?r=coach/CoachProduct/GetCoachList&data%5BdepartureCityName%5D=' + start + '&data%5BarrivalCityName%5D=' + end + '&data%5BdepartureDate%5D=' + date
     html = requests.get(url).content.decode('unicode_escape')#unicode编码转中文
     if html.find('系统错误页面') != -1 or html.find('未查询到结果') != -1:
         print(start + " ---> " + end + "\t无数据",end = '\n')
+<<<<<<< HEAD
         sql = "select * from city where city like '%" + start + "%' and state=1"
         cursor.execute(sql)
         city = cursor.fetchone()
@@ -248,6 +303,15 @@ def get_result_from_tuniu(start,end,date,re_time,start_station_id,end_station_id
             city_id = city[0]
             sql = "update city_to_station set state=0 where city_id=%d and station_id=%d" % (city_id,end_station_id)
             cursor.execute(sql)
+=======
+        # sql = "select * from city where city like '%" + start + "%' and state=1"
+        # cursor.execute(sql)
+        # city = cursor.fetchone()
+        # if city != None:
+        #     city_id = city[0]
+            # sql = "update city_to_station set state=0 where city_id=%d and station_id=%d" % (city_id,end_station_id)
+            # cursor.execute(sql)
+>>>>>>> zzw
         sql = "select * from is_not_city_to_station where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
         cursor.execute(sql)
         if cursor.rowcount == 0:
@@ -262,6 +326,11 @@ def get_result_from_tuniu(start,end,date,re_time,start_station_id,end_station_id
     index_price = html.find('ticketPrice:',index_type)
     sql = u"update line set state=0 where start_station_id=%s and end_station_id=%s" % (start_station_id,end_station_id)
     cursor.execute(sql)
+<<<<<<< HEAD
+=======
+    if index_start == -1 and index_end == -1:
+        print("Notice!")
+>>>>>>> zzw
     while(index_start != -1 and index_end != -1):
         start_station = html[index_start + 14:index_end]
         index_temp = html.find('category:',index_start)
@@ -291,10 +360,25 @@ def get_result_from_tuniu(start,end,date,re_time,start_station_id,end_station_id
     return True
         
 def get_data(station1,station2,date,cursor,i):
+<<<<<<< HEAD
     station1_id = get_station_id(cursor,station1)
     station2_id = get_station_id(cursor,station2)
     #获取出发地到目的地需要的时间
     re_time = get_time(station1,station2)
+=======
+    # station2 = "高各庄"
+    # station1 = "唐山"
+    sql = "select id from city where city like '%" + station1 + "%' and state=1"
+    cursor.execute(sql)
+    station1_id = cursor.fetchone()[0]
+    sql = "select id from station where name='" + station2 + "' and state=1"
+    cursor.execute(sql)
+    station2_id = cursor.fetchone()[0]
+    #获取出发地到目的地需要的时间
+    re_time = get_time(station1,station2) 
+    # time.sleep(1)
+    # return 0
+>>>>>>> zzw
     t = random.randint(1,2)
     if t == 1:
         t = station1_id
@@ -307,6 +391,7 @@ def get_data(station1,station2,date,cursor,i):
         print('114:')
         get_result_from_114(station1,station2,date,re_time,station1_id,station2_id,cursor)
         print('携程:')
+<<<<<<< HEAD
         get_result_from_xiecheng(station2,station1,date,re_time,station1_id,station2_id,cursor)
     else: 
         print('去哪儿:')
@@ -314,10 +399,22 @@ def get_data(station1,station2,date,cursor,i):
         print('途牛:')
         get_result_from_tuniu(station2,station1,date,re_time,station2_id,station1_id,cursor)
         time.sleep(0.5)
+=======
+        get_result_from_xiecheng(station2,station1,date,re_time,station2_id,station1_id,cursor)
+    else: 
+        print('去哪儿:')
+        get_result_from_qunaer(station1,station2,date,re_time,station1_id,station2_id,cursor)
+        print('114:')
+        get_result_from_114(station2,station1,date,re_time,station2_id,station1_id,cursor)
+        # print('途牛:')
+        # get_result_from_tuniu(station2,station1,date,re_time,station2_id,station1_id,cursor)
+    time.sleep(1)
+>>>>>>> zzw
 
 def main():
     db = pymysql.connect('localhost','root','','project',charset =  "utf8")
     cursor = db.cursor()
+<<<<<<< HEAD
     sql = u"select * from city where state=1"
     cursor.execute(sql)
     date = '2018-03-25'
@@ -334,6 +431,38 @@ def main():
             if city[0] <= num1:
                 continue
             print(city[0])
+=======
+    now_time = time.strftime("%Y-%m-%d", time.localtime())
+    day = now_time[8:10]
+    if day == '01':
+        date = '2018-03-03'
+    if day == '11':
+        date = '2018-03-13'
+    if day == '21':
+        date = '2018-03-23'
+    date = '2018-04-20'
+    sql = u"select * from city where state=1"
+    cursor.execute(sql)
+    if cursor.rowcount > 0:
+        citys = cursor.fetchall()
+        f = open('1.txt','r')
+        num = f.readline()
+        if len(num) != 0:
+            num = num.split(',',1)
+            num1 = int(num[0])
+            num2 = int(num[1])
+        else:
+            num1 = 0
+            num2 = 2
+        f.close()
+        flag = True
+        i = 1
+        for city in citys:
+            print(city[0])
+            # return 0
+            if city[0] <= num1:
+                continue
+>>>>>>> zzw
             sql = u"select * from city_to_station where city_id=%d and state=1" % (city[0])
             cursor.execute(sql)
             if cursor.rowcount > 0:
@@ -345,8 +474,12 @@ def main():
                         flag = False
                     sql = u"select * from station where id=%d" % (responsible[2])
                     cursor.execute(sql)
+<<<<<<< HEAD
                     station = cursor.fetchone()
                     station2 = station[1]
+=======
+                    station2 = cursor.fetchone()[1]
+>>>>>>> zzw
                     spare = city[2][len(city[2]) - 1:len(city[2])]
                     if spare == '市' or spare == '县' or spare == '区':
                         station1 = city[2][0:len(city[2]) - 1]
@@ -360,6 +493,7 @@ def main():
                     f = open('1.txt','w')
                     f.write(str(city[0] - 1) + ',' + str(responsible[0]))
                     f.close()
+<<<<<<< HEAD
                     # if responsible[0] % 1000 == 0:
                     #     time.sleep(100)
                     # elif responsible[0] % 100 == 0:
@@ -369,3 +503,29 @@ def main():
                         
 if __name__ == '__main__':
     main()
+=======
+                    if responsible[0] % 50 == 0:
+                        time.sleep(30)
+        f = open('1.txt','w')
+        f.close()
+
+if __name__ == '__main__':
+    while(True):
+        try:
+            main()
+        except:
+            print('异常')
+            time.sleep(10)
+
+    # while True:
+    #     try:
+    #         now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    #         day = now_time[8:10]
+    #         if day == '01' or day == '11' or day == '21':
+    #             main()
+    #         time.sleep(5)
+    #     except:
+    #         print('异常')
+    #         time.sleep(10)
+    #         main()
+>>>>>>> zzw

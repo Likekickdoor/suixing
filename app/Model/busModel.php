@@ -53,19 +53,13 @@
         function get_bus($start,$end,$order){
             $this->data = [];
             $this->init($start,$end);
-            DB::find("city_to_station","city_id={$this->start_id} and station_id={$this->end_id}");
-            if(DB::$rowcount > 0){
-                $lines = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$this->end_id} order by $order");
-                if($lines != NULL){
-                    $this->print_line($lines);
-                }else{
-                    $this->data = [];
-                }
+            // p($this->start_id.','.$this->end_id);die;
+            $lines = DB::findAll("line","start_station_id={$this->start_id} and end_station_id={$this->end_id} order by $order");
+            if($lines != NULL){
+                $this->print_line($lines);
             }else{
-                // $this->get_interchange($order);
                 $this->data = [];
             }
-            // var_dump($this->data);p("");p("");
             return $this->data;
         }
     }

@@ -9,10 +9,17 @@ class pdoSql {
     private $host = "127.0.0.1";       //数据库主机名
     //private $dbName = "flight_line";
     private $user = "root";
+<<<<<<< HEAD
     private $pwd = "890ccf33a9a4";
     private $pdoObject;
 
     public function __construct($dbName="suixing",$charset="utf8"){
+=======
+    private $pwd = "";
+    private $pdoObject;
+
+    public function __construct($dbName="project",$charset="utf8"){
+>>>>>>> zzw
         try{
             $setcharset = array(PDO::MYSQL_ATTR_INIT_COMMAND=>"set names ".$charset);
             

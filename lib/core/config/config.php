@@ -4,7 +4,11 @@
     $config = array(
         //数据库配置
         'dbconfig' => array('dbtype' => 'mysql','dbhost' => '127.0.0.1','dbuser' => 'root',
+<<<<<<< HEAD
                 'dbpwd' => '890ccf33a9a4','dbname' => 'suixing','dbcharset' => 'utf8'),
+=======
+                'dbpwd' => '','dbname' => 'project','dbcharset' => 'utf8'),
+>>>>>>> zzw
         //日志配置
         'logconfig' => array('IS_START' => 'true','PATH' => FRAME.'/log','DB_NAME' => 'log'),
         //视图配置
