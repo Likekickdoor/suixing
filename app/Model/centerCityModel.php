@@ -170,22 +170,23 @@
                 return $citys;
             }else{
                 $station_id = DB::find("station","name='{$this->start}'")['id'];
-                // p($station_id);die;
+                //var_dump($station_id);die;
                 $result = DB::findAll("line a,city b","a.start_station_id={$station_id} and a.end_station_id=b.id","distinct b.city");
                 // $result = DB::findAll("line","start_station_id={$station_id}");
-                // var_dump($result);die;
+                //var_dump($result);die;
                 $place = DB::findAll("center_city","bus like '%{$this->end}%' or train like '%{$this->end}%' or flight like '%{$this->end}%' or ship like '%{$this->end}%'","place");
                 $all_places = "";
                 foreach ($place as $value) {
                     $all_places .= $value['place'];
                 }
-                // var_dump($all_places);die;
+		//var_dump($result);p("");
+                //var_dump($all_places);die;
                 foreach ($result as $value) {
                     if(strpos($all_places,$value['city']) != false)
                         $citys[] = $value['city'];
                 }
                 // var_dump($place);die;
-                // var_dump($citys);die;
+                //var_dump($citys);die;
                 return $citys;
             }
         }

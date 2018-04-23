@@ -110,7 +110,7 @@
             $flight_mod = M('flight');
             $ship_mod = M('ship');
             $result = $mod->getCenterCity();
-            // var_dump($result);die;
+            //var_dump($result);die;
             if(!empty($result)){
                 foreach ($result as $city) {
                     $first = $bus_mod->get_bus($_GET['start'],$city,"price")[0];
