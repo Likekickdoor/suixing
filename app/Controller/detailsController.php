@@ -51,7 +51,7 @@
         }
 
         private function get_interchange_line($citys,$i,$j){
-            // var_dump($citys);p($i.','.$j);
+            // p($i.','.$j);
             $bus_mod = M('bus');
             $train_mod = M('TrainsPrice');
             $flight_mod = M('flight');
@@ -85,6 +85,7 @@
                     if((!empty($temp)) && (!empty($second))){
                         $this->interchange[] = array('first'=>$temp,'second'=>$second);
                     }
+                    // var_dump($temp);
                 }
                 // if(!empty($second_lines))
                 //     {var_dump($second_lines);p("");p("");}
@@ -128,10 +129,7 @@
                 $this->flight();
                 $this->ship();
                 $this->recommend();
-                // var_dump($this->recommend);
-                // die;
-                if(!empty($this->recommend[0]))
-                    echo json_encode($this->recommend,JSON_UNESCAPED_UNICODE);
+                echo json_encode($this->recommend,JSON_UNESCAPED_UNICODE);
             }
         }
 
@@ -162,7 +160,7 @@
             $mod = M('centerCity');
             $result = $mod->getCenterCity();
             // var_dump($result[0]);die;
-            if(is_array($result[0]))
+            if(!empty($result[0]) || !empty($result[1]) || !empty($result[2]) || !empty($result[3]))
                 for ($i = 0;$i < count($result);$i ++) {
                     $all_citys = $result[$i];
                     for($j = 0;$j < count($all_citys);$j ++){
