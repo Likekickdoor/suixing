@@ -39,15 +39,10 @@
             return $result;
         }
         //数据库查找函数，查找一条
-<<<<<<< HEAD
-        public static function find($table,$condition){
-            $sql = "select * from $table where $condition";
-=======
         public static function find($table,$condition = "",$find = "*"){
             if($condition == "")
                 $sql = "select $find from $table";
             else $sql = "select $find from $table where $condition";
->>>>>>> zzw
             try{
                 $result = self::$con->query($sql);
                 if(!$result)
@@ -59,15 +54,10 @@
             return $result->fetch();
         }
         //查找所有
-<<<<<<< HEAD
-        public static function findAll($table,$condition){
-            $sql = "select * from $table where $condition";
-=======
         public static function findAll($table,$condition = "",$find = "*"){
             if($condition == "")
                 $sql = "select $find from $table";
             else $sql = "select $find from $table where $condition";
->>>>>>> zzw
             try{
                 $result = self::$con->query($sql);
                 if(!$result)
@@ -97,19 +87,11 @@
         }
         //更新
         public static function update($table,$data,$condition){
-<<<<<<< HEAD
-            $sql = "updata $table set $data where $condition";
-            try{
-                self::$rowcount = self::$con->exec($sql);
-                if(!self::$rowcount)
-                    die('数据库更新语句执行失败');
-=======
             $sql = "update $table set $data where $condition";
             try{
                 self::$rowcount = self::$con->exec($sql);
                 // if(!self::$rowcount)
                 //     die('数据库更新语句执行失败');
->>>>>>> zzw
             }catch(Exception $e){
                 die('更新数据失败');
             }
@@ -145,8 +127,6 @@
                 echo "Line:".$e->getTraceAsString()."<br/></pre>";
             }
         }
-<<<<<<< HEAD
-=======
         //查询所有
       public static function findAlls($field,$table,$condition){
                 $sql = "select distinct $field from $table where $condition";
@@ -163,7 +143,6 @@
                 }
                 return isset($list) ? $list : "";
             }
->>>>>>> zzw
 
         /**
      * 执行sql查询语句
