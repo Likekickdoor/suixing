@@ -1,7 +1,6 @@
 <?php
     namespace app\Model;
     use lib\core\DB;
-    error_reporting(0);
     class centerCity{
 
         private $data = [];
@@ -167,7 +166,6 @@
                     if(strpos($all_places,$value['place']) != false)
                         $citys[] = $value['place'];
                 }
-                return $citys;
             }else{
                 $station_id = DB::find("station","name='{$this->start}'")['id'];
                 // p($station_id);die;
@@ -175,19 +173,30 @@
                 // $result = DB::findAll("line","start_station_id={$station_id}");
                 // var_dump($result);die;
                 $place = DB::findAll("center_city","bus like '%{$this->end}%' or train like '%{$this->end}%' or flight like '%{$this->end}%' or ship like '%{$this->end}%'","place");
-                $all_places = "";
-                foreach ($place as $value) {
-                    $all_places .= $value['place'];
+                if(!empty($result)){
+                    $all_places = "a";
+                    foreach ($place as $value) {
+                        $all_places .= $value['place'];
+                    }
+                    // var_dump($all_places);die;
+                    foreach ($result as $value) {
+                        if(strpos($all_places,$value['city']) != false)
+                            $citys[] = $value['city'];
+                    }
+                    // var_dump($place);die;
                 }
-                // var_dump($all_places);die;
-                foreach ($result as $value) {
-                    if(strpos($all_places,$value['city']) != false)
-                        $citys[] = $value['city'];
+                $result = $this->get_train($this->start);
+                if(!empty($result)){
+                    // $result = \explode(",",$result);
+                    // p($result);die;
+                    foreach ($place as $value) {
+                        if(strpos($result,$value['place']) != false)
+                            $citys[] = $value['place'];
+                    }
                 }
-                // var_dump($place);die;
-                // var_dump($citys);die;
-                return $citys;
             }
+            // var_dump($citys);die;
+            return $citys;
         }
     }
 ?>
