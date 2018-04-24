@@ -1,7 +1,6 @@
 <?php
     namespace app\Model;
     use lib\core\DB;
-    error_reporting(0);
     class centerCity{
 
         private $data = [];
@@ -149,39 +148,6 @@
             $this->end = $_GET['end'];
         }
 
-        private function get_data($tool){
-            $result = DB::findAll("center_city","{$tool} like '%{$this->end}%'");
-            // var_dump($result);die;
-            if(!empty($result)){
-                foreach ($result as $value) {
-                    // p($value['place']);
-                    if(strpos($this->bus_center_city,$value['place']) != false)
-                        $bus[] = $value['place'];
-                    if(strpos($this->train_center_city,$value['place']) != false)
-                        $train[] = $value['place'];
-                    if(strpos($this->flight_center_city,$value['place']) != false)
-                        $flight[] = $value['place'];
-                    if(strpos($this->ship_center_city,$value['place']) != false)
-                        $ship[] = $value['place'];
-                }
-                if(!empty($bus))
-                    $citys[] = $bus;
-                else $citys[] = NULL;
-                if(!empty($train))
-                    $citys[] = $train;
-                else $citys[] = NULL;
-                if(!empty($flight))
-                    $citys[] = $flight;
-                else $citys[] = NULL;
-                if(!empty($ship))
-                    $citys[] = $ship;
-                else $citys[] = NULL;
-                // if(!empty($citys[0]) || !empty($citys[1]) || !empty($citys[2]) || !empty($citys[3]))
-                    $this->data[] = $citys;
-                // var_dump($tool);p("");
-            }
-        }
-
         function getCenterCity(){
             $this->init();
             $bus = [];
@@ -191,18 +157,15 @@
             $result = DB::find("center_city","place like '%{$this->start}%'");
             // var_dump($result);die;
             if($result != NULL){
-                $this->bus_center_city = $result['bus'];
-                $this->train_center_city = $result['train'];
-                $this->flight_center_city = $result['flight'];
-                $this->ship_center_city = $result['ship'];
-                // $all_center_city = $this->bus_center_city.$this->train_center_city.$this->flight_center_city.$this->ship_center_city;
-                // var_dump($all_center_city);die;
-                $this->get_data('bus');
-                $this->get_data('train');
-                $this->get_data('flight');
-                $this->get_data('ship');
-                // var_dump($this->data);die;
-                return $this->data;
+                $place = DB::findAll("center_city","bus like '%{$this->end}%' or train like '%{$this->end}%' or flight like '%{$this->end}%' or ship like '%{$this->end}%'","place");
+                $all_places = "a";
+                $all_places .= $result['bus'].$result['train'].$result['flight'].$result['ship'];
+                // var_dump($all_places);die;
+                foreach ($place as $value) {
+                    // var_dump($value);
+                    if(strpos($all_places,$value['place']) != false)
+                        $citys[] = $value['place'];
+                }
             }else{
                 $station_id = DB::find("station","name='{$this->start}'")['id'];
                 // p($station_id);die;
@@ -210,19 +173,33 @@
                 // $result = DB::findAll("line","start_station_id={$station_id}");
                 // var_dump($result);die;
                 $place = DB::findAll("center_city","bus like '%{$this->end}%' or train like '%{$this->end}%' or flight like '%{$this->end}%' or ship like '%{$this->end}%'","place");
-                $all_places = "";
-                foreach ($place as $value) {
-                    $all_places .= $value['place'];
+                if(!empty($result)){
+                    $all_places = "a";
+                    foreach ($place as $value) {
+                        $all_places .= $value['place'];
+                    }
+                    // var_dump($all_places);die;
+                    foreach ($result as $value) {
+                        if(strpos($all_places,$value['city']) != false)
+                            $citys[] = $value['city'];
+                    }
+                    // var_dump($place);die;
                 }
-                // var_dump($all_places);die;
-                foreach ($result as $value) {
-                    if(strpos($all_places,$value['city']) != false)
-                        $citys[] = $value['city'];
+                $result = $this->get_train($this->start);
+                if(!empty($result)){
+                    // $result = \explode(",",$result);
+                    // p($result);die;
+                    foreach ($place as $value) {
+                        if(strpos($result,$value['place']) != false)
+                            $citys[] = $value['place'];
+                    }
                 }
                 // var_dump($place);die;
                 // var_dump($citys);die;
                 return $citys;
             }
+            // var_dump($citys);die;
+            return $citys;
         }
     }
 ?>
