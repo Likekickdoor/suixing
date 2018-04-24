@@ -22,13 +22,11 @@
             $this->init($busData,$trainData,$flightData,$shipData);
             $price = $this->getPriceRecommend();
             $time = $this->getTimeRecommend();
-            if(!empty($price))
-                array_push($this->data,$price);
-            if(array_keys($price)[0] != array_keys($time)[0])
-                if(!empty($time))
-                    array_push($this->data,$time);
+            array_push($this->data,$price);
+            // if($price[0] != $time[0] || $price[1] != $time[1])
+                array_push($this->data,$time);
             // var_dump($this->data);
-            // var_dump();
+            // p($time);
             // die;
             return $this->data;                
         }
