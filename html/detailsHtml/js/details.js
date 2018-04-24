@@ -1,4 +1,4 @@
-﻿    function GETplace(){
+    function GETplace(){
         //以下添加自动填写表单内容
         var urlStr = decodeURIComponent(window.location.search);
         // alert(urlStr);
@@ -334,10 +334,6 @@
             if(str3 != '输入起点' && str4 != '输入终点' && str1.length != 0 && str2.length != 0 ){
                 $('#start').attr('placeholder', str4);
                 $('#end').attr('placeholder', str3);
-            }else if(str3 != '输入起点' && str4 != '输入终点' && str1.length == 0 && str2.length == 0 ){
-                $('#start').attr('placeholder', str4);
-                $('#end').attr('placeholder', str3);
-                // alert('a')
             }
         }else if(str1.length!=0 && str2.length==0){
             $('#start').val(str4);

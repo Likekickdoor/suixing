@@ -1,10 +1,4 @@
-﻿$(document).ready(function(){
-    $('#SEbutton').click(function(){
-        var tempCity = '';
-        tempCity = $('#start').val();
-        $('#start').val($('#end').val());
-        $('#end').val(tempCity);
-    });
+$(document).ready(function(){
     function GETplace(){
         //以下添加自动填写表单内容
         var urlStr = decodeURIComponent(window.location.search);
