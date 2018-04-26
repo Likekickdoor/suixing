@@ -194,9 +194,6 @@
                             $citys[] = $value['place'];
                     }
                 }
-                // var_dump($place);die;
-                // var_dump($citys);die;
-                return $citys;
             }
             // var_dump($citys);die;
             return $citys;
