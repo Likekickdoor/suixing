@@ -112,15 +112,12 @@
             sort($timeAll);
             // p($timeAll);
             // die;
-            if(!empty($this->busData) && $timeeAll[0] == $busTime['price']){
+            if(!empty($this->busData) && $timeAll[0] == $busTime['time']){
                 $busTime['time'] = $time1;
                 return $busTime;
             }
-            if(!empty($this->trainData)){
-                if(array_key_exists("bSeat",$trainTime) && $timeAll[0] == $trainTime['bSeat'])
-                    return $trainTime;
-                if(array_key_exists("hardSeat",$trainTime) && $timeAll[0] == $trainTime['hardSeat'])
-                    return $trainTime;
+            if(!empty($this->trainData) && $timeAll[0] == $trainTime['BrunTime']-$trainTime['ArunTime']){
+                return $trainTime;
             }
             if(!empty($this->flightData) && $timeAll[0] == $flightTime['f_flightTime']){
                 $flightTime['f_flightTime'] = str_replace(array("小","钟"),"",$time2);
