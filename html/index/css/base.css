@@ -65,6 +65,12 @@ div.header {
 div.header div.siteName {
   float: left;
 }
+div.header div.siteName img{
+  display: block;
+  padding: 18px 0;
+  float: left;
+  width: 32px
+}
 div.header ul.siteContents {
   float: right;
 }
