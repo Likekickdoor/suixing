@@ -2,26 +2,18 @@
 body{
     background:url(../img/bg.jpg) no-repeat center fixed;
     background-size:100% 100%; 
-<<<<<<< HEAD
+    
     height: auto;
-=======
-    height: 600px;
->>>>>>> zzw
     margin: 0 auto;
     padding: 0;
 }
 
 #main{
     width: 1350px;
-<<<<<<< HEAD
+
     height: auto;
    position: absolute;
    top: 20%;
-=======
-    height: 600px;
-   position: absolute;
-   top: 25%;
->>>>>>> zzw
 }
 .left{
 width: 60%;
@@ -169,8 +161,3 @@ float: left;
         left: 25%;
         cursor: pointer;
     }
-<<<<<<< HEAD
-   
-=======
-   
->>>>>>> zzw
